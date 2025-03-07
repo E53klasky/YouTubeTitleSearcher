@@ -1,4 +1,3 @@
-// components/landingPage.js
 import React, { useEffect, useRef, useState } from 'react';
 import { 
   Typography, 
@@ -19,7 +18,6 @@ const theme = createTheme({
   },
 });
 
-// Extended list of comments
 const commentsData = [
   {
     id: 1,
@@ -109,7 +107,6 @@ const CommentCard = ({ comment }) => {
   );
 };
 
-// YouTube Logo SVG Component
 const YouTubeLogo = () => (
   <svg 
     viewBox="0 0 90 20" 
@@ -138,42 +135,33 @@ const YouTubeLogo = () => (
   </svg>
 );
 
-// Create an infinite scroll component that handles both automatic scrolling and manual wheel scrolling
 const InfiniteScrollComments = ({ comments, side }) => {
   const scrollContainerRef = useRef(null);
   const [displayedComments, setDisplayedComments] = useState([]);
   const [scrollPosition, setScrollPosition] = useState(0);
   
-  // Set up the comments with duplicate entries to create the illusion of infinite scrolling
   useEffect(() => {
-    // Duplicate the comments array multiple times to ensure smooth infinite scrolling
     setDisplayedComments([...comments, ...comments, ...comments, ...comments]);
   }, [comments]);
   
-  // Handle the wheel event for manual scrolling
   const handleWheel = (e) => {
     e.preventDefault();
     
     if (scrollContainerRef.current) {
       const container = scrollContainerRef.current;
-      const scrollAmount = e.deltaY * 0.5; // Adjust scrolling speed
+      const scrollAmount = e.deltaY * 0.5; 
       
-      // Get the container's total scrollable height
       const totalHeight = container.scrollHeight;
       const visibleHeight = container.clientHeight;
       const maxScrollTop = totalHeight - visibleHeight;
       
-      // Calculate new scroll position
       let newPosition = container.scrollTop + scrollAmount;
-      
-      // If we reach the end, jump back to the duplicate section
+
       if (newPosition >= maxScrollTop - 10) {
-        // Jump to the first duplicate section (25% of the way through)
         newPosition = maxScrollTop / 4;
       } 
-      // If we reach the beginning, jump forward to the duplicate section
       else if (newPosition <= 10) {
-        // Jump to the third duplicate section (75% of the way through)
+     
         newPosition = maxScrollTop * 0.75;
       }
       
@@ -182,31 +170,28 @@ const InfiniteScrollComments = ({ comments, side }) => {
     }
   };
   
-  // Auto scroll effect
+
   useEffect(() => {
     if (!scrollContainerRef.current) return;
     
     const container = scrollContainerRef.current;
     
-    // Set initial scroll position to middle of first duplicate section
+
     container.scrollTop = container.scrollHeight * 0.125;
     setScrollPosition(container.scrollTop);
-    
-    // Auto scroll animation
+
     let animationId;
     const autoScroll = () => {
       if (container) {
-        // Get the container's total scrollable height
+
         const totalHeight = container.scrollHeight;
         const visibleHeight = container.clientHeight;
         const maxScrollTop = totalHeight - visibleHeight;
         
-        // Calculate new position (slow scroll)
-        let newPosition = container.scrollTop + (side === 'left' ? 0.5 : 0.4); // Different speeds
+        let newPosition = container.scrollTop + (side === 'left' ? 0.5 : 0.4); 
         
-        // If we reach the end of the second duplicate, jump back to first duplicate
         if (newPosition >= maxScrollTop - 10) {
-          newPosition = maxScrollTop / 4; // Jump to 25% point
+          newPosition = maxScrollTop / 4; 
         }
         
         container.scrollTop = newPosition;
@@ -230,10 +215,10 @@ const InfiniteScrollComments = ({ comments, side }) => {
       sx={{ 
         height: '100%', 
         overflowY: 'scroll',
-        msOverflowStyle: 'none', // Hide scrollbar in IE/Edge
-        scrollbarWidth: 'none', // Hide scrollbar in Firefox
+        msOverflowStyle: 'none',
+        scrollbarWidth: 'none', 
         '&::-webkit-scrollbar': {
-          display: 'none' // Hide scrollbar in Chrome/Safari
+          display: 'none' 
         },
         pr: side === 'left' ? 2 : 0,
         pl: side === 'right' ? 2 : 0,
@@ -285,7 +270,7 @@ function LandingPage() {
               fontWeight: 'bold',
               color: '#ff0000', // YouTube red
               textShadow: '0px 2px 4px rgba(0,0,0,0.2)',
-              mb: 2 // Add margin bottom to create space between title and logo
+              mb: 2 
             }}
           >
             YouTube Title Generator
@@ -296,8 +281,8 @@ function LandingPage() {
             sx={{ 
               display: 'flex',
               justifyContent: 'center',
-              width: '180px', // Control the width of the logo
-              mb: 3 // Add margin bottom for spacing
+              width: '180px', 
+              mb: 3 
             }}
           >
             <YouTubeLogo />

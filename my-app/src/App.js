@@ -9,7 +9,7 @@ function App() {
         <div className="App">
             <LandingPage />
             <TrieTesting />
-            <HashMapTesting/>
+            {/* <HashMapTesting/> */}
         </div>
     );
 }

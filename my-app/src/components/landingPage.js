@@ -5,9 +5,15 @@ import {
   Paper, 
   Avatar, 
   createTheme, 
-  ThemeProvider 
+  ThemeProvider,
+  TextField,
+  AppBar, 
+  Toolbar, 
+  Button, 
+  IconButton,
 } from '@mui/material';
 import '@fontsource/poppins';
+import HomeIcon from '@mui/material/Icon';
 
 const theme = createTheme({
   typography: {
@@ -236,6 +242,29 @@ const HorizontalInfiniteScrollComments = () => {
     </Box>
   );
 };
+{/*Half chatgpted*/}
+export const Navbar = () => {
+  return (
+    <AppBar position="sticky" sx = {{background: 'rgba(0,0,0, .4)'}}>
+      <Toolbar>
+        {/* Icon on the left */}
+        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+          <HomeIcon /> {/* You can replace this with your desired icon */}
+        </IconButton>
+
+        {/* Navbar Title (optional) */}
+        <Typography variant="h6" color = 'rgb(201, 196, 196)' align='left' sx={{ flexGrow: 1, textShadow: '0px 2px 4px rgba(0,0,0, 0.7)'}}>
+          YouTube Title Searcher
+        </Typography>
+
+        {/* Buttons */}
+        <Button color="inherit" sx = {{color: 'rgb(201, 196, 196)', fontSize: '19px'}}>Home</Button>
+        <Button color="inherit" sx = {{color: 'rgb(201, 196, 196)', fontSize: '19px'}}>Search</Button>
+        <Button color="inherit" sx = {{color: 'rgb(201, 196, 196)', fontSize: '19px'}}>About</Button>
+      </Toolbar>
+    </AppBar>
+  );
+}
 
 function LandingPage() {
   return (
@@ -245,21 +274,23 @@ function LandingPage() {
         flexDirection: 'column', 
         minHeight: '100vh',
         overflow: 'hidden',
-        backgroundColor: '#0F0F0F', 
-        backgroundImage: 'url(/1336986.jpeg)',
+        background: 'linear-gradient(160deg, rgb(126, 38, 38) 5%, rgb(29, 29, 29) 50%)',
+        //backgroundImage: 'url(/1336986.jpeg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed'
       }}>
         {/* Header Section with Title and Logo */}
+        <Navbar/>
         <Box 
           sx={{ 
             width: '100%', 
             textAlign: 'center',
-            pt: 5,
-            mb: 4,
+            pt: 15,
+            mb: 2,
             zIndex: 10,
+            pb: 0,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center'
@@ -270,15 +301,15 @@ function LandingPage() {
             component="h1" 
             sx={{ 
               fontWeight: 'bold',
-              color: '#ff0000', 
-              textShadow: '0px 2px 4px rgba(0,0,0,0.2)',
-              mb: 2 
+              color: "rgb(201, 196, 196)", 
+              textShadow: '0px 2px 4px rgb(0,0,0)',
+              //mb: 2 
             }}
           >
-            YouTube Title Generator
+            Test Title Here!
           </Typography>
           
-          {/* YouTube Logo */}
+          {/* YouTube Logo
           <Box 
             sx={{ 
               display: 'flex',
@@ -288,31 +319,80 @@ function LandingPage() {
             }}
           >
             <YouTubeLogo />
-          </Box>
+          </Box> */}
         </Box>
         
         {/* Main content area */}
         <Box sx={{ 
           display: 'flex', 
-          flexGrow: 1, 
+          //flexGrow: 1, 
           position: 'relative',
-          flexDirection: 'column',
+          //flexDirection: 'column',
           justifyContent: 'space-between',
-          minHeight: 'calc(100vh - 230px)'
+          //minHeight: 'calc(100vh - 230px)',
+          //top: '-120px'
+          margin: 0,
+          padding: 0,
         }}>
           {/* Center content */}
           <Box sx={{ 
             width: '100%',
-            flexGrow: 1,
+            //flexGrow: 1,
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center',
-            zIndex: 5
+            zIndex: 5,
           }}>
             {/* Content goes here */}
+            <TextField id="outlined-basic" placeholder='Input title...' variant= "outlined" fullWidth sx = {{
+              backgroundColor: 'black',
+              maxWidth: "60%",
+              boxShadow: '0px 0px 5px 1px rgb(29, 29, 29)',
+              input:{
+                color: "rgb(143, 140, 140)",
+                fontSize: "27px"
+              },
+
+              borderRadius: '100px',
+              "& .MuiInputBase-root": {
+                height: "85px", // Adjust height here
+              },
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "50px",
+                "&:hover fieldset":{
+                  borderColor: 'rgb(29, 29, 29)',
+                },
+                "&.Mui-focused fieldset": {
+                    borderColor: 'rgb(29, 29, 29)', // Focused state
+                  },
+              }
+            }} />
+            {/* <TextField
+              label="Search"
+              variant="outlined"
+              fullWidth
+              sx={{
+                maxWidth: 400,
+                backgroundColor: "white",
+                borderRadius: "25px",
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "25px",
+                  "& fieldset": {
+                    borderColor: "blue", // Normal border color
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkblue", // Hover state
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "green", // Focused state
+                  },
+                },
+              }}
+            /> */}
           </Box>
           
-          {/* Comments at the bottom */}
+          {/* Deleted comments because this is the search/animation page
+           Comments at the bottom
           <Box sx={{ 
             width: '100%',
             position: 'relative',
@@ -322,7 +402,7 @@ function LandingPage() {
             zIndex: 10
           }}>
             <HorizontalInfiniteScrollComments />
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </ThemeProvider>

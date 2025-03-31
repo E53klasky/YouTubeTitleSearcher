@@ -349,7 +349,7 @@ function LandingPage() {
               maxWidth: "60%",
               boxShadow: '0px 0px 5px 1px rgb(29, 29, 29)',
               input:{
-                color: "rgb(143, 140, 140)",
+                color: "rgb(31, 18, 18)",
                 fontSize: "27px"
               },
 
@@ -389,7 +389,6 @@ function LandingPage() {
                 },
               }}
             /> */}
-          </Box>
           
           {/* Deleted comments because this is the search/animation page
            Comments at the bottom
@@ -404,6 +403,41 @@ function LandingPage() {
             <HorizontalInfiniteScrollComments />
           </Box> */}
         </Box>
+        {/*ANIMATION BOXES*/}
+        </Box>
+            <Box sx = {{
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: 'fixed',
+              display: 'flex', 
+              flexDirection: 'row', 
+              minHeight: '100vh',
+              overflow: 'hidden',
+              justifyContent: "center"
+            }}>
+             <Box sx = {{
+              backgroundColor: 'gray',
+              width: '600px',
+              height: '400px',
+              borderRadius: '10px',
+              margin: "20px",
+              padding: '10px',
+             }}>
+              
+              </Box>
+              <Box sx = {{
+              backgroundColor: 'gray',
+              width: '600px',
+              height: '400px',
+              borderRadius: '10px',
+              margin: "20px",
+              padding: '10px',
+             }}>
+  
+              </Box>
+            </Box>
+            
       </Box>
     </ThemeProvider>
   );

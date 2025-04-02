@@ -1,3 +1,4 @@
+//Install Framer Motion for Animations: npm install framer-motion @mui/material @emotion/react @emotion/styled
 import React, { useEffect, useRef, useState } from 'react';
 import { 
   Typography, 
@@ -11,9 +12,12 @@ import {
   Toolbar, 
   Button, 
   IconButton,
+  Stack,
 } from '@mui/material';
 import '@fontsource/poppins';
 import HomeIcon from '@mui/material/Icon';
+import { motion } from "framer-motion";
+
 
 const theme = createTheme({
   typography: {
@@ -258,11 +262,43 @@ export const Navbar = () => {
         </Typography>
 
         {/* Buttons */}
-        <Button color="inherit" sx = {{color: 'rgb(201, 196, 196)', fontSize: '19px'}}>Home</Button>
-        <Button color="inherit" sx = {{color: 'rgb(201, 196, 196)', fontSize: '19px'}}>Search</Button>
-        <Button color="inherit" sx = {{color: 'rgb(201, 196, 196)', fontSize: '19px'}}>About</Button>
+        <Button color="inherit" href="https://www.google.com" sx = {{color: 'rgb(201, 196, 196)', fontSize: '19px'}}>Home</Button>
+        <Button color="inherit" href="https://www.google.com/maps" sx = {{color: 'rgb(201, 196, 196)', fontSize: '19px'}}>Search</Button>
+        <Button color="inherit" href="https://www.google.com/drive" sx = {{color: 'rgb(201, 196, 196)', fontSize: '19px'}}>About</Button>
       </Toolbar>
     </AppBar>
+  );
+}
+
+export function ScrollingStack() {
+  return (
+    <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center" }}>
+      <motion.div
+        animate={{ y: ["100%", "-100%"]}} // Moves from bottom to top
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }} // Infinite loop
+      >
+        <Stack spacing={2}>
+          {[...Array(6)].map((_, index) => (
+            <Box
+              key={index}
+              sx={{
+                width: 100,
+                height: 50,
+                backgroundColor: "primary.main",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+                fontSize: "1.2rem",
+                borderRadius: 1,
+              }}
+            >
+              {index + 1}
+            </Box>
+          ))}
+        </Stack>
+      </motion.div>
+    </Box>
   );
 }
 
@@ -349,7 +385,7 @@ function LandingPage() {
               maxWidth: "60%",
               boxShadow: '0px 0px 5px 1px rgb(29, 29, 29)',
               input:{
-                color: "rgb(31, 18, 18)",
+                color: "rgb(201, 196, 196)",
                 fontSize: "27px"
               },
 
@@ -424,7 +460,7 @@ function LandingPage() {
               margin: "20px",
               padding: '10px',
              }}>
-              
+              {ScrollingStack()}
               </Box>
               <Box sx = {{
               backgroundColor: 'gray',
@@ -437,7 +473,6 @@ function LandingPage() {
   
               </Box>
             </Box>
-            
       </Box>
     </ThemeProvider>
   );

@@ -275,7 +275,7 @@ export function ScrollingStack() {
   return (
     <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center"}}>
       <motion.div
-        animate={{ y: ["0%", "-1000%"]}} // Moves from bottom to top
+        animate={{ y: ["0%", "-1200%"]}} // Moves from bottom to top
         transition={{ duration: 5, repeat: Infinity, ease: "linear" }} // Infinite loop
         style={{ width: "100%" }}
       >
@@ -464,10 +464,11 @@ function LandingPage() {
               backgroundRepeat: 'no-repeat',
               backgroundAttachment: 'fixed',
               display: 'flex', 
-              flexDirection: 'row', 
-              minHeight: '100vh',
+              flexDirection: {xs: "column", md: "row"}, 
+              minHeight: '50vh',
               overflow: 'hidden',
-              justifyContent: "center"
+              justifyContent: "center",
+              alignItems: "center",
             }}>
              <Box sx = {{
               backgroundColor: 'gray',

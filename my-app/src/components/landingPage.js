@@ -17,6 +17,7 @@ import {
 import '@fontsource/poppins';
 import HomeIcon from '@mui/material/Icon';
 import { motion } from "framer-motion";
+import Divider, {dividerClasses} from '@mui/material/Divider'
 
 
 const theme = createTheme({
@@ -275,26 +276,35 @@ export function ScrollingStack() {
     <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center" }}>
       <motion.div
         animate={{ y: ["100%", "-100%"]}} // Moves from bottom to top
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }} // Infinite loop
+        transition={{ duration: 5, repeat: Infinity, ease: "linear" }} // Infinite loop
       >
-        <Stack spacing={2}>
+        <Stack container spacing={1} maxWidth={'300px'}>
           {[...Array(6)].map((_, index) => (
+            <>
             <Box
               key={index}
               sx={{
                 width: 100,
                 height: 50,
-                backgroundColor: "primary.main",
+                backgroundColor: "black",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "white",
                 fontSize: "1.2rem",
                 borderRadius: 1,
+                margin: "10px",
+                [`& .${dividerClasses.root}`]: {
+                  mx: 2,
+                }
               }}
             >
-              {index + 1}
+              {index}
+              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
+              poopy snarf
             </Box>
+            
+            </>
           ))}
         </Stack>
       </motion.div>

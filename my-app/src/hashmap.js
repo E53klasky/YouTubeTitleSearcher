@@ -1,20 +1,13 @@
-// VideoStats class to store video information
-export class VideoStats {
-    constructor(title, likes, comments, views) {
-        this.title = title;
-        this.likes = likes;
-        this.comments = comments;
-        this.views = views;
-    }
-}
+import VideoStats from "./VideoStats";
 
-export class OptimizedYTVideoStatsHashmap { 
-    constructor(bucketSize = 131072) {  // Optimal bucket size for load factor control 100,000
+export class OptimizedYTVideoStatsHashmap {
+    constructor(bucketSize = 131072) {
+        // Optimal bucket size for load factor control 100,000
         this.buckets = new Array(bucketSize);
         this.bucketSize = bucketSize;
         this.size = 0;
     }
-   /**
+    /**
      * Generates a hash value for a given key.
      * This function uses a variant of the djb2 hash algorithm with bitwise operations
      * and a fixed multiplier (16777619) to generate a hash value for the provided key.
@@ -23,21 +16,21 @@ export class OptimizedYTVideoStatsHashmap {
     hash(key) {
         let hash = 0;
         for (let i = 0; i < key.length; i++) {
-            hash = ((hash << 5) - hash) + key.charCodeAt(i);
-            hash |= 0; 
+            hash = (hash << 5) - hash + key.charCodeAt(i);
+            hash |= 0;
         }
         return Math.abs(hash * 16777619) % this.bucketSize;
     }
 
-    
-     //Adds or updates an item in the hash map.
+    //Adds or updates an item in the hash map.
 
     setItem(videoId, videoStats) {
         if (!(videoStats instanceof VideoStats)) {
-            throw new Error('Value must be an instance of VideoStats');
+            throw new Error("Value must be an instance of VideoStats");
         }
 
-        if (this.size / this.bucketSize > 0.7) { // 0.7 is the load factor
+        if (this.size / this.bucketSize > 0.7) {
+            // 0.7 is the load factor
             this._resize(this.bucketSize * 2);
         }
 
@@ -88,7 +81,7 @@ export class OptimizedYTVideoStatsHashmap {
                 return videoStats;
             }
         }
-        
+
         return null;
     }
 
@@ -104,13 +97,13 @@ export class OptimizedYTVideoStatsHashmap {
                 this.size--;
 
                 if (this.size > 0 && this.size / this.bucketSize < 0.2) {
-                    this._resize(Math.max(this.bucketSize / 2, 32768)); 
+                    this._resize(Math.max(this.bucketSize / 2, 32768));
                 }
-                
+
                 return true;
             }
         }
-        
+
         return false;
     }
 }

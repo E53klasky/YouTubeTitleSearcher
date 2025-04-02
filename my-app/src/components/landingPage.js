@@ -273,18 +273,19 @@ export const Navbar = () => {
 
 export function ScrollingStack() {
   return (
-    <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center" }}>
+    <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center"}}>
       <motion.div
-        animate={{ y: ["100%", "-100%"]}} // Moves from bottom to top
+        animate={{ y: ["0%", "-1000%"]}} // Moves from bottom to top
         transition={{ duration: 5, repeat: Infinity, ease: "linear" }} // Infinite loop
+        style={{ width: "100%" }}
       >
-        <Stack container spacing={1} maxWidth={'300px'}>
-          {[...Array(6)].map((_, index) => (
+        <Stack container spacing={1} sx = {{ width: "100%"}}>
+          {[...Array(100)].map((_, index) => (
             <>
             <Box
               key={index}
               sx={{
-                width: 100,
+                width: "96.5%",
                 height: 50,
                 backgroundColor: "black",
                 display: "flex",
@@ -294,14 +295,20 @@ export function ScrollingStack() {
                 fontSize: "1.2rem",
                 borderRadius: 1,
                 margin: "10px",
+                paddingLeft: "10px", 
+                paddingRight: "10px", 
                 [`& .${dividerClasses.root}`]: {
-                  mx: 2,
+                  mx: 1,
                 }
               }}
             >
-              {index}
+              TITLE TITLE TITLE TITLE TITLE
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              poopy snarf
+              views
+              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
+              likes
+              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
+              Comments
             </Box>
             
             </>

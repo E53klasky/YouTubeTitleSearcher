@@ -18,6 +18,7 @@ import '@fontsource/poppins';
 import HomeIcon from '@mui/material/Icon';
 import { motion } from "framer-motion";
 import Divider, {dividerClasses} from '@mui/material/Divider'
+import youtubeData from './visualsData';
 
 
 const theme = createTheme({
@@ -272,18 +273,18 @@ export const Navbar = () => {
 }
 
 export function ScrollingStack() {
+  let arr = youtubeData();
   return (
     <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center"}}>
       <motion.div
         animate={{ y: ["0%", "-1200%"]}} // Moves from bottom to top
-        transition={{ duration: 5, repeat: Infinity, ease: "linear" }} // Infinite loop
+        transition={{ duration: 10, repeat: Infinity, ease: "easeOut" }} // Infinite loop
         style={{ width: "100%" }}
       >
         <Stack container spacing={1} sx = {{ width: "100%"}}>
-          {[...Array(100)].map((_, index) => (
+          {arr.map((row, index) => (
             <>
             <Box
-              key={index}
               sx={{
                 width: "96.5%",
                 height: 50,
@@ -302,17 +303,17 @@ export function ScrollingStack() {
                 }
               }}
             >
-              TITLE TITLE TITLE TITLE TITLE
+              {row[0]}
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              views
+              {row[1]}
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              likes
+              {row[2]}
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              Comments
+              {row[3]}
             </Box>
             
             </>
-          ))}
+))}
         </Stack>
       </motion.div>
     </Box>

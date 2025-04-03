@@ -19,6 +19,8 @@ import HomeIcon from '@mui/material/Icon';
 import { motion } from "framer-motion";
 import Divider, {dividerClasses} from '@mui/material/Divider'
 import youtubeData from './visualsData';
+import highlightWord from './visualsData';
+import { input } from 'framer-motion/client';
 
 
 const theme = createTheme({
@@ -272,8 +274,32 @@ export const Navbar = () => {
   );
 }
 
-export function ScrollingStack(inputArr) {
+export function ScrollingStack(inputArr, word) {
   let arr = youtubeData();
+
+  //Highlights "word"
+  const parts = inputArr[0].split(" ");
+  let before = [];
+  let after = [];
+  for (let i = 0; i < parts.length; i++){
+    if (parts[i] == word){
+      parts[i] = "";
+      for(let j = 0; j < i; j++){
+        before[j] = parts[j]
+        parts[j] = "";
+      }
+      break;
+    }
+  }
+  for (let i = before.length; i < parts.length; i++){
+    after[i] = parts[i];
+  }
+  inputArr[0] = [<p key="0">{before.join(" ")} <mark>{word}</mark> {after.join(" ")} </p>]
+
+
+  arr[97] = inputArr;
+  
+  
   return (
     <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center"}}>
       <motion.div
@@ -304,13 +330,13 @@ export function ScrollingStack(inputArr) {
                 }
               }}
             >
-              {index != 97 ? row[0] : inputArr[0]}
+              {row[0]}
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {index != 97 ? row[1] : inputArr[1]}
+              {row[1]}
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {index != 97 ? row[2] : inputArr[2]}
+              {row[2]}
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {index != 97 ? row[3] : inputArr[3]}
+              {row[3]}
             </Box>
             
             </>
@@ -480,7 +506,7 @@ function LandingPage() {
               margin: "20px",
               padding: '10px',
              }}>
-              {ScrollingStack(["Testicle1", 69696, 420, 0])}
+              {ScrollingStack(["Testicle1 word wordasuhdkh", 69696, 420, 0], "word")}
               </Box>
               <Box sx = {{
               backgroundColor: 'gray',

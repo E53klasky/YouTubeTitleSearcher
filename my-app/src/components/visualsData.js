@@ -4,7 +4,23 @@ function shuffleArray(arr) {
     [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
   }
 }
+export function highlightWord(arr, word){
 
+  // return (
+  //   // <div>
+  //   //   {/* First element with highlighted first word */}
+  //   //   <p>
+  //   //     <strong>{words[0]}</strong> {words.slice(1).join(" ")}
+  //   //   </p>
+
+  //   //   {/* Render the rest of the array normally */}
+  //   //   {arr.slice(1).map((item, index) => (
+  //   //     <p key={index}>{item}</p>
+  //   //   ))}
+  //   // </div>
+  //   [<p key="0"><strong>Testicle1</strong> is highlighted</p>, 100, 100, 100]
+  // );
+}
 function youtubeData() {
   let arr = [
     ["The SECRET to Building the Ultimate PC", 128456, 2134, 134],

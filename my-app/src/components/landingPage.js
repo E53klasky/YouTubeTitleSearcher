@@ -272,13 +272,13 @@ export const Navbar = () => {
   );
 }
 
-export function ScrollingStack() {
+export function ScrollingStack(inputArr) {
   let arr = youtubeData();
   return (
     <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center"}}>
       <motion.div
-        animate={{ y: ["0%", "-1200%"]}} // Moves from bottom to top
-        transition={{ duration: 10, repeat: Infinity, ease: "easeOut" }} // Infinite loop
+        animate={{ y: ["0%", "-1370%"]}} // Moves from bottom to top
+        transition={{ duration: 4, repeat: 0, ease: "easeOut" }}
         style={{ width: "100%" }}
       >
         <Stack container spacing={1} sx = {{ width: "100%"}}>
@@ -286,7 +286,7 @@ export function ScrollingStack() {
             <>
             <Box
               sx={{
-                width: "96.5%",
+                width: "95.5%",
                 height: 50,
                 backgroundColor: "black",
                 display: "flex",
@@ -298,18 +298,19 @@ export function ScrollingStack() {
                 margin: "10px",
                 paddingLeft: "10px", 
                 paddingRight: "10px", 
+                boxShadow: index == 97 && "0px 0px 4px 2px rgba(255, 217, 0, .4)",
                 [`& .${dividerClasses.root}`]: {
                   mx: 1,
                 }
               }}
             >
-              {row[0]}
+              {index != 97 ? row[0] : inputArr[0]}
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {row[1]}
+              {index != 97 ? row[1] : inputArr[1]}
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {row[2]}
+              {index != 97 ? row[2] : inputArr[2]}
               <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {row[3]}
+              {index != 97 ? row[3] : inputArr[3]}
             </Box>
             
             </>
@@ -479,7 +480,7 @@ function LandingPage() {
               margin: "20px",
               padding: '10px',
              }}>
-              {ScrollingStack()}
+              {ScrollingStack(["Testicle1", 69696, 420, 0])}
               </Box>
               <Box sx = {{
               backgroundColor: 'gray',

@@ -108,7 +108,7 @@ function youtubeData() {
     ["Making the World's Smallest Pizza 🍕", 541263, 18450, 420],
     ["How to Overcome Your Fears", 383456, 29587, 99],
     ["Exploring the Most Remote Places on Earth", 647238, 14258, 301],
-    ["The MOST Beautiful Libraries in the World", 456971, 21001, 79]
+    ["The MOST Beautiful Libraries in the World", 456971, 21001, 79],
     ];
     shuffleArray(arr);
   return(arr);};

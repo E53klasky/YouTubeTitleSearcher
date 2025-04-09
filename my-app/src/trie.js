@@ -4,6 +4,8 @@
  * Description: Implementation of a Trie data structure
  */
 
+import VideoStats from "./VideoStats";
+
 export default class Trie {
     //define private attribute
     #root;
@@ -13,7 +15,7 @@ export default class Trie {
     }
 
     //insert a word into the trie
-    insert(word) {
+    insert(word, data) {
         let curr = this.#root;
         for (const c of word) {
             if (!curr.children.has(c)) {
@@ -28,7 +30,13 @@ export default class Trie {
         return true;
     }
 
-    //check if a word exists in the trie
+    #insertWord(word, data) {}
+
+    /**
+     * check if a word exists in the trie
+     * @param {string} word
+     * @returns {boolean}
+     */
     search(word) {
         let curr = this.#root;
         for (const c of word) {

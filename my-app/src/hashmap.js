@@ -14,7 +14,8 @@ export class OptimizedYTVideoStatsHashmap {
         this.bucketSize = bucketSize;
         this.size = 0;
     }
-   /**
+    
+    /**
      * Generates a hash value for a given key.
      * This function uses a variant of the djb2 hash algorithm with bitwise operations
      * and a fixed multiplier (16777619) to generate a hash value for the provided key.
@@ -29,9 +30,7 @@ export class OptimizedYTVideoStatsHashmap {
         return Math.abs(hash * 16777619) % this.bucketSize;
     }
 
-    
-     //Adds or updates an item in the hash map.
-
+    //Adds or updates an item in the hash map.
     setItem(videoId, videoStats) {
         if (!(videoStats instanceof VideoStats)) {
             throw new Error('Value must be an instance of VideoStats');
@@ -112,5 +111,73 @@ export class OptimizedYTVideoStatsHashmap {
         }
         
         return false;
+    }
+
+    /**
+     * Searches for all videos containing a specific word in their titles
+     */
+    searchByWord(word) {
+        if (!word || typeof word !== 'string') {
+            return [];
+        }
+
+        const results = [];
+        const lowercaseWord = word.toLowerCase();
+
+        // Search through all buckets
+        for (let bucket of this.buckets) {
+            if (bucket) {
+                for (let [videoId, videoStats] of bucket) {
+                    // Check if the title contains the word (case insensitive)
+                    if (videoStats.title.toLowerCase().includes(lowercaseWord)) {
+                        results.push([videoId, videoStats]);
+                    }
+                }
+            }
+        }
+
+        return results;
+    }
+
+    /**
+     * Calculates the average likes, comments, and views for videos containing a specific word
+     */
+    getAverageStatsForWord(word) {
+        const videos = this.searchByWord(word);
+        
+        if (videos.length === 0) {
+            return 0;
+        }
+
+        let totalLikes = 0;
+        let totalComments = 0;
+        let totalViews = 0;
+
+        for (let [_, videoStats] of videos) {
+            totalLikes += videoStats.likes;
+            totalComments += videoStats.comments;
+            totalViews += videoStats.views;
+        }
+
+        // Calculate the overall average
+        const overallSum = totalLikes + totalComments + totalViews;
+        return Math.round(overallSum / 3);
+    }
+
+    /**
+     * Gets all videos in the hashmap
+     */
+    getAllVideos() {
+        const allVideos = [];
+        
+        for (let bucket of this.buckets) {
+            if (bucket) {
+                for (let video of bucket) {
+                    allVideos.push(video);
+                }
+            }
+        }
+        
+        return allVideos;
     }
 }

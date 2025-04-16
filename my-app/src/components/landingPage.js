@@ -21,6 +21,7 @@ import Divider, {dividerClasses} from '@mui/material/Divider'
 import youtubeData from './visualsData';
 import highlightWord from './visualsData';
 import { input } from 'framer-motion/client';
+import TrieAnimation from './TrieAnimation.js';
 
 
 const theme = createTheme({
@@ -346,7 +347,40 @@ export function ScrollingStack(inputArr, word) {
     </Box>
   );
 }
-
+const exampleTrie = {
+  char: "",
+  isEnd: false,
+  children: {
+    a: {
+      char: "a",
+      isEnd: false,
+      children: {
+        t: {
+          char: "t",
+          isEnd: true,
+          children: {},
+        },
+      },
+    },
+    b: {
+      char: "b",
+      isEnd: false,
+      children: {
+        a: {
+          char: "a",
+          isEnd: false,
+          children: {
+            d: {
+              char: "d",
+              isEnd: true,
+              children: {},
+            },
+          },
+        },
+      },
+    },
+  },
+};
 function LandingPage() {
   return (
     <ThemeProvider theme={theme}>
@@ -506,7 +540,7 @@ function LandingPage() {
               margin: "20px",
               padding: '10px',
              }}>
-              {ScrollingStack(["Testicle1 word wordasuhdkh", 69696, 420, 0], "word")}
+              {ScrollingStack(["This is a video title", 69696, 420, 0], "video")}
               </Box>
               <Box sx = {{
               backgroundColor: 'gray',
@@ -516,7 +550,7 @@ function LandingPage() {
               margin: "20px",
               padding: '10px',
              }}>
-  
+              <TrieAnimation node={exampleTrie}/>
               </Box>
             </Box>
       </Box>

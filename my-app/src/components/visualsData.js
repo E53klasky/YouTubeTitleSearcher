@@ -6,20 +6,23 @@ function shuffleArray(arr) {
 }
 export function highlightWord(arr, word){
 
-  // return (
-  //   // <div>
-  //   //   {/* First element with highlighted first word */}
-  //   //   <p>
-  //   //     <strong>{words[0]}</strong> {words.slice(1).join(" ")}
-  //   //   </p>
-
-  //   //   {/* Render the rest of the array normally */}
-  //   //   {arr.slice(1).map((item, index) => (
-  //   //     <p key={index}>{item}</p>
-  //   //   ))}
-  //   // </div>
-  //   [<p key="0"><strong>Testicle1</strong> is highlighted</p>, 100, 100, 100]
-  // );
+  const parts = arr[0].split(" ");
+  let before = [];
+  let after = [];
+  for (let i = 0; i < parts.length; i++){
+    if (parts[i] == word){
+      parts[i] = "";
+      for(let j = 0; j < i; j++){
+        before[j] = parts[j]
+        parts[j] = "";
+      }
+      break;
+    }
+  }
+  for (let i = before.length; i < parts.length; i++){
+    after[i] = parts[i];
+  }
+  return([<p key="0">{before.join(" ")} <mark>{word}</mark> {after.join(" ")} </p>]);
 }
 function youtubeData() {
   let arr = [

@@ -1,4 +1,5 @@
 //Install Framer Motion for Animations: npm install framer-motion @mui/material @emotion/react @emotion/styled
+import useYoutubeData from '../hooks/useYoutubeData.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { 
   Typography, 
@@ -274,79 +275,108 @@ export const Navbar = () => {
     </AppBar>
   );
 }
-
-export function ScrollingStack(inputArr, word) {
-  let arr = youtubeData();
-
-  //Highlights "word"
-  const parts = inputArr[0].split(" ");
-  let before = [];
-  let after = [];
-  for (let i = 0; i < parts.length; i++){
-    if (parts[i] == word){
-      parts[i] = "";
-      for(let j = 0; j < i; j++){
-        before[j] = parts[j]
-        parts[j] = "";
-      }
-      break;
-    }
-  }
-  for (let i = before.length; i < parts.length; i++){
-    after[i] = parts[i];
-  }
-  inputArr[0] = [<p key="0">{before.join(" ")} <mark>{word}</mark> {after.join(" ")} </p>]
-
-
-  arr[97] = inputArr;
+export function ScrollingStack(inputWord) {
+  const { data, loading } = useYoutubeData();
+  const word = inputWord || "";
   
+  // If data is empty or loading, show a placeholder
+  if (!data || loading || data.length === 0) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+        <Typography>Loading YouTube data...</Typography>
+      </Box>
+    );
+  }
+  
+  // Create a highlighted version of each video title
+  const processedData = data.map(item => {
+    const title = item.Title || "";
+    let highlightedContent;
+    
+    if (word && typeof word === 'string' && typeof title === 'string') {
+      const parts = title.split(new RegExp(`(${word})`, 'gi'));
+      highlightedContent = (
+        <p key={`highlight-${title}`}>
+          {parts.map((part, index) => (
+            part.toLowerCase() === word.toLowerCase() ? 
+            <mark key={index}>{part}</mark> : 
+            <React.Fragment key={index}>{part}</React.Fragment>
+          ))}
+        </p>
+      );
+    } else {
+      highlightedContent = <p key={`default-${title}`}>{title}</p>;
+    }
+    
+    // Ensure all values are numbers and not undefined
+    const views = typeof item.Views === 'number' ? item.Views : 0;
+    const likes = typeof item.Likes === 'number' ? item.Likes : 0;
+    const comments = typeof item.Comments === 'number' ? item.Comments : 0;
+    
+    return [highlightedContent, views, likes, comments];
+  });
+  
+  // Make a copy to avoid mutating the original
+  let displayArr = [...processedData];
+  
+  // Repeat the data to have enough for scrolling animation
+  while (displayArr.length < 100) {
+    displayArr = [...displayArr, ...processedData];
+  }
+  displayArr = displayArr.slice(0, 100);
   
   return (
     <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center"}}>
       <motion.div
-        animate={{ y: ["0%", "-1370%"]}} // Moves from bottom to top
-        transition={{ duration: 4, repeat: 0, ease: "easeOut" }}
+        animate={{ y: ["0%", "-1370%"]}} 
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
         style={{ width: "100%" }}
       >
-        <Stack container spacing={1} sx = {{ width: "100%"}}>
-          {arr.map((row, index) => (
-            <>
+        <Stack spacing={1} sx={{ width: "100%" }}>
+          {displayArr.map((row, index) => (
             <Box
+              key={index}
               sx={{
                 width: "95.5%",
                 height: 50,
                 backgroundColor: "black",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "space-between",
                 color: "white",
                 fontSize: "1.2rem",
                 borderRadius: 1,
                 margin: "10px",
                 paddingLeft: "10px", 
                 paddingRight: "10px", 
-                boxShadow: index == 97 && "0px 0px 4px 2px rgba(255, 217, 0, .4)",
+                boxShadow: index % processedData.length === 0 ? "0px 0px 4px 2px rgba(255, 217, 0, .4)" : "none",
                 [`& .${dividerClasses.root}`]: {
                   mx: 1,
                 }
               }}
             >
-              {row[0]}
-              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {row[1]}
-              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {row[2]}
-              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {row[3]}
+              <Box sx={{ flexGrow: 1, maxWidth: "60%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {row[0]}
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Divider color="red" orientation='vertical' variant="middle" flexItem/>
+                <Box sx={{ width: "80px", textAlign: "right" }}>{row[1].toLocaleString()}</Box>
+                <Divider color="red" orientation='vertical' variant="middle" flexItem/>
+                <Box sx={{ width: "80px", textAlign: "right" }}>{row[2].toLocaleString()}</Box>
+                <Divider color="red" orientation='vertical' variant="middle" flexItem/>
+                <Box sx={{ width: "80px", textAlign: "right" }}>{row[3].toLocaleString()}</Box>
+              </Box>
             </Box>
-            
-            </>
-))}
+          ))}
         </Stack>
       </motion.div>
     </Box>
   );
 }
+
+
+
+
 const exampleTrie = {
   char: "",
   isEnd: false,
@@ -381,6 +411,9 @@ const exampleTrie = {
     },
   },
 };
+
+
+
 function LandingPage() {
   return (
     <ThemeProvider theme={theme}>

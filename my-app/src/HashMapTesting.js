@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { OptimizedYTVideoStatsHashmap, VideoStats } from "./hashmap";
+import { OptimizedYTVideoStatsHashmap } from './hashmap';
+import VideoStats from "./VideoStats";
 
 const HashMapTestCases = () => {
     const hashmap = new OptimizedYTVideoStatsHashmap();
@@ -81,14 +82,13 @@ const HashMapTestCases = () => {
         let totalLikes = 0, totalComments = 0, totalViews = 0;
         
         console.log("\nDetailed calculation for 'cool':");
-        for (let [videoId, stats] of coolVideos) {
-            console.log(`${videoId}: Likes=${stats.likes}, Comments=${stats.comments}, Views=${stats.views}`);
+        for (let [, stats] of coolVideos) { // Changed '_' to ',' to properly indicate unused variable
+            console.log(`Video: Likes=${stats.likes}, Comments=${stats.comments}, Views=${stats.views}`);
             totalLikes += stats.likes;
             totalComments += stats.comments;
             totalViews += stats.views;
         }
         
-        const numVideos = coolVideos.length;
         console.log(`Total: Likes=${totalLikes}, Comments=${totalComments}, Views=${totalViews}`);
         console.log(`Average calculation: (${totalLikes} + ${totalComments} + ${totalViews}) / 3 = ${Math.round((totalLikes + totalComments + totalViews) / 3)}`);
     };

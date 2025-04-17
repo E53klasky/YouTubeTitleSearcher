@@ -24,6 +24,7 @@ export function highlightWord(arr, word){
   }
   return([<p key="0">{before.join(" ")} <mark>{word}</mark> {after.join(" ")} </p>]);
 }
+// gonna read in here I think i cannot tell what you are doing 
 function youtubeData() {
   let arr = [
     ["The SECRET to Building the Ultimate PC", 128456, 2134, 134],

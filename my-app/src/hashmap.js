@@ -148,7 +148,7 @@ export class OptimizedYTVideoStatsHashmap {
         let totalComments = 0;
         let totalViews = 0;
 
-        for (let [_, videoStats] of videos) {
+        for (let [, videoStats] of videos) {
             totalLikes += videoStats.likes;
             totalComments += videoStats.comments;
             totalViews += videoStats.views;
@@ -176,3 +176,6 @@ export class OptimizedYTVideoStatsHashmap {
         return allVideos;
     }
 }
+
+// Export VideoStats for use in other files
+export { VideoStats };

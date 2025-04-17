@@ -22,6 +22,7 @@ import youtubeData from './visualsData';
 import highlightWord from './visualsData';
 import { input } from 'framer-motion/client';
 import TrieAnimation from './TrieAnimation.js';
+import SearchButton from './searchButton.js'
 
 
 const theme = createTheme({
@@ -408,7 +409,8 @@ function LandingPage() {
             pb: 0,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
+            mt: -8,
           }}
         >
           <Typography 
@@ -457,6 +459,7 @@ function LandingPage() {
             alignItems: 'center', 
             justifyContent: 'center',
             zIndex: 5,
+            flexDirection: 'column',
           }}>
             {/* Content goes here */}
             <TextField id="outlined-basic" placeholder='Input title...' variant= "outlined" fullWidth sx = {{
@@ -464,9 +467,15 @@ function LandingPage() {
               maxWidth: "60%",
               boxShadow: '0px 0px 5px 1px rgb(29, 29, 29)',
               input:{
+                '&:-webkit-autofill': {
+                    boxShadow: '0 0 0 1000px black inset',
+                    WebkitTextFillColor: 'rgb(201, 196, 196)'},
+                    borderRadius: '100px',
+                    height: "50px", // Adjust height here
                 color: "rgb(201, 196, 196)",
                 fontSize: "27px"
               },
+             
 
               borderRadius: '100px',
               "& .MuiInputBase-root": {
@@ -482,6 +491,7 @@ function LandingPage() {
                   },
               }
             }} />
+            <SearchButton/>
             {/* <TextField
               label="Search"
               variant="outlined"

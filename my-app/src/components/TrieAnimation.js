@@ -43,6 +43,30 @@ const NODE_HEIGHT = 40;
 const HORIZONTAL_SPACING = 20;
 const VERTICAL_SPACING = 80;
 
+const LineBetweenPoints = ({ x1, y1, x2, y2, color = "black", width = 2 }) => {
+  return (
+    <Box
+      position="absolute"
+      top={0}
+      left={-100}
+      width="1000%"
+      height="1000%"
+      pointerEvents="none"
+    >
+      <svg width="100%" height="100%" style={{ position: "absolute", top: 0, left: 0 }}>
+        <line
+          x1={x1+100}
+          y1={y1}
+          x2={x2+100}
+          y2={y2}
+          stroke={color}
+          strokeWidth={width}
+        />
+      </svg>
+    </Box>
+  );
+};
+
 const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1 }) => {
   if (!node) return null;
 
@@ -77,8 +101,9 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1 }) => {
         </Paper>
 
         {/* Connectors to children */}
-        {childCount > 0 && (
-          <Box
+        {childCount == 2 && (
+          <>
+          {/* <Box
             sx={{
               position: "absolute",
               top: NODE_HEIGHT,
@@ -89,7 +114,27 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1 }) => {
               transform: "translateX(-1px)",
               zIndex: 0,
             }}
-          />
+          /> */}
+          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={-NODE_WIDTH/4} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
+          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={NODE_WIDTH*5/4} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
+          </>
+        )}
+        {childCount == 1 && (
+          <>
+          {/* <Box
+            sx={{
+              position: "absolute",
+              top: NODE_HEIGHT,
+              left: NODE_WIDTH / 2,
+              height: VERTICAL_SPACING,
+              width: 2,
+              backgroundColor: "#999",
+              transform: "translateX(-1px)",
+              zIndex: 0,
+            }}
+          /> */}
+          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={NODE_WIDTH/2} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
+          </>
         )}
       </Box>
 

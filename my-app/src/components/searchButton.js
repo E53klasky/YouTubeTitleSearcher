@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Button, Paper } from "@mui/material";
 import { doAnalyze } from "./doAnalyze";
 
+
+
 const SearchButton = () => {
     return (
         <Box mt={2}>

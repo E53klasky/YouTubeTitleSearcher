@@ -40,8 +40,8 @@ import { Box, Paper } from "@mui/material";
 
 const NODE_WIDTH = 40;
 const NODE_HEIGHT = 40;
-const HORIZONTAL_SPACING = 20;
-const VERTICAL_SPACING = 80;
+const HORIZONTAL_SPACING = 40;
+const VERTICAL_SPACING = 40;
 
 const LineBetweenPoints = ({ x1, y1, x2, y2, color = "black", width = 2 }) => {
   return (
@@ -67,11 +67,12 @@ const LineBetweenPoints = ({ x1, y1, x2, y2, color = "black", width = 2 }) => {
   );
 };
 
-const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1 }) => {
+const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1}) => {
   if (!node) return null;
 
   const childrenKeys = Object.keys(node.children || {});
   const childCount = childrenKeys.length;
+  const left = childrenKeys.at(0) > node.char;
 
   return (
     <Box
@@ -97,13 +98,13 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1 }) => {
             zIndex: 1,
           }}
         >
-          {node.char}
+          {childrenKeys.at(0)}
         </Paper>
 
         {/* Connectors to children */}
-        {childCount == 2 && (
+        {/*childCount == 2 && (
           <>
-          {/* <Box
+           <Box
             sx={{
               position: "absolute",
               top: NODE_HEIGHT,
@@ -114,27 +115,16 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1 }) => {
               transform: "translateX(-1px)",
               zIndex: 0,
             }}
-          /> */}
+          /> 
           <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={-NODE_WIDTH/4} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
           <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={NODE_WIDTH*5/4} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
           </>
+        )*/}
+        {childCount == 1 && left && (
+          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={NODE_WIDTH*3/2} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
         )}
-        {childCount == 1 && (
-          <>
-          {/* <Box
-            sx={{
-              position: "absolute",
-              top: NODE_HEIGHT,
-              left: NODE_WIDTH / 2,
-              height: VERTICAL_SPACING,
-              width: 2,
-              backgroundColor: "#999",
-              transform: "translateX(-1px)",
-              zIndex: 0,
-            }}
-          /> */}
-          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={NODE_WIDTH/2} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
-          </>
+        {childCount == 1 && !left && (
+          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={-NODE_WIDTH/2} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
         )}
       </Box>
 
@@ -143,6 +133,7 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1 }) => {
         mt={`${VERTICAL_SPACING}px`}
         display="flex"
         justifyContent="center"
+        marginLeft={left ? 10 : -10}
         gap={`${HORIZONTAL_SPACING}px`}
       >
         {childrenKeys.map((key, i) => (

@@ -22,7 +22,8 @@ import youtubeData from './visualsData';
 import highlightWord from './visualsData';
 import { input } from 'framer-motion/client';
 import TrieAnimation from './TrieAnimation.js';
-import SearchButton from './searchButton.js'
+import SearchButton from './searchButton.js';
+import {buildTrie} from './Trie.js';
 
 
 const theme = createTheme({
@@ -560,7 +561,7 @@ function LandingPage() {
               margin: "20px",
               padding: '10px',
              }}>
-              <TrieAnimation node={exampleTrie}/>
+              <TrieAnimation node={buildTrie(["abcd"])}/>
               </Box>
             </Box>
       </Box>

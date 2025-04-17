@@ -1,6 +1,7 @@
 //Install Framer Motion for Animations: npm install framer-motion @mui/material @emotion/react @emotion/styled
-import useYoutubeData from '../hooks/useYoutubeData.js';
-import React, {  useRef, useState } from 'react';
+import { useYoutubeData } from '../hooks/useYoutubeData.js';
+import React, { useRef, useState } from 'react';
+
 import { 
   Typography, 
   Box, 
@@ -61,14 +62,18 @@ export const Navbar = () => {
   );
 }
 export function ScrollingStack(inputWord) {
-  const { data, loading } = useYoutubeData();
+  const { data, loading, error } = useYoutubeData();
   const word = inputWord || "";
+  
+  // Debug info
+  console.log("ScrollingStack received data:", data ? data.length : 0, "items");
+  console.log("Sample data:", data ? data.slice(0, 2) : "No data");
   
   // If data is empty or loading, show a placeholder
   if (!data || loading || data.length === 0) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-        <Typography>Loading YouTube data...</Typography>
+        <Typography>Loading YouTube data... {error ? `Error: ${error}` : ''}</Typography>
       </Box>
     );
   }
@@ -200,6 +205,13 @@ const exampleTrie = {
 
 
 function LandingPage() {
+  const [searchWord, setSearchWord] = useState("");
+
+  // Handle input change
+  const handleSearchChange = (e) => {
+    setSearchWord(e.target.value);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ 
@@ -207,7 +219,7 @@ function LandingPage() {
         flexDirection: 'column', 
         minHeight: '100vh',
         overflow: 'hidden',
-        background: 'linear-gradient(160deg, rgb(126, 38, 38) 5%, rgb(29, 29, 29) 50%)',
+        background: 'linear-gradient(160deg, rgb(211, 29, 29) 5%, rgb(29, 29, 29) 50%)',
         //backgroundImage: 'url(/1336986.jpeg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -239,7 +251,7 @@ function LandingPage() {
               //mb: 2 
             }}
           >
-            Test Title Here!
+            YouTube Title Search
           </Typography>
           
           {/* YouTube Logo
@@ -277,51 +289,37 @@ function LandingPage() {
             zIndex: 5,
           }}>
             {/* Content goes here */}
-            <TextField id="outlined-basic" placeholder='Input title...' variant= "outlined" fullWidth sx = {{
-              backgroundColor: 'black',
-              maxWidth: "60%",
-              boxShadow: '0px 0px 5px 1px rgb(29, 29, 29)',
-              input:{
-                color: "rgb(201, 196, 196)",
-                fontSize: "27px"
-              },
-
-              borderRadius: '100px',
-              "& .MuiInputBase-root": {
-                height: "85px", // Adjust height here
-              },
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "50px",
-                "&:hover fieldset":{
-                  borderColor: 'rgb(29, 29, 29)',
-                },
-                "&.Mui-focused fieldset": {
-                    borderColor: 'rgb(29, 29, 29)', // Focused state
-                  },
-              }
-            }} />
-            {/* <TextField
-              label="Search"
-              variant="outlined"
+            <TextField 
+              id="outlined-basic" 
+              placeholder='Search titles...' 
+              variant="outlined" 
               fullWidth
-              sx={{
-                maxWidth: 400,
-                backgroundColor: "white",
-                borderRadius: "25px",
+              value={searchWord}
+              onChange={handleSearchChange}
+              sx = {{
+                backgroundColor: 'black',
+                maxWidth: "60%",
+                boxShadow: '0px 0px 5px 1px rgb(29, 29, 29)',
+                input:{
+                  color: "rgb(201, 196, 196)",
+                  fontSize: "27px"
+                },
+
+                borderRadius: '100px',
+                "& .MuiInputBase-root": {
+                  height: "85px", // Adjust height here
+                },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "25px",
-                  "& fieldset": {
-                    borderColor: "blue", // Normal border color
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "darkblue", // Hover state
+                  borderRadius: "50px",
+                  "&:hover fieldset":{
+                    borderColor: 'rgb(29, 29, 29)',
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: "green", // Focused state
-                  },
-                },
-              }}
-            /> */}
+                      borderColor: 'rgb(29, 29, 29)', // Focused state
+                    },
+                }
+              }} 
+            />
           
           {/* Deleted comments because this is the search/animation page
            Comments at the bottom
@@ -358,7 +356,8 @@ function LandingPage() {
               margin: "20px",
               padding: '10px',
              }}>
-              {ScrollingStack(["This is a video title", 69696, 420, 0], "video")}
+              {/* Pass the searchWord to ScrollingStack */}
+              <ScrollingStack inputWord={searchWord} />
               </Box>
               <Box sx = {{
               backgroundColor: 'gray',

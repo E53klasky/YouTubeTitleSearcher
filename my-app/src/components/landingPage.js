@@ -182,11 +182,16 @@ const MyComponent = ({word}) => {
   useEffect(() => {
     async function runSequence() {
       // for each boolean, await the end of its animation…
+      let height = -70;
+      let right = -70;
       for (let goRight of coords) {
         await controls.start({
-          x: goRight ? 100 : -100,
-          transition: { duration: 0.5, ease: "easeInOut" },
+          x: right,
+          y: height,
+          transition: {delay: 1, duration: 0.5, ease: "easeInOut" },
         });
+        height -= 80;
+        right += goRight ? 72 : -72;
       }
     }
     runSequence();
@@ -215,7 +220,7 @@ const MyComponent = ({word}) => {
           //key={index}
           // animate={{ y: left ? "-40px" : "20px", x: left ? "-40px" : "20px"}}
           animate={controls}
-          transition={{delay: 2, duration: 1, ease: "easeIn" }}
+          transition={{delay: 3, duration: 1, ease: "easeIn" }}
           style={{ width: "100%" }}
         >
           <TrieAnimation node={buildTrie([word])} />
@@ -393,7 +398,7 @@ function LandingPage() {
               overflow: "hidden",
              }}>
               <motion.div
-                animate={{ y: ["0px", "0px"], scale: 1}} // Moves from bottom to top
+                animate={{ y: ["0px", "850px"], scale: 3}} // Moves from bottom to top
                 transition={{ duration: 1, repeat: 0, ease: "easeIn" }}
                 style={{ width: "100%" }}
               >

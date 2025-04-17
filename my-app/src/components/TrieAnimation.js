@@ -35,12 +35,13 @@
 //     </Box>git
 //   );
 // }
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Box, Paper } from "@mui/material";
+import { buildTrie } from "./Trie";
 
 const NODE_WIDTH = 40;
 const NODE_HEIGHT = 40;
-const HORIZONTAL_SPACING = 40;
+const HORIZONTAL_SPACING = 10;
 const VERTICAL_SPACING = 40;
 
 const LineBetweenPoints = ({ x1, y1, x2, y2, color = "black", width = 2 }) => {
@@ -68,11 +69,15 @@ const LineBetweenPoints = ({ x1, y1, x2, y2, color = "black", width = 2 }) => {
 };
 
 const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1}) => {
-  if (!node) return null;
 
   const childrenKeys = Object.keys(node.children || {});
   const childCount = childrenKeys.length;
   const left = childrenKeys.at(0) > node.char;
+  // useEffect(() => {
+  //   if (!node) return null;
+  //   if (left){coords.current.push(true);}
+  //   else{coords.current.push(false);}
+  // }, [coords, left, node]);
 
   return (
     <Box
@@ -95,7 +100,7 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1}) => {
             borderRadius: "50%",
             backgroundColor: node.isEnd ? "#1976d2" : "#90caf9",
             color: "white",
-            zIndex: 1,
+            zIndex: 10,
           }}
         >
           {childrenKeys.at(0)}
@@ -133,7 +138,8 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1}) => {
         mt={`${VERTICAL_SPACING}px`}
         display="flex"
         justifyContent="center"
-        marginLeft={left ? 10 : -10}
+        marginLeft={left ? HORIZONTAL_SPACING : -HORIZONTAL_SPACING}
+        marginRight={!left ? HORIZONTAL_SPACING : -HORIZONTAL_SPACING}
         gap={`${HORIZONTAL_SPACING}px`}
       >
         {childrenKeys.map((key, i) => (
@@ -149,5 +155,8 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1}) => {
     </Box>
   );
 };
+
+
+
 
 export default TrieAnimation;

@@ -1,5 +1,5 @@
 //Install Framer Motion for Animations: npm install framer-motion @mui/material @emotion/react @emotion/styled
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { 
   Typography, 
   Box, 
@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import '@fontsource/poppins';
 import HomeIcon from '@mui/material/Icon';
-import { motion } from "framer-motion";
+import { motion, useAnimation  } from "framer-motion";
 import Divider, {dividerClasses} from '@mui/material/Divider'
 import youtubeData from './visualsData';
 import highlightWord from './visualsData';
@@ -24,6 +24,7 @@ import { input } from 'framer-motion/client';
 import TrieAnimation from './TrieAnimation.js';
 import SearchButton from './searchButton.js';
 import {buildTrie} from './Trie.js';
+import TreeContainer from './TrieAnimation.js';
 
 
 const theme = createTheme({
@@ -166,7 +167,99 @@ const exampleTrie = {
     },
   },
 };
+const MyComponent = ({word}) => {
+
+  const coords = useMemo(() => {
+    const arr = [];
+    for (let i = 1; i < word.length; i++) {
+      arr.push(word.charCodeAt(i) <= word.charCodeAt(i - 1));
+    }
+    return arr;
+  }, [word]);
+
+  const controls = useAnimation();
+
+  useEffect(() => {
+    async function runSequence() {
+      // for each boolean, await the end of its animation…
+      for (let goRight of coords) {
+        await controls.start({
+          x: goRight ? 100 : -100,
+          transition: { duration: 0.5, ease: "easeInOut" },
+        });
+      }
+    }
+    runSequence();
+  }, [coords, controls]);
+
+  // return (
+  //   <motion.div
+  //     animate={controls}
+  //     style={{
+  //       width: 60,
+  //       height: 60,
+  //       background: "rebeccapurple",
+  //       color: "#fff",
+  //       display: "flex",
+  //       alignItems: "center",
+  //       justifyContent: "center",
+  //       borderRadius: 8,
+  //     }}
+  //   >
+  //     <MyComponent word= {word}/>
+  //   </motion.div>
+  // );
+  return (
+    <>
+        <motion.div
+          //key={index}
+          // animate={{ y: left ? "-40px" : "20px", x: left ? "-40px" : "20px"}}
+          animate={controls}
+          transition={{delay: 2, duration: 1, ease: "easeIn" }}
+          style={{ width: "100%" }}
+        >
+          <TrieAnimation node={buildTrie([word])} />
+        </motion.div>
+    </>
+  );
+};
+// function SequencedMover({ directions /* array of bools */ }) {
+//   const controls = useAnimation();
+
+//   useEffect(() => {
+//     async function runSequence() {
+//       // for each boolean, await the end of its animation…
+//       for (let goRight of directions) {
+//         await controls.start({
+//           x: goRight ? 100 : -100,
+//           transition: { duration: 0.5, ease: "easeInOut" },
+//         });
+//       }
+//     }
+//     runSequence();
+//   }, [directions, controls]);
+
+//   return (
+//     <motion.div
+//       animate={controls}
+//       style={{
+//         width: 60,
+//         height: 60,
+//         background: "rebeccapurple",
+//         color: "#fff",
+//         display: "flex",
+//         alignItems: "center",
+//         justifyContent: "center",
+//         borderRadius: 8,
+//       }}
+//     >
+//       <MyComponent word= {word}/>
+//     </motion.div>
+//   );
+// }
+
 function LandingPage() {
+  let coords = useRef([false]);
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ 
@@ -296,8 +389,29 @@ function LandingPage() {
               borderRadius: '10px',
               margin: "20px",
               padding: '10px',
+              zIndex: 1,
+              overflow: "hidden",
              }}>
-              <TrieAnimation node={buildTrie(["abcd"])}/>
+              <motion.div
+                animate={{ y: ["0px", "0px"], scale: 1}} // Moves from bottom to top
+                transition={{ duration: 1, repeat: 0, ease: "easeIn" }}
+                style={{ width: "100%" }}
+              >
+              {/* {useEffect(() => {
+                coords.current.map((left, index) => (
+                  <motion.div
+                    key={index}
+                    animate={{ y: ["0px", left ? "600px" : "-600px"]}} // Moves from bottom to top
+                    transition={{ duration: 1, repeat: 0, ease: "easeIn" }}
+                    style={{ width: "100%" }}
+                  >
+                  
+                      <TrieAnimation node={buildTrie(["words"])} coords={coords} />
+                  </motion.div>
+                ))}, [coords.current])} */}
+                <MyComponent word= {"wordasdj"}/>
+               </motion.div>
+              
               </Box>
             </Box>
       </Box>

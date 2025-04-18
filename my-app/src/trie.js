@@ -14,8 +14,17 @@ export default class Trie {
         this.#root = new TrieNode();
     }
 
+    //insert a title into the trie
+    insert(title, data) {
+        const words = title.trim().split(/\s+/);
+
+        for (const word of words) {
+            this.#insertWord(word, data);
+        }
+    }
+
     //insert a word into the trie
-    insert(word, data) {
+    #insertWord(word, data) {
         let curr = this.#root;
         for (const c of word) {
             if (!curr.children.has(c)) {
@@ -27,10 +36,11 @@ export default class Trie {
         if (curr.isWord) return false;
 
         curr.isWord = true;
+
+        curr.data.push(data);
+
         return true;
     }
-
-    #insertWord(word, data) {}
 
     /**
      * check if a word exists in the trie
@@ -44,6 +54,15 @@ export default class Trie {
             curr = curr.children.get(c);
         }
         return curr.isWord;
+    }
+
+    getWordData(word) {
+        let curr = this.#root;
+        for (const c of word) {
+            if (!curr.children.has(c)) return null;
+            curr = curr.children.get(c);
+        }
+        return curr.getAverageData();
     }
 
     //returns a list of all words in the trie that contain the prefix
@@ -75,5 +94,25 @@ class TrieNode {
     constructor() {
         this.isWord = false;
         this.children = new Map();
+        this.data = [];
+    }
+
+    getAverageData() {
+        let totalLikes = 0;
+        let totalComments = 0;
+        let totalViews = 0;
+
+        for (const stat of this.data) {
+            totalLikes += stat.likes;
+            totalComments += stat.comments;
+            totalViews += stat.views;
+        }
+
+        return new VideoStats(
+            "Average",
+            totalLikes / this.data.length,
+            totalComments / this.data.length,
+            totalViews / this.data.length
+        );
     }
 }

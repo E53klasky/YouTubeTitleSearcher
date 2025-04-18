@@ -194,6 +194,14 @@ export function ScrollingStack(inputArr, word) {
 
 function LandingPage() {
     const [titleInput, setTitleInput] = useState("");
+    const [currentWord, setCurrentWord] = useState("");
+    const [analyzing, setAnalyzing] = useState(false);
+
+    const [dataDisplay, setDataDisplay] = useState("");
+    const [trieTime, setTrieTime] = useState("");
+    const [mapTime, setMapTime] = useState("");
+
+    const trieControls = useAnimation();
 
     return (
         <ThemeProvider theme={theme}>
@@ -274,6 +282,10 @@ function LandingPage() {
                             placeholder="Input title..."
                             variant="outlined"
                             fullWidth
+                            value={titleInput}
+                            onChange={(e) => {
+                                setTitleInput(e.target.value);
+                            }}
                             sx={{
                                 backgroundColor: "black",
                                 maxWidth: "60%",
@@ -305,7 +317,112 @@ function LandingPage() {
                                 },
                             }}
                         />
-                        <SearchButton />
+                        <SearchButton
+                            title={titleInput}
+                            currentWord={currentWord}
+                            setCurrentWord={setCurrentWord}
+                            analyzing={analyzing}
+                            setAnalyzing={setAnalyzing}
+                            setDataDisplay={setDataDisplay}
+                            setTrieTime={setTrieTime}
+                            setMapTime={setMapTime}
+                        />
+                        {/* Results Box */}
+                        <Box
+                            sx={{
+                                backgroundColor: "gray",
+                                display: "flex",
+                                flexDirection: { xs: "column", md: "row" },
+                                minHeight: "200px",
+                                width: "85vw",
+                                overflow: "hidden",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderRadius: "10px",
+                                margin: "20px",
+                                padding: "10px",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-around",
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    background: "black",
+                                    color: "white",
+                                    width: "100%",
+                                    minHeight: "50px",
+                                    display: "flex",
+                                    alignItems: "start",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <Typography
+                                    sx={{
+                                        fontSize: "1.2rem",
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    {dataDisplay}
+                                </Typography>
+                            </Box>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "center",
+                                    flexGrow: 1,
+                                    width: "100%",
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        background: "black",
+                                        color: "white",
+                                        width: "100%",
+                                        flexGrow: 1,
+                                        marginTop: "10px",
+                                        marginRight: "10px",
+                                        padding: "0px 20px",
+                                        display: "flex",
+                                        alignItems: "start",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <Typography
+                                        sx={{
+                                            fontSize: "1.2rem",
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {mapTime}
+                                    </Typography>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        background: "black",
+                                        color: "white",
+                                        width: "100%",
+                                        flexGrow: 1,
+                                        marginTop: "10px",
+                                        marginLeft: "10px",
+                                        padding: "0px 20px",
+                                        display: "flex",
+                                        alignItems: "start",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <Typography
+                                        sx={{
+                                            fontSize: "1.2rem",
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {trieTime}
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        </Box>
                     </Box>
                     {/*ANIMATION BOXES*/}
                 </Box>
@@ -335,7 +452,7 @@ function LandingPage() {
                     >
                         {ScrollingStack(
                             ["This is a video title", 69696, 420, 0],
-                            "video"
+                            currentWord
                         )}
                     </Box>
                     <Box
@@ -350,7 +467,11 @@ function LandingPage() {
                             overflow: "hidden",
                         }}
                     >
-                        <TrieAnimation word={"ThisIsALLOneWord"} />
+                        <TrieAnimation
+                            key={currentWord}
+                            word={currentWord}
+                            controls={trieControls}
+                        />
                     </Box>
                 </Box>
             </Box>

@@ -2,15 +2,32 @@ import React from "react";
 import { Box, Button, Paper } from "@mui/material";
 import { doAnalyze } from "./doAnalyze";
 
-
-
-const SearchButton = () => {
+const SearchButton = ({
+    title,
+    currentWord,
+    setCurrentWord,
+    analyzing,
+    setAnalyzing,
+    setDataDisplay,
+    setTrieTime,
+    setMapTime,
+}) => {
     return (
         <Box mt={2}>
-            <Button 
+            <Button
                 variant="contained"
-                onClick={doAnalyze}
+                onClick={() =>
+                    doAnalyze(
+                        title,
+                        setCurrentWord,
+                        setAnalyzing,
+                        setDataDisplay,
+                        setTrieTime,
+                        setMapTime
+                    )
+                }
                 color="error"
+                disabled={analyzing}
                 sx={{
                     backgroundColor: "rgb(149, 24, 24)",
                     color: "rgb(201, 196, 196)",
@@ -21,10 +38,9 @@ const SearchButton = () => {
                     // fontWeight: "bold",
                 }}
             >
-            Analyze Title
+                Analyze Title
             </Button>
         </Box>
-        
     );
 };
 

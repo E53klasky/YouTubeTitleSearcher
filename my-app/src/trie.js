@@ -12,11 +12,13 @@ export default class Trie {
 
     constructor() {
         this.#root = new TrieNode();
+        this.titleCount = 0;
     }
 
     //insert a title into the trie
     insert(title, data) {
         const words = title.trim().split(/\s+/);
+        this.titleCount++;
 
         for (const word of words) {
             this.#insertWord(word, data);

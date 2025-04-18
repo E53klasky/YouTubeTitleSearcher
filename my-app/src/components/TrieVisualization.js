@@ -37,7 +37,7 @@
 // }
 import React, { useRef, useEffect, useState } from "react";
 import { Box, Paper } from "@mui/material";
-import { buildTrie } from "./Trie";
+import { buildTrie } from "./buildTrie";
 
 const NODE_WIDTH = 40;
 const NODE_HEIGHT = 40;

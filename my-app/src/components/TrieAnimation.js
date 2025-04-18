@@ -53,6 +53,7 @@ const LineBetweenPoints = ({ x1, y1, x2, y2, color = "black", width = 2 }) => {
       width="1000%"
       height="1000%"
       pointerEvents="none"
+      sx = {{zIndex: 0}}
     >
       <svg width="100%" height="100%" style={{ position: "absolute", top: 0, left: 0 }}>
         <line
@@ -62,6 +63,7 @@ const LineBetweenPoints = ({ x1, y1, x2, y2, color = "black", width = 2 }) => {
           y2={y2}
           stroke={color}
           strokeWidth={width}
+          zIndex = {1}
         />
       </svg>
     </Box>
@@ -87,50 +89,34 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1}) => {
       alignItems="center"
       sx={{ minWidth: NODE_WIDTH }}
     >
-      <Box sx={{ position: "relative" }}>
+      <Box sx={{ position: "relative"}}>
+        {/* Connectors to children */}
+        {childCount == 1 && left && (
+          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT-5} x2={NODE_WIDTH*2.5} y2={VERTICAL_SPACING*2+5} color="rgb(149, 24, 24)" width={10}/>
+        )}
+        {childCount == 1 && !left && (
+          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT-5} x2={-NODE_WIDTH*1.5} y2={VERTICAL_SPACING*2+5} color="rgb(149, 24, 24)" width={10}/>
+        )}
         {/* Node Circle */}
         <Paper
           elevation={3}
           sx={{
+            position: "relative",
             width: NODE_WIDTH,
             height: NODE_HEIGHT,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             borderRadius: "50%",
-            backgroundColor: node.isEnd ? "#1976d2" : "#90caf9",
+            backgroundColor: "rgb(255, 7, 7)",
             color: "white",
-            zIndex: 10,
+            zIndex: 1,
           }}
         >
           {childrenKeys.at(0)}
         </Paper>
 
-        {/* Connectors to children */}
-        {/*childCount == 2 && (
-          <>
-           <Box
-            sx={{
-              position: "absolute",
-              top: NODE_HEIGHT,
-              left: NODE_WIDTH / 2,
-              height: VERTICAL_SPACING,
-              width: 2,
-              backgroundColor: "#999",
-              transform: "translateX(-1px)",
-              zIndex: 0,
-            }}
-          /> 
-          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={-NODE_WIDTH/4} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
-          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={NODE_WIDTH*5/4} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
-          </>
-        )*/}
-        {childCount == 1 && left && (
-          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={NODE_WIDTH*3/2} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
-        )}
-        {childCount == 1 && !left && (
-          <LineBetweenPoints x1={NODE_WIDTH/2} y1={NODE_HEIGHT} x2={-NODE_WIDTH/2} y2={VERTICAL_SPACING*1.5} color="red" width={10}/>
-        )}
+        
       </Box>
 
       {/* Render children horizontally */}
@@ -141,6 +127,7 @@ const TrieAnimation = ({ node, depth = 0, index = 0, totalSiblings = 1}) => {
         marginLeft={left ? HORIZONTAL_SPACING : -HORIZONTAL_SPACING}
         marginRight={!left ? HORIZONTAL_SPACING : -HORIZONTAL_SPACING}
         gap={`${HORIZONTAL_SPACING}px`}
+        zIndex={0}
       >
         {childrenKeys.map((key, i) => (
           <TrieAnimation

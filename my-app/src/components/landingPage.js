@@ -183,15 +183,17 @@ const MyComponent = ({word}) => {
     async function runSequence() {
       // for each boolean, await the end of its animation…
       let height = -70;
-      let right = -70;
+      let right = -80;
+      let first = true;
       for (let goRight of coords) {
         await controls.start({
           x: right,
           y: height,
-          transition: {delay: 1, duration: 0.5, ease: "easeInOut" },
+          transition: {delay: first ? 3 : 1, duration: 0.5, ease: "easeInOut" },
         });
         height -= 80;
-        right += goRight ? 72 : -72;
+        right += goRight ? 80 : -80;
+        if (first == true) {first = false;}
       }
     }
     runSequence();
@@ -220,7 +222,7 @@ const MyComponent = ({word}) => {
           //key={index}
           // animate={{ y: left ? "-40px" : "20px", x: left ? "-40px" : "20px"}}
           animate={controls}
-          transition={{delay: 3, duration: 1, ease: "easeIn" }}
+          transition={{delay: 5, duration: 1, ease: "easeIn" }}
           style={{ width: "100%" }}
         >
           <TrieAnimation node={buildTrie([word])} />
@@ -265,6 +267,7 @@ const MyComponent = ({word}) => {
 
 function LandingPage() {
   let coords = useRef([false]);
+  const word = "ThisIsAllOneWord!";
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ 
@@ -398,8 +401,8 @@ function LandingPage() {
               overflow: "hidden",
              }}>
               <motion.div
-                animate={{ y: ["0px", "850px"], scale: 3}} // Moves from bottom to top
-                transition={{ duration: 1, repeat: 0, ease: "easeIn" }}
+                animate={{ y: ["0px", `${((word.length)*.25+.78)*300}px`], scale: 3}} // Moves from bottom to top
+                transition={{delay: 1, duration: 1, repeat: 0, ease: "easeIn" }}
                 style={{ width: "100%" }}
               >
               {/* {useEffect(() => {
@@ -414,7 +417,7 @@ function LandingPage() {
                       <TrieAnimation node={buildTrie(["words"])} coords={coords} />
                   </motion.div>
                 ))}, [coords.current])} */}
-                <MyComponent word= {"wordasdj"}/>
+                <MyComponent word= {word}/>
                </motion.div>
               
               </Box>

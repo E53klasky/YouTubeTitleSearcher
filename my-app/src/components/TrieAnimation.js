@@ -2,7 +2,7 @@ import React, { useEffect, useMemo} from 'react';
 import '@fontsource/poppins';
 import { motion, useAnimation  } from "framer-motion";
 import TrieVisualization from './TrieVisualization.js';
-import {buildTrie} from './Trie.js';
+import {buildTrie} from './buildTrie.js';
 
 const TrieAnimation = ({word}) => {
 

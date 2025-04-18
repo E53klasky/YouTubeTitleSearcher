@@ -23,7 +23,7 @@ import highlightWord from './visualsData';
 import { input } from 'framer-motion/client';
 import TrieVisualization from './TrieVisualization.js';
 import SearchButton from './searchButton.js';
-import {buildTrie} from './Trie.js';
+import {buildTrie} from './buildTrie.js';
 import TreeContainer from './TrieVisualization.js';
 import TrieAnimation from './TrieAnimation.js';
 

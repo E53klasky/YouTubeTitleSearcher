@@ -11,6 +11,7 @@ const SearchButton = ({
     setDataDisplay,
     setTrieTime,
     setMapTime,
+    setTrieStats
 }) => {
     return (
         <Box mt={2}>
@@ -23,7 +24,8 @@ const SearchButton = ({
                         setAnalyzing,
                         setDataDisplay,
                         setTrieTime,
-                        setMapTime
+                        setMapTime,
+                        setTrieStats
                     )
                 }
                 color="error"

@@ -18,7 +18,7 @@ import "@fontsource/poppins";
 import HomeIcon from "@mui/material/Icon";
 import { motion, useAnimation } from "framer-motion";
 import Divider, { dividerClasses } from "@mui/material/Divider";
-import youtubeData from "./visualsData";
+import { getYoutubeData } from "./visualsData";
 import highlightWord from "./visualsData";
 import { input } from "framer-motion/client";
 import TrieVisualization from "./TrieVisualization.js";
@@ -94,97 +94,148 @@ export const Navbar = () => {
     );
 };
 
+
+const highlightWordInTitle = (title, word) => {
+    if (!word || !title) return title;
+    const regex = new RegExp(`(${word})`, 'gi');
+    const parts = title.split(regex);
+    
+    return (
+        <p style={{ margin: 0 }}>
+            {parts.map((part, i) => 
+                part.toLowerCase() === word.toLowerCase() 
+                    ? <mark 
+                        key={i} 
+                        style={{
+                            backgroundColor: 'rgba(255, 255, 0, 0.5)',
+                            color: 'white',
+                            padding: '0 2px',
+                            borderRadius: '3px',
+                            fontWeight: 'bold',
+                            textShadow: '1px 1px 1px rgba(0,0,0,0.5)' 
+                        }}
+                      >
+                        {part}
+                      </mark>
+                    : part
+            )}
+        </p>
+    );
+};
+
+// Update the ScrollingStack component
 export function ScrollingStack(inputArr, word) {
-    let arr = youtubeData();
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [key, setKey] = useState(0);
 
-    //Highlights "word"
-    const parts = inputArr[0].split(" ");
-    let before = [];
-    let after = [];
-    for (let i = 0; i < parts.length; i++) {
-        if (parts[i] == word) {
-            parts[i] = "";
-            for (let j = 0; j < i; j++) {
-                before[j] = parts[j];
-                parts[j] = "";
+    // Update the key whenever the word changes
+    useEffect(() => {
+        setKey(prev => prev + 1);
+    }, [word]);
+
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const youtubeData = await getYoutubeData();
+                if (!youtubeData || youtubeData.length === 0) {
+                    throw new Error('No data available');
+                }
+
+                // Process the real data, ensuring all entries are valid
+                const processedData = youtubeData
+                    .filter(row => row && row[0] && typeof row[0] === 'string')
+                    .map(row => [
+                        row[0],
+                        Number(row[1]) || 0,
+                        Number(row[2]) || 0,
+                        Number(row[3]) || 0
+                    ]);
+
+                // If we need more rows for the animation, repeat the real data
+                let finalData = [];
+                while (finalData.length < 100) {
+                    finalData = [...finalData, ...processedData];
+                }
+                
+                // Trim to exactly 100 items
+                finalData = finalData.slice(0, 100);
+                
+                setData(finalData);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error loading data:', error);
+                setLoading(false);
             }
-            break;
-        }
-    }
-    for (let i = before.length; i < parts.length; i++) {
-        after[i] = parts[i];
-    }
-    inputArr[0] = [
-        <p key="0">
-            {before.join(" ")} <mark>{word}</mark> {after.join(" ")}{" "}
-        </p>,
-    ];
+        };
+        loadData();
+    }, []);
 
-    arr[97] = inputArr;
+    if (loading) {
+        return (
+            <Box sx={{ 
+                height: "100%", 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center",
+                color: "white",
+                fontSize: "1.5rem"
+            }}>
+                Loading...
+            </Box>
+        );
+    }
+
+    if (data.length === 0) {
+        return (
+            <Box sx={{ 
+                height: "100%", 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center",
+                color: "white",
+                fontSize: "1.5rem"
+            }}>
+                No data available
+            </Box>
+        );
+    }
+
+    // Process the data to highlight words
+    const displayData = data.map(row => {
+        const title = row[0];
+        return [
+            word ? highlightWordInTitle(title, word) : title,
+            row[1],
+            row[2],
+            row[3]
+        ];
+    });
 
     return (
         <Box
             sx={{
+                height: "100%",
                 overflow: "hidden",
-                height: "inherit",
                 display: "flex",
                 justifyContent: "center",
+                backgroundColor: "black"
             }}
         >
             <motion.div
-                animate={{ y: ["0%", "-1370%"] }} // Moves from bottom to top
-                transition={{ duration: 4, repeat: 0, ease: "easeOut" }}
+                key={key}
+                animate={{ y: ["0%", "-1370%"] }}
+                transition={{ duration: 2, repeat: 0, ease: "easeOut" }}
                 style={{ width: "100%" }}
             >
-                <Stack container spacing={1} sx={{ width: "100%" }}>
-                    {arr.map((row, index) => (
-                        <>
-                            <Box
-                                sx={{
-                                    width: "95.5%",
-                                    height: 50,
-                                    backgroundColor: "black",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    color: "white",
-                                    fontSize: "1.2rem",
-                                    borderRadius: 1,
-                                    margin: "10px",
-                                    paddingLeft: "10px",
-                                    paddingRight: "10px",
-                                    boxShadow:
-                                        index == 97 &&
-                                        "0px 0px 4px 2px rgba(255, 217, 0, .4)",
-                                    [`& .${dividerClasses.root}`]: {
-                                        mx: 1,
-                                    },
-                                }}
-                            >
-                                {row[0]}
-                                <Divider
-                                    color="red"
-                                    orientation="vertical"
-                                    variant="middle"
-                                    flexItem
-                                />
-                                {row[1]}
-                                <Divider
-                                    color="red"
-                                    orientation="vertical"
-                                    variant="middle"
-                                    flexItem
-                                />
-                                {row[2]}
-                                <Divider
-                                    color="red"
-                                    orientation="vertical"
-                                    variant="middle"
-                                    flexItem
-                                />
-                                {row[3]}
-                            </Box>
-                        </>
+                <Stack spacing={1} sx={{ width: "100%", padding: "10px" }}>
+                    {displayData.map((row, index) => (
+                        <DataRow 
+                            key={index}
+                            row={row}
+                            index={index}
+                            isHighlighted={false}
+                        />
                     ))}
                 </Stack>
             </motion.div>
@@ -192,10 +243,68 @@ export function ScrollingStack(inputArr, word) {
     );
 }
 
+const DataRow = React.memo(({ row, index, isHighlighted }) => {
+    const safeRow = Array.isArray(row) ? row : ["No data", 0, 0, 0];
+    
+    return (
+        <Box
+            sx={{
+                width: "100%",
+                height: 50,
+                backgroundColor: "black",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "white",
+                fontSize: "1.2rem",
+                borderRadius: 1,
+                padding: "0 10px",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                },
+                '& mark': {
+                    backgroundColor: 'rgba(255, 255, 0, 0.5)', 
+                    color: 'white',
+                    padding: '0 2px',
+                    borderRadius: '3px',
+                    fontWeight: 'bold',
+                    textShadow: '1px 1px 1px rgba(0,0,0,0.5)' 
+                }
+            }}
+        >
+            <Box sx={{ 
+                flex: 3, 
+                overflow: 'hidden', 
+                textOverflow: 'ellipsis', 
+                whiteSpace: 'nowrap',
+                display: 'flex',
+                alignItems: 'center'
+            }}>
+                {safeRow[0]}
+            </Box>
+            <Divider orientation="vertical" flexItem sx={{ backgroundColor: "red", mx: 1 }} />
+            <Box sx={{ flex: 1, textAlign: 'center' }}>
+                {typeof safeRow[1] === 'number' ? safeRow[1].toLocaleString() : 0}
+            </Box>
+            <Divider orientation="vertical" flexItem sx={{ backgroundColor: "red", mx: 1 }} />
+            <Box sx={{ flex: 1, textAlign: 'center' }}>
+                {typeof safeRow[2] === 'number' ? safeRow[2].toLocaleString() : 0}
+            </Box>
+            <Divider orientation="vertical" flexItem sx={{ backgroundColor: "red", mx: 1 }} />
+            <Box sx={{ flex: 1, textAlign: 'center' }}>
+                {typeof safeRow[3] === 'number' ? safeRow[3].toLocaleString() : 0}
+            </Box>
+        </Box>
+    );
+});
+
 function LandingPage() {
     const [titleInput, setTitleInput] = useState("");
     const [currentWord, setCurrentWord] = useState("");
     const [analyzing, setAnalyzing] = useState(false);
+    const [trieStats, setTrieStats] = useState({ views: 0, likes: 0, comments: 0 });
 
     const [dataDisplay, setDataDisplay] = useState("");
     const [trieTime, setTrieTime] = useState("");
@@ -213,14 +322,14 @@ function LandingPage() {
                     overflow: "hidden",
                     background:
                         "linear-gradient(160deg, rgb(126, 38, 38) 5%, rgb(29, 29, 29) 50%)",
-                    //backgroundImage: 'url(/1336986.jpeg)',
+           
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundAttachment: "fixed",
                 }}
             >
-                {/* Header Section with Title and Logo */}
+
                 <Navbar />
                 <Box
                     sx={{
@@ -326,24 +435,22 @@ function LandingPage() {
                             setDataDisplay={setDataDisplay}
                             setTrieTime={setTrieTime}
                             setMapTime={setMapTime}
+                            setTrieStats={setTrieStats}
                         />
                         {/* Results Box */}
                         <Box
                             sx={{
                                 backgroundColor: "gray",
                                 display: "flex",
-                                flexDirection: { xs: "column", md: "row" },
+                                flexDirection: "column",
                                 minHeight: "200px",
                                 width: "85vw",
                                 overflow: "hidden",
-                                justifyContent: "center",
+                                justifyContent: "space-around",
                                 alignItems: "center",
                                 borderRadius: "10px",
                                 margin: "20px",
-                                padding: "10px",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-around",
+                                padding: "10px"
                             }}
                         >
                             <Box
@@ -428,43 +535,40 @@ function LandingPage() {
                 </Box>
                 <Box
                     sx={{
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-                        backgroundAttachment: "fixed",
                         display: "flex",
                         flexDirection: { xs: "column", md: "row" },
-                        minHeight: "50vh",
-                        overflow: "hidden",
                         justifyContent: "center",
                         alignItems: "center",
+                        width: "100%",
+                        padding: "20px",
+                        gap: "20px"
                     }}
                 >
+                    {/* Hash Map Animation Box */}
                     <Box
                         sx={{
                             backgroundColor: "gray",
-                            width: "600px",
+                            width: { xs: "90%", md: "600px" },
                             height: "400px",
                             borderRadius: "10px",
-                            margin: "20px",
-                            padding: "10px",
+                            overflow: "hidden"
                         }}
                     >
                         {ScrollingStack(
-                            ["This is a video title", 69696, 420, 0],
+                            [titleInput || "This is a video title", trieStats.views, trieStats.likes, trieStats.comments],
                             currentWord
                         )}
                     </Box>
+
+                    {/* Trie Animation Box */}
                     <Box
                         sx={{
                             backgroundColor: "gray",
-                            width: "600px",
+                            width: { xs: "90%", md: "600px" },
                             height: "400px",
                             borderRadius: "10px",
-                            margin: "20px",
-                            padding: "10px",
-                            zIndex: 1,
                             overflow: "hidden",
+                            position: "relative"
                         }}
                     >
                         <TrieAnimation

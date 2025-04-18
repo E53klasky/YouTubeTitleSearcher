@@ -67,7 +67,7 @@ const LineBetweenPoints = ({ x1, y1, x2, y2, color = "black", width = 2 }) => {
                     y2={y2}
                     stroke={color}
                     strokeWidth={width}
-                    zIndex={1}
+                    style={{ zIndex: 1 }}
                 />
             </svg>
         </Box>
@@ -147,7 +147,7 @@ const TrieVisualization = ({
                 marginLeft={left ? HORIZONTAL_SPACING : -HORIZONTAL_SPACING}
                 marginRight={!left ? HORIZONTAL_SPACING : -HORIZONTAL_SPACING}
                 gap={`${HORIZONTAL_SPACING}px`}
-                zIndex={0}
+                sx={{ zIndex: 0 }}
             >
                 {childrenKeys.map((key, i) => (
                     <TrieVisualization

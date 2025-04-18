@@ -15,7 +15,7 @@ const TrieAnimation = ({ word, controls }) => {
 
     useEffect(() => {
         async function runSequence() {
-            // for each boolean, await the end of its animation…
+  
             let height = -70;
             let right = -80;
             let first = true;
@@ -46,7 +46,7 @@ const TrieAnimation = ({ word, controls }) => {
                 animate={{
                     y: ["0px", `${(word.length * 0.25 + 0.78) * 300}px`],
                     scale: 3,
-                }} // Moves from bottom to top
+                }} 
                 transition={{
                     delay: 1,
                     duration: 1,

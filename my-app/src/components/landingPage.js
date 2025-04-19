@@ -1,4 +1,3 @@
-//Install Framer Motion for Animations: npm install framer-motion @mui/material @emotion/react @emotion/styled
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
     Typography,

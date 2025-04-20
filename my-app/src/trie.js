@@ -35,8 +35,6 @@ export default class Trie {
             curr = curr.children.get(c);
         }
 
-        if (curr.isWord) return false;
-
         curr.isWord = true;
 
         curr.data.push(data);
@@ -110,11 +108,14 @@ class TrieNode {
             totalViews += stat.views;
         }
 
-        return new VideoStats(
-            "Average",
-            totalLikes / this.data.length,
-            totalComments / this.data.length,
-            totalViews / this.data.length
-        );
+        return {
+            avgStats: new VideoStats(
+                "Average",
+                totalLikes / this.data.length,
+                totalComments / this.data.length,
+                totalViews / this.data.length
+            ),
+            count: this.data.length,
+        };
     }
 }

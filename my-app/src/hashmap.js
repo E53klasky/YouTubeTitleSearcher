@@ -1,3 +1,4 @@
+import { data } from "framer-motion/client";
 import VideoStats from "./VideoStats";
 
 export class OptimizedYTVideoStatsHashmap {
@@ -6,6 +7,10 @@ export class OptimizedYTVideoStatsHashmap {
         this.buckets = new Array(bucketSize);
         this.bucketSize = bucketSize;
         this.size = 0;
+
+        this.wordBuckets = new Array(bucketSize);
+        this.wordBucketSize = bucketSize;
+        this.wordSize = 0;
     }
 
     /**
@@ -21,6 +26,15 @@ export class OptimizedYTVideoStatsHashmap {
             hash |= 0;
         }
         return Math.abs(hash * 16777619) % this.bucketSize;
+    }
+
+    hashWord(key) {
+        let hash = 0;
+        for (let i = 0; i < key.length; i++) {
+            hash = (hash << 5) - hash + key.charCodeAt(i);
+            hash |= 0;
+        }
+        return Math.abs(hash * 16777619) % this.wordBucketSize;
     }
 
     //Adds or updates an item in the hash map.
@@ -51,6 +65,38 @@ export class OptimizedYTVideoStatsHashmap {
         this.size++;
     }
 
+    insertTitle(title, videoStats) {
+        if (!(videoStats instanceof VideoStats)) {
+            throw new Error("Value must be an instance of VideoStats");
+        }
+
+        const words = title.trim().split(/\s+/);
+
+        for (const word of words) {
+            this.insertWord(word, videoStats);
+        }
+    }
+
+    insertWord(word, videoStats) {
+        if (!(videoStats instanceof VideoStats)) {
+            throw new Error("Value must be an instance of VideoStats");
+        }
+
+        if (this.wordSize / this.wordBucketSize > 0.7) {
+            // 0.7 is the load factor
+            this._resizeWord(this.wordBucketSize * 2);
+        }
+
+        const index = this.hashWord(word);
+
+        if (!this.wordBuckets[index]) {
+            this.wordBuckets[index] = [];
+        }
+
+        this.wordBuckets[index].push([word, videoStats]);
+        this.wordSize++;
+    }
+
     /**
      * Resizes the hash map to a new bucket size.
      * This function creates a new array of buckets with the specified size and rehashes
@@ -64,8 +110,24 @@ export class OptimizedYTVideoStatsHashmap {
         // Rehash all existing items and insert them into the new bucket array
         for (let bucket of oldBuckets) {
             if (bucket) {
-                for (let [videoId, videoStats] of bucket) {
-                    this.setItem(videoId, videoStats);
+                for (let [word, videoStats] of bucket) {
+                    this.insertWord(word, videoStats);
+                }
+            }
+        }
+    }
+
+    _resizeWord(newSize) {
+        const oldBuckets = this.wordBuckets;
+        this.wordBuckets = new Array(newSize);
+        this.wordBucketSize = newSize;
+        this.wordSize = 0;
+
+        // Rehash all existing items and insert them into the new bucket array
+        for (let bucket of oldBuckets) {
+            if (bucket) {
+                for (let [word, videoStats] of bucket) {
+                    this.insertWord(word, videoStats);
                 }
             }
         }
@@ -112,7 +174,7 @@ export class OptimizedYTVideoStatsHashmap {
      * Searches for all videos containing a specific word in their titles
      */
     searchByWord(word) {
-        if (!word || typeof word !== 'string') {
+        if (!word || typeof word !== "string") {
             return [];
         }
 
@@ -124,7 +186,9 @@ export class OptimizedYTVideoStatsHashmap {
             if (bucket) {
                 for (let [videoId, videoStats] of bucket) {
                     // Check if the title contains the word (case insensitive)
-                    if (videoStats.title.toLowerCase().includes(lowercaseWord)) {
+                    if (
+                        videoStats.title.toLowerCase().includes(lowercaseWord)
+                    ) {
                         results.push([videoId, videoStats]);
                     }
                 }
@@ -134,12 +198,53 @@ export class OptimizedYTVideoStatsHashmap {
         return results;
     }
 
+    getWordStats(word) {
+        const index = this.hashWord(word);
+
+        if (!this.wordBuckets[index]) {
+            return [];
+        }
+
+        return this.wordBuckets[index];
+    }
+
+    getAverageWordStats(word) {
+        const dataPoints = this.getWordStats(word);
+
+        if (dataPoints.length == 0) {
+            return {
+                avgStats: new VideoStats("Empty", 0, 0, 0),
+                count: dataPoints.length,
+            };
+        }
+
+        let totalLikes = 0;
+        let totalComments = 0;
+        let totalViews = 0;
+
+        for (let [, videoStats] of dataPoints) {
+            totalLikes += videoStats.likes;
+            totalComments += videoStats.comments;
+            totalViews += videoStats.views;
+        }
+
+        return {
+            avgStats: new VideoStats(
+                "Average",
+                totalLikes / dataPoints.length,
+                totalComments / dataPoints.length,
+                totalViews / dataPoints.length
+            ),
+            count: dataPoints.length,
+        };
+    }
+
     /**
      * Calculates the average likes, comments, and views for videos containing a specific word
      */
     getAverageStatsForWord(word) {
         const videos = this.searchByWord(word);
-        
+
         if (videos.length === 0) {
             return 0;
         }
@@ -155,8 +260,18 @@ export class OptimizedYTVideoStatsHashmap {
         }
 
         // Calculate the overall average
-        const overallSum = totalLikes + totalComments + totalViews;
-        return Math.round(overallSum / 3);
+        // const overallSum = totalLikes + totalComments + totalViews;
+        // return Math.round(overallSum / 3);
+
+        return {
+            avgStats: new VideoStats(
+                "Average",
+                totalLikes / videos.length,
+                totalComments / videos.length,
+                totalViews / videos.length
+            ),
+            count: videos.length,
+        };
     }
 
     /**
@@ -164,7 +279,7 @@ export class OptimizedYTVideoStatsHashmap {
      */
     getAllVideos() {
         const allVideos = [];
-        
+
         for (let bucket of this.buckets) {
             if (bucket) {
                 for (let video of bucket) {
@@ -172,7 +287,7 @@ export class OptimizedYTVideoStatsHashmap {
                 }
             }
         }
-        
+
         return allVideos;
     }
 }

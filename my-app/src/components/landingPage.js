@@ -212,8 +212,8 @@ export function ScrollingStack(inputArr, word) {
     }
 
     // Process the data to highlight words
-    const displayData = data.map((row) => {
-        const title = row[0];
+    const displayData = data.map((row, index) => {
+        const title = index == 94 ? inputArr[0] : row[0];
         return [
             word ? highlightWordInTitle(title, word) : title,
             row[1],
@@ -589,7 +589,7 @@ function LandingPage() {
                     >
                         {ScrollingStack(
                             [
-                                titleInput || "This is a video title",
+                                "This is a video title",
                                 trieStats.views,
                                 trieStats.likes,
                                 trieStats.comments,

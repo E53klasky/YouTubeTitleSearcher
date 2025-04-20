@@ -136,11 +136,13 @@ export function ScrollingStack(inputArr, word) {
     // Update the key whenever the word changes
     useEffect(() => {
         setKey((prev) => prev + 1);
+        console.log("Updating first useEffect");
     }, [word]);
 
     useEffect(() => {
         const loadData = async () => {
             try {
+                console.log("Getting some data");
                 const youtubeData = await getYoutubeData();
                 if (!youtubeData || youtubeData.length === 0) {
                     throw new Error("No data available");
@@ -167,6 +169,8 @@ export function ScrollingStack(inputArr, word) {
                 // Trim to exactly 100 items
                 finalData = finalData.slice(0, 100);
 
+                console.log(`Final Data length: ${finalData.length}`);
+
                 setData(finalData);
                 setLoading(false);
             } catch (error) {
@@ -175,6 +179,7 @@ export function ScrollingStack(inputArr, word) {
             }
         };
         loadData();
+        console.log("Updating second useEffect");
     }, []);
 
     if (loading) {
@@ -340,11 +345,17 @@ function LandingPage() {
         comments: 0,
     });
 
+    const [hashMapTitle, setHashMapTitle] = useState("");
+
     const [dataDisplay, setDataDisplay] = useState("");
     const [trieTime, setTrieTime] = useState("");
     const [mapTime, setMapTime] = useState("");
 
     const trieControls = useAnimation();
+
+    const handleTitleChange = (e) => {
+        setTitleInput(e.target.value);
+    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -425,9 +436,7 @@ function LandingPage() {
                             variant="outlined"
                             fullWidth
                             value={titleInput}
-                            onChange={(e) => {
-                                setTitleInput(e.target.value);
-                            }}
+                            onChange={handleTitleChange}
                             sx={{
                                 backgroundColor: "black",
                                 maxWidth: "60%",
@@ -469,6 +478,7 @@ function LandingPage() {
                             setTrieTime={setTrieTime}
                             setMapTime={setMapTime}
                             setTrieStats={setTrieStats}
+                            setHashMapTitle={setHashMapTitle}
                         />
                         {/* Results Box */}
                         <Box
@@ -587,15 +597,15 @@ function LandingPage() {
                             overflow: "hidden",
                         }}
                     >
-                        {ScrollingStack(
-                            [
-                                "This is a video title",
+                        <ScrollingStack
+                            inputArr={[
+                                hashMapTitle || "This is a video title",
                                 trieStats.views,
                                 trieStats.likes,
                                 trieStats.comments,
-                            ],
-                            currentWord
-                        )}
+                            ]}
+                            word={currentWord}
+                        />
                     </Box>
 
                     {/* Trie Animation Box */}

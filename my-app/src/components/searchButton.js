@@ -11,7 +11,8 @@ const SearchButton = ({
     setDataDisplay,
     setTrieTime,
     setMapTime,
-    setTrieStats
+    setTrieStats,
+    setHashMapTitle,
 }) => {
     return (
         <Box mt={2}>
@@ -25,7 +26,8 @@ const SearchButton = ({
                         setDataDisplay,
                         setTrieTime,
                         setMapTime,
-                        setTrieStats
+                        setTrieStats,
+                        setHashMapTitle
                     )
                 }
                 color="error"

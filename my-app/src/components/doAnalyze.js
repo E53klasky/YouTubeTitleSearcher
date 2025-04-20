@@ -73,7 +73,8 @@ export async function doAnalyze(
     setDataDisplay,
     setTrieTime,
     setMapTime,
-    setTrieStats
+    setTrieStats,
+    setHashMapTitle
 ) {
     if (currentController) {
         currentController.abort();
@@ -83,6 +84,7 @@ export async function doAnalyze(
     const signal = currentController.signal;
 
     setAnalyzing(true);
+    setHashMapTitle(title);
 
     console.log(trie.titleCount);
 
@@ -193,5 +195,6 @@ export async function doAnalyze(
         setTrieStats({ views: 0, likes: 0, comments: 0 });
     } finally {
         setAnalyzing(false);
+        setHashMapTitle("");
     }
 }

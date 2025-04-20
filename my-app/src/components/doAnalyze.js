@@ -96,6 +96,13 @@ export async function doAnalyze(
         const words = title.trim().split(/\s+/);
 
         for (const word of words) {
+            const validTitles = hashmap.searchByWord(word);
+            setHashMapTitle(
+                validTitles.length > 0
+                    ? validTitles[0][0]
+                    : "No titles contain this word"
+            );
+
             setCurrentWord("");
             await cancelableDelay(100, signal);
             setCurrentWord(word);
@@ -194,6 +201,5 @@ export async function doAnalyze(
         setTrieStats({ views: 0, likes: 0, comments: 0 });
     } finally {
         setAnalyzing(false);
-        setHashMapTitle("");
     }
 }

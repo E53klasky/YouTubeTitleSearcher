@@ -13,6 +13,10 @@ export class OptimizedYTVideoStatsHashmap {
         this.wordSize = 0;
     }
 
+    escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
     /**
      * Generates a hash value for a given key.
      * This function uses a variant of the djb2 hash algorithm with bitwise operations
@@ -186,10 +190,13 @@ export class OptimizedYTVideoStatsHashmap {
             if (bucket) {
                 for (let [videoId, videoStats] of bucket) {
                     // Check if the title contains the word (case insensitive)
-                    if (
-                        videoStats.title.toLowerCase().includes(lowercaseWord)
-                    ) {
-                        results.push([videoId, videoStats]);
+
+                    const parts = videoStats.title.toLowerCase().split(" ");
+                    for (const part of parts) {
+                        if (part.toLowerCase() === lowercaseWord) {
+                            results.push([videoId, videoStats]);
+                            break;
+                        }
                     }
                 }
             }

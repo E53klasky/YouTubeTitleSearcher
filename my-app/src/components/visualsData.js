@@ -1,4 +1,4 @@
-import Papa from 'papaparse';
+import Papa from "papaparse";
 
 function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -33,58 +33,55 @@ export function highlightWord(arr, word) {
 
 export async function getYoutubeData() {
     try {
-        const response = await fetch('/youtube_video_data.csv');
+        const response = await fetch("/youtube_video_data.csv");
         const csvText = await response.text();
-        
+
         return new Promise((resolve, reject) => {
             Papa.parse(csvText, {
                 header: true,
                 skipEmptyLines: true,
-                delimiter: ',',
+                delimiter: ",",
                 complete: (results) => {
                     if (!results.data || results.data.length === 0) {
-                        reject(new Error('CSV parsing returned no data'));
+                        reject(new Error("CSV parsing returned no data"));
                         return;
                     }
 
                     const data = results.data
-                        .filter(row => {
-                            return row.Title && 
-                                   !isNaN(parseInt(row.Views)) && 
-                                   !isNaN(parseInt(row.Likes)) && 
-                                   !isNaN(parseInt(row.Comments));
+                        .filter((row) => {
+                            return (
+                                row.Title &&
+                                !isNaN(parseInt(row.Views)) &&
+                                !isNaN(parseInt(row.Likes)) &&
+                                !isNaN(parseInt(row.Comments))
+                            );
                         })
-                        .map(row => {
+                        .map((row) => {
                             const title = row.Title.trim();
                             const views = parseInt(row.Views) || 0;
                             const likes = parseInt(row.Likes) || 0;
                             const comments = parseInt(row.Comments) || 0;
-                            
-                            return [
-                                title,
-                                views,
-                                likes,
-                                comments
-                            ];
+
+                            return [title, views, likes, comments];
                         });
-                    
+
                     if (data.length === 0) {
-                        reject(new Error('No valid data found in CSV'));
+                        reject(new Error("No valid data found in CSV"));
                         return;
                     }
-                    
+
                     // Shuffle the data to get different entries each time
                     shuffleArray(data);
                     resolve(data);
                 },
                 error: (error) => {
-                    console.error('Error parsing CSV:', error);
+                    console.error("Error parsing CSV:", error);
                     reject(error);
-                }
+                },
             });
         });
     } catch (error) {
-        console.error('Error reading CSV file:', error);
+        console.error("Error reading CSV file:", error);
         throw error;
     }
 }

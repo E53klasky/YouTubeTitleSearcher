@@ -7,8 +7,6 @@ let dataArr = null;
 let trie = new Trie();
 let hashmap = new OptimizedYTVideoStatsHashmap();
 
-const SECONDS_PER_CHAR = 2;
-
 function cancelableDelay(ms, signal) {
     return new Promise((resolve, reject) => {
         const id = setTimeout(() => resolve(), ms);
@@ -173,8 +171,9 @@ export async function doAnalyze(
             }
 
             try {
+                console.log(word.length);
                 await cancelableDelay(
-                    3000 + SECONDS_PER_CHAR * 1000 * word.length,
+                    (word.length * 0.1 + 2.75) * 1000,
                     signal
                 );
             } catch (err) {

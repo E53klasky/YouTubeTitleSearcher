@@ -258,14 +258,58 @@ export function ScrollingStack(inputArr, word) {
     );
 }
 
+/**
+ * return (
+    <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center"}}>
+      <motion.div
+        animate={{ y: ["0%", "-1370%"]}} // Moves from bottom to top
+        transition={{ duration: 4, repeat: 0, ease: "easeOut" }}
+        style={{ width: "100%" }}
+      >
+        <Stack container spacing={1} sx = {{ width: "100%"}}>
+          {arr.map((row, index) => (
+            <>
+            <Box
+              sx={{
+                width: "95.5%",
+                height: 50,
+                backgroundColor: "black",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+                fontSize: "1.2rem",
+                borderRadius: 1,
+                margin: "10px",
+                paddingLeft: "10px", 
+                paddingRight: "10px", 
+                boxShadow: index == 97 && "0px 0px 4px 2px rgba(255, 217, 0, .4)",
+                [`& .${dividerClasses.root}`]: {
+                  mx: 1,
+                }
+              }}
+            >
+              {row[0]}
+              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
+              {row[1]}
+              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
+              {row[2]}
+              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
+              {row[3]}
+            </Box>
+            
+            </>
+))}
+ */
+
 const DataRow = React.memo(({ row, index, isHighlighted }) => {
     const safeRow = Array.isArray(row) ? row : ["No data", 0, 0, 0];
 
     return (
         <Box
             sx={{
-                width: "100%",
-                height: 50,
+                width: "90%",
+                minHeight: 50,
                 backgroundColor: "black",
                 display: "flex",
                 alignItems: "center",
@@ -291,12 +335,13 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
         >
             <Box
                 sx={{
-                    flex: 3,
                     overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
+                    whiteSpace: "normal",
                     display: "flex",
                     alignItems: "center",
+                    maxWidth: "40%",
+                    width: "40%",
+                    minWidth: "40%",
                 }}
             >
                 {safeRow[0]}
@@ -306,7 +351,14 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
                 flexItem
                 sx={{ backgroundColor: "red", mx: 1 }}
             />
-            <Box sx={{ flex: 1, textAlign: "center" }}>
+            <Box
+                sx={{
+                    textAlign: "center",
+                    maxWidth: "15%",
+                    width: "15%",
+                    minWidth: "15%",
+                }}
+            >
                 {typeof safeRow[1] === "number"
                     ? safeRow[1].toLocaleString()
                     : 0}
@@ -316,7 +368,14 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
                 flexItem
                 sx={{ backgroundColor: "red", mx: 1 }}
             />
-            <Box sx={{ flex: 1, textAlign: "center" }}>
+            <Box
+                sx={{
+                    textAlign: "center",
+                    maxWidth: "15%",
+                    width: "15%",
+                    minWidth: "15%",
+                }}
+            >
                 {typeof safeRow[2] === "number"
                     ? safeRow[2].toLocaleString()
                     : 0}
@@ -326,7 +385,14 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
                 flexItem
                 sx={{ backgroundColor: "red", mx: 1 }}
             />
-            <Box sx={{ flex: 1, textAlign: "center" }}>
+            <Box
+                sx={{
+                    textAlign: "center",
+                    maxWidth: "15%",
+                    width: "15%",
+                    minWidth: "15%",
+                }}
+            >
                 {typeof safeRow[3] === "number"
                     ? safeRow[3].toLocaleString()
                     : 0}

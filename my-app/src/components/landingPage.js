@@ -597,15 +597,15 @@ function LandingPage() {
                             overflow: "hidden",
                         }}
                     >
-                        <ScrollingStack
-                            inputArr={[
+                        {ScrollingStack(
+                            [
                                 hashMapTitle || "This is a video title",
                                 trieStats.views,
                                 trieStats.likes,
                                 trieStats.comments,
-                            ]}
-                            word={currentWord}
-                        />
+                            ],
+                            currentWord
+                        )}
                     </Box>
 
                     {/* Trie Animation Box */}

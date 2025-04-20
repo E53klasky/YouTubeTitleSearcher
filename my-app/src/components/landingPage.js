@@ -240,7 +240,7 @@ export function ScrollingStack(inputArr, word) {
         >
             <motion.div
                 key={key}
-                animate={{ y: ["0%", "-1964%"] }}
+                animate={{ y: ["0%", "-2250%"] }}
                 transition={{ duration: 2, repeat: 0, ease: "easeOut" }}
                 style={{ width: "100%" }}
             >
@@ -572,29 +572,10 @@ function LandingPage() {
                         />
                         {/* Results Box */}
                         <Box
-                            sx={{
-                                backgroundColor: "yellow",
-                                display: "flex",
-                                flexDirection: "column",
-                                height: "50px",
-                                width: "500px",
-                                overflow: "hidden",
-                                justifyContent: "space-around",
-                                //alignItems: "center",
-                                borderRadius: "100%",
-                                margin: "20px",
-                                padding: "10px",
-                            }}
-                        >
-                            {!analyzing ? <Typography>
-                                TITLE STATS: Views: {titleScore.views} Likes: {titleScore.likes} Comments: {titleScore.comments}
-                            </Typography> : <Typography>Loading</Typography>}
-                        </Box>
-                        <Box
                             sx = {{
                                 display: "flex",
                                 height: "50px",
-                                width: "500px",
+                                width: "70%",
                                 justifyContent: "center",
                                 //alignItems: "center",
                                 padding: "10px",}}
@@ -610,7 +591,7 @@ function LandingPage() {
                                     justifyContent: "space-around",
                                     //alignItems: "center",
                                     borderRadius: "100%",
-                                    marginRight: "100px",
+                                    marginRight: "300px",
                                     padding: "10px",
                                 }}
                             >
@@ -619,6 +600,25 @@ function LandingPage() {
                                     {totalMapTime}
                                 </Typography>
                             </Box>
+                            <Box
+                            sx={{
+                                backgroundColor: "yellow",
+                                display: "flex",
+                                flexDirection: "column",
+                                height: "50px",
+                                width: "500px",
+                                overflow: "hidden",
+                                justifyContent: "space-around",
+                                //alignItems: "center",
+                                borderRadius: "100%",
+                                marginBottom: "20px",
+                                padding: "10px",
+                            }}
+                        >
+                            {!analyzing ? <Typography>
+                                TITLE STATS: Views: {titleScore.views} Likes: {titleScore.likes} Comments: {titleScore.comments}
+                            </Typography> : <Typography>Loading</Typography>}
+                        </Box>
                             <Box
                                 sx={{
                                     backgroundColor: "yellow",
@@ -630,7 +630,7 @@ function LandingPage() {
                                     justifyContent: "space-around",
                                     //alignItems: "center",
                                     borderRadius: "100%",
-                                    marginLeft: "100px",
+                                    marginLeft: "300px",
                                     padding: "10px",
                                 }}
                             >
@@ -752,7 +752,7 @@ function LandingPage() {
                         sx={{
                             backgroundColor: "gray",
                             width: { xs: "90%", md: "600px" },
-                            height: "400px",
+                            height: "350px",
                             borderRadius: "10px",
                             overflow: "hidden",
                         }}
@@ -773,7 +773,7 @@ function LandingPage() {
                         sx={{
                             backgroundColor: "gray",
                             width: { xs: "90%", md: "600px" },
-                            height: "400px",
+                            height: "350px",
                             borderRadius: "10px",
                             overflow: "hidden",
                             position: "relative",

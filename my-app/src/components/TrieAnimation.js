@@ -44,7 +44,7 @@ const TrieAnimation = ({ word, controls }) => {
         <>
             <motion.div
                 animate={{
-                    y: ["0px", `${(word.length * 0.25 + 0.78) * 300}px`],
+                    y: ["0px", `${(word.length * 0.25 + 0.72) * 300}px`],
                     scale: 3,
                 }}
                 transition={{

@@ -148,12 +148,12 @@ export async function doAnalyze(
                 setTrieTime(
                     `The Trie produced the results in ${(
                         trieEnd - trieStart
-                    ).toFixed(2)}ms for the word "${word}"`
+                    ).toFixed(4)}ms for the word "${word}"`
                 );
                 setMapTime(
                     `The Hash Map produced the results in ${(
                         mapEnd - mapStart
-                    ).toFixed(2)}ms for the word "${word}"`
+                    ).toFixed(4)}ms for the word "${word}"`
                 );
             } else {
                 setTrieStats({ views: 0, likes: 0, comments: 0 });

@@ -67,7 +67,7 @@ export const Navbar = () => {
                 </Typography>
 
                 {/* Buttons */}
-                <Button
+                {/* <Button
                     color="inherit"
                     href="https://www.google.com"
                     sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
@@ -87,36 +87,41 @@ export const Navbar = () => {
                     sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
                 >
                     About
-                </Button>
+                </Button> */}
             </Toolbar>
         </AppBar>
     );
 };
 
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 
 const highlightWordInTitle = (title, word) => {
     if (!word || !title) return title;
-    const regex = new RegExp(`(${word})`, 'gi');
+    const regex = new RegExp(`(${escapeRegExp(word)})`, "gi");
     const parts = title.split(regex);
-    
+
     return (
         <p style={{ margin: 0 }}>
-            {parts.map((part, i) => 
-                part.toLowerCase() === word.toLowerCase() 
-                    ? <mark 
-                        key={i} 
+            {parts.map((part, i) =>
+                part.toLowerCase() === word.toLowerCase() ? (
+                    <mark
+                        key={i}
                         style={{
-                            backgroundColor: 'rgba(255, 255, 0, 0.5)',
-                            color: 'white',
-                            padding: '0 2px',
-                            borderRadius: '3px',
-                            fontWeight: 'bold',
-                            textShadow: '1px 1px 1px rgba(0,0,0,0.5)' 
+                            backgroundColor: "rgba(255, 255, 0, 0.5)",
+                            color: "white",
+                            padding: "0 2px",
+                            borderRadius: "3px",
+                            fontWeight: "bold",
+                            textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
                         }}
-                      >
+                    >
                         {part}
-                      </mark>
-                    : part
+                    </mark>
+                ) : (
+                    part
+                )
             )}
         </p>
     );
@@ -130,7 +135,7 @@ export function ScrollingStack(inputArr, word) {
 
     // Update the key whenever the word changes
     useEffect(() => {
-        setKey(prev => prev + 1);
+        setKey((prev) => prev + 1);
     }, [word]);
 
     useEffect(() => {
@@ -138,17 +143,19 @@ export function ScrollingStack(inputArr, word) {
             try {
                 const youtubeData = await getYoutubeData();
                 if (!youtubeData || youtubeData.length === 0) {
-                    throw new Error('No data available');
+                    throw new Error("No data available");
                 }
 
                 // Process the real data, ensuring all entries are valid
                 const processedData = youtubeData
-                    .filter(row => row && row[0] && typeof row[0] === 'string')
-                    .map(row => [
+                    .filter(
+                        (row) => row && row[0] && typeof row[0] === "string"
+                    )
+                    .map((row) => [
                         row[0],
                         Number(row[1]) || 0,
                         Number(row[2]) || 0,
-                        Number(row[3]) || 0
+                        Number(row[3]) || 0,
                     ]);
 
                 // If we need more rows for the animation, repeat the real data
@@ -156,14 +163,14 @@ export function ScrollingStack(inputArr, word) {
                 while (finalData.length < 100) {
                     finalData = [...finalData, ...processedData];
                 }
-                
+
                 // Trim to exactly 100 items
                 finalData = finalData.slice(0, 100);
-                
+
                 setData(finalData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error loading data:', error);
+                console.error("Error loading data:", error);
                 setLoading(false);
             }
         };
@@ -172,14 +179,16 @@ export function ScrollingStack(inputArr, word) {
 
     if (loading) {
         return (
-            <Box sx={{ 
-                height: "100%", 
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center",
-                color: "white",
-                fontSize: "1.5rem"
-            }}>
+            <Box
+                sx={{
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontSize: "1.5rem",
+                }}
+            >
                 Loading...
             </Box>
         );
@@ -187,27 +196,29 @@ export function ScrollingStack(inputArr, word) {
 
     if (data.length === 0) {
         return (
-            <Box sx={{ 
-                height: "100%", 
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center",
-                color: "white",
-                fontSize: "1.5rem"
-            }}>
+            <Box
+                sx={{
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontSize: "1.5rem",
+                }}
+            >
                 No data available
             </Box>
         );
     }
 
     // Process the data to highlight words
-    const displayData = data.map(row => {
+    const displayData = data.map((row) => {
         const title = row[0];
         return [
             word ? highlightWordInTitle(title, word) : title,
             row[1],
             row[2],
-            row[3]
+            row[3],
         ];
     });
 
@@ -218,7 +229,7 @@ export function ScrollingStack(inputArr, word) {
                 overflow: "hidden",
                 display: "flex",
                 justifyContent: "center",
-                backgroundColor: "black"
+                backgroundColor: "black",
             }}
         >
             <motion.div
@@ -229,7 +240,7 @@ export function ScrollingStack(inputArr, word) {
             >
                 <Stack spacing={1} sx={{ width: "100%", padding: "10px" }}>
                     {displayData.map((row, index) => (
-                        <DataRow 
+                        <DataRow
                             key={index}
                             row={row}
                             index={index}
@@ -244,7 +255,7 @@ export function ScrollingStack(inputArr, word) {
 
 const DataRow = React.memo(({ row, index, isHighlighted }) => {
     const safeRow = Array.isArray(row) ? row : ["No data", 0, 0, 0];
-    
+
     return (
         <Box
             sx={{
@@ -259,41 +270,61 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
                 borderRadius: 1,
                 padding: "0 10px",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                transition: "all 0.3s ease",
+                "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
                 },
-                '& mark': {
-                    backgroundColor: 'rgba(255, 255, 0, 0.5)', 
-                    color: 'white',
-                    padding: '0 2px',
-                    borderRadius: '3px',
-                    fontWeight: 'bold',
-                    textShadow: '1px 1px 1px rgba(0,0,0,0.5)' 
-                }
+                "& mark": {
+                    backgroundColor: "rgba(255, 255, 0, 0.5)",
+                    color: "white",
+                    padding: "0 2px",
+                    borderRadius: "3px",
+                    fontWeight: "bold",
+                    textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
+                },
             }}
         >
-            <Box sx={{ 
-                flex: 3, 
-                overflow: 'hidden', 
-                textOverflow: 'ellipsis', 
-                whiteSpace: 'nowrap',
-                display: 'flex',
-                alignItems: 'center'
-            }}>
+            <Box
+                sx={{
+                    flex: 3,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                }}
+            >
                 {safeRow[0]}
             </Box>
-            <Divider orientation="vertical" flexItem sx={{ backgroundColor: "red", mx: 1 }} />
-            <Box sx={{ flex: 1, textAlign: 'center' }}>
-                {typeof safeRow[1] === 'number' ? safeRow[1].toLocaleString() : 0}
+            <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ backgroundColor: "red", mx: 1 }}
+            />
+            <Box sx={{ flex: 1, textAlign: "center" }}>
+                {typeof safeRow[1] === "number"
+                    ? safeRow[1].toLocaleString()
+                    : 0}
             </Box>
-            <Divider orientation="vertical" flexItem sx={{ backgroundColor: "red", mx: 1 }} />
-            <Box sx={{ flex: 1, textAlign: 'center' }}>
-                {typeof safeRow[2] === 'number' ? safeRow[2].toLocaleString() : 0}
+            <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ backgroundColor: "red", mx: 1 }}
+            />
+            <Box sx={{ flex: 1, textAlign: "center" }}>
+                {typeof safeRow[2] === "number"
+                    ? safeRow[2].toLocaleString()
+                    : 0}
             </Box>
-            <Divider orientation="vertical" flexItem sx={{ backgroundColor: "red", mx: 1 }} />
-            <Box sx={{ flex: 1, textAlign: 'center' }}>
-                {typeof safeRow[3] === 'number' ? safeRow[3].toLocaleString() : 0}
+            <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ backgroundColor: "red", mx: 1 }}
+            />
+            <Box sx={{ flex: 1, textAlign: "center" }}>
+                {typeof safeRow[3] === "number"
+                    ? safeRow[3].toLocaleString()
+                    : 0}
             </Box>
         </Box>
     );
@@ -303,7 +334,11 @@ function LandingPage() {
     const [titleInput, setTitleInput] = useState("");
     const [currentWord, setCurrentWord] = useState("");
     const [analyzing, setAnalyzing] = useState(false);
-    const [trieStats, setTrieStats] = useState({ views: 0, likes: 0, comments: 0 });
+    const [trieStats, setTrieStats] = useState({
+        views: 0,
+        likes: 0,
+        comments: 0,
+    });
 
     const [dataDisplay, setDataDisplay] = useState("");
     const [trieTime, setTrieTime] = useState("");
@@ -321,14 +356,13 @@ function LandingPage() {
                     overflow: "hidden",
                     background:
                         "linear-gradient(160deg, rgb(126, 38, 38) 5%, rgb(29, 29, 29) 50%)",
-           
+
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundAttachment: "fixed",
                 }}
             >
-
                 <Navbar />
                 <Box
                     sx={{
@@ -449,7 +483,7 @@ function LandingPage() {
                                 alignItems: "center",
                                 borderRadius: "10px",
                                 margin: "20px",
-                                padding: "10px"
+                                padding: "10px",
                             }}
                         >
                             <Box
@@ -540,7 +574,7 @@ function LandingPage() {
                         alignItems: "center",
                         width: "100%",
                         padding: "20px",
-                        gap: "20px"
+                        gap: "20px",
                     }}
                 >
                     {/* Hash Map Animation Box */}
@@ -550,11 +584,16 @@ function LandingPage() {
                             width: { xs: "90%", md: "600px" },
                             height: "400px",
                             borderRadius: "10px",
-                            overflow: "hidden"
+                            overflow: "hidden",
                         }}
                     >
                         {ScrollingStack(
-                            [titleInput || "This is a video title", trieStats.views, trieStats.likes, trieStats.comments],
+                            [
+                                titleInput || "This is a video title",
+                                trieStats.views,
+                                trieStats.likes,
+                                trieStats.comments,
+                            ],
                             currentWord
                         )}
                     </Box>
@@ -567,7 +606,7 @@ function LandingPage() {
                             height: "400px",
                             borderRadius: "10px",
                             overflow: "hidden",
-                            position: "relative"
+                            position: "relative",
                         }}
                     >
                         <TrieAnimation

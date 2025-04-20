@@ -99,8 +99,8 @@ function escapeRegExp(string) {
 
 const highlightWordInTitle = (title, word) => {
     if (!word || !title) return title;
-    const regex = new RegExp(`(${escapeRegExp(word)})`, "gi");
-    const parts = title.split(regex);
+    const regex = new RegExp(`\\b(${escapeRegExp(word)})\\b`, "gi");
+    const parts = title.split(regex).filter((part) => part !== "");
 
     return (
         <p style={{ margin: 0 }}>
@@ -115,6 +115,7 @@ const highlightWordInTitle = (title, word) => {
                             borderRadius: "3px",
                             fontWeight: "bold",
                             textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
+                            fontSize: "1rem",
                         }}
                     >
                         {part}
@@ -239,7 +240,7 @@ export function ScrollingStack(inputArr, word) {
         >
             <motion.div
                 key={key}
-                animate={{ y: ["0%", "-1370%"] }}
+                animate={{ y: ["0%", "-1964%"] }}
                 transition={{ duration: 2, repeat: 0, ease: "easeOut" }}
                 style={{ width: "100%" }}
             >
@@ -309,7 +310,7 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
         <Box
             sx={{
                 width: "90%",
-                minHeight: 50,
+                height: "75px",
                 backgroundColor: "black",
                 display: "flex",
                 alignItems: "center",
@@ -336,12 +337,13 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
             <Box
                 sx={{
                     overflow: "hidden",
+                    wordWrap: "break-word",
                     whiteSpace: "normal",
-                    display: "flex",
-                    alignItems: "center",
+                    textAlign: "center",
                     maxWidth: "40%",
                     width: "40%",
                     minWidth: "40%",
+                    fontSize: "0.75rem",
                 }}
             >
                 {safeRow[0]}
@@ -357,6 +359,7 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
                     maxWidth: "15%",
                     width: "15%",
                     minWidth: "15%",
+                    fontSize: "0.75rem",
                 }}
             >
                 {typeof safeRow[1] === "number"
@@ -374,6 +377,7 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
                     maxWidth: "15%",
                     width: "15%",
                     minWidth: "15%",
+                    fontSize: "0.75rem",
                 }}
             >
                 {typeof safeRow[2] === "number"
@@ -391,6 +395,7 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
                     maxWidth: "15%",
                     width: "15%",
                     minWidth: "15%",
+                    fontSize: "0.75rem",
                 }}
             >
                 {typeof safeRow[3] === "number"

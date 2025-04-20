@@ -79,7 +79,7 @@ export async function doAnalyze(
     totalTrieTime,
     setTotalTrieTime,
     totalMapTime,
-    setTotalMapTime,
+    setTotalMapTime
 ) {
     if (currentController) {
         currentController.abort();
@@ -91,8 +91,10 @@ export async function doAnalyze(
     setAnalyzing(true);
     setHashMapTitle(title);
 
-
     console.log(trie.titleCount);
+
+    setTotalMapTime(0.0);
+    setTotalTrieTime(0.0);
 
     try {
         if (!dataArr) {
@@ -118,20 +120,37 @@ export async function doAnalyze(
             const trieStart = performance.now();
             const trieStats = trie.getWordData(word);
             const trieEnd = performance.now();
-            
+
             const mapStart = performance.now();
             const hashmapStats = hashmap.getAverageWordStats(word);
             const mapEnd = performance.now();
 
             //Weird title score formula
-            setTitleScore({views: titleScore.views + hashmapStats.avgStats.views/words.length, likes: titleScore.views + hashmapStats.avgStats.likes/words.length, comments: titleScore.comments + hashmapStats.avgStats.comments/words.length});
-            setWordScores(prev => [
+            setTitleScore({
+                views:
+                    titleScore.views +
+                    hashmapStats.avgStats.views / words.length,
+                likes:
+                    titleScore.views +
+                    hashmapStats.avgStats.likes / words.length,
+                comments:
+                    titleScore.comments +
+                    hashmapStats.avgStats.comments / words.length,
+            });
+            setWordScores((prev) => [
                 ...prev,
-                [word, hashmapStats.avgStats.views, hashmapStats.avgStats.likes, hashmapStats.avgStats.comments]
-              ]);
-            setTotalTrieTime(totalTrieTime+(trieEnd-trieStart));
-            setTotalMapTime(totalMapTime+(mapEnd-mapStart));
-              
+                [
+                    word,
+                    hashmapStats.avgStats.views,
+                    hashmapStats.avgStats.likes,
+                    hashmapStats.avgStats.comments,
+                ],
+            ]);
+            setTotalTrieTime((prev) => prev + (trieEnd - trieStart));
+            setTotalMapTime((prev) => prev + (mapEnd - mapStart));
+            console.log(`Map start: ${mapStart}`);
+            console.log(`Map end: ${mapEnd}`);
+
             if (trieStats && hashmapStats) {
                 setTrieStats({
                     views: trieStats.avgStats.views || 0,
@@ -195,7 +214,6 @@ export async function doAnalyze(
             }
 
             try {
-                console.log(word.length);
                 await cancelableDelay(
                     (word.length * 0.1 + 2.75) * 1000,
                     signal

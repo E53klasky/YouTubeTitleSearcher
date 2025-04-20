@@ -137,13 +137,11 @@ export function ScrollingStack(inputArr, word) {
     // Update the key whenever the word changes
     useEffect(() => {
         setKey((prev) => prev + 1);
-        console.log("Updating first useEffect");
     }, [word]);
 
     useEffect(() => {
         const loadData = async () => {
             try {
-                console.log("Getting some data");
                 const youtubeData = await getYoutubeData();
                 if (!youtubeData || youtubeData.length === 0) {
                     throw new Error("No data available");
@@ -170,8 +168,6 @@ export function ScrollingStack(inputArr, word) {
                 // Trim to exactly 100 items
                 finalData = finalData.slice(0, 100);
 
-                console.log(`Final Data length: ${finalData.length}`);
-
                 setData(finalData);
                 setLoading(false);
             } catch (error) {
@@ -180,7 +176,6 @@ export function ScrollingStack(inputArr, word) {
             }
         };
         loadData();
-        console.log("Updating second useEffect");
     }, []);
 
     if (loading) {
@@ -258,50 +253,6 @@ export function ScrollingStack(inputArr, word) {
         </Box>
     );
 }
-
-/**
- * return (
-    <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center"}}>
-      <motion.div
-        animate={{ y: ["0%", "-1370%"]}} // Moves from bottom to top
-        transition={{ duration: 4, repeat: 0, ease: "easeOut" }}
-        style={{ width: "100%" }}
-      >
-        <Stack container spacing={1} sx = {{ width: "100%"}}>
-          {arr.map((row, index) => (
-            <>
-            <Box
-              sx={{
-                width: "95.5%",
-                height: 50,
-                backgroundColor: "black",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "1.2rem",
-                borderRadius: 1,
-                margin: "10px",
-                paddingLeft: "10px", 
-                paddingRight: "10px", 
-                boxShadow: index == 97 && "0px 0px 4px 2px rgba(255, 217, 0, .4)",
-                [`& .${dividerClasses.root}`]: {
-                  mx: 1,
-                }
-              }}
-            >
-              {row[0]}
-              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {row[1]}
-              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {row[2]}
-              <Divider color = "red" orientation='vertical' variant = "middle" flexItem/>
-              {row[3]}
-            </Box>
-            
-            </>
-))}
- */
 
 const DataRow = React.memo(({ row, index, isHighlighted }) => {
     const safeRow = Array.isArray(row) ? row : ["No data", 0, 0, 0];
@@ -437,7 +388,6 @@ function LandingPage() {
     const handleTitleChange = (e) => {
         setTitleInput(e.target.value);
     };
-    
 
     return (
         <ThemeProvider theme={theme}>
@@ -561,24 +511,25 @@ function LandingPage() {
                             setMapTime={setMapTime}
                             setTrieStats={setTrieStats}
                             setHashMapTitle={setHashMapTitle}
-                            setTitleScore = {setTitleScore}
-                            titleScore = {titleScore}
-                            setWordScores = {setWordScores}
-                            wordScores = {wordsScores}
-                            totalTrieTime = {totalTrieTime}
-                            setTotalTrieTime = {setTotalTrieTime}
-                            totalMapTime = {totalMapTime}
-                            setTotalMapTime = {setTotalMapTime}
+                            setTitleScore={setTitleScore}
+                            titleScore={titleScore}
+                            setWordScores={setWordScores}
+                            wordScores={wordsScores}
+                            totalTrieTime={totalTrieTime}
+                            setTotalTrieTime={setTotalTrieTime}
+                            totalMapTime={totalMapTime}
+                            setTotalMapTime={setTotalMapTime}
                         />
                         {/* Results Box */}
                         <Box
-                            sx = {{
+                            sx={{
                                 display: "flex",
                                 height: "50px",
                                 width: "70%",
                                 justifyContent: "center",
                                 //alignItems: "center",
-                                padding: "10px",}}
+                                padding: "10px",
+                            }}
                         >
                             <Box
                                 sx={{
@@ -596,29 +547,35 @@ function LandingPage() {
                                 }}
                             >
                                 <Typography>
-                                    Total Hashmap Time: 
+                                    Total Hashmap Time:
                                     {totalMapTime}
                                 </Typography>
                             </Box>
                             <Box
-                            sx={{
-                                backgroundColor: "yellow",
-                                display: "flex",
-                                flexDirection: "column",
-                                height: "50px",
-                                width: "500px",
-                                overflow: "hidden",
-                                justifyContent: "space-around",
-                                //alignItems: "center",
-                                borderRadius: "100%",
-                                marginBottom: "20px",
-                                padding: "10px",
-                            }}
-                        >
-                            {!analyzing ? <Typography>
-                                TITLE STATS: Views: {titleScore.views} Likes: {titleScore.likes} Comments: {titleScore.comments}
-                            </Typography> : <Typography>Loading</Typography>}
-                        </Box>
+                                sx={{
+                                    backgroundColor: "yellow",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    height: "50px",
+                                    width: "500px",
+                                    overflow: "hidden",
+                                    justifyContent: "space-around",
+                                    //alignItems: "center",
+                                    borderRadius: "100%",
+                                    marginBottom: "20px",
+                                    padding: "10px",
+                                }}
+                            >
+                                {!analyzing ? (
+                                    <Typography>
+                                        TITLE STATS: Views: {titleScore.views}{" "}
+                                        Likes: {titleScore.likes} Comments:{" "}
+                                        {titleScore.comments}
+                                    </Typography>
+                                ) : (
+                                    <Typography>Loading</Typography>
+                                )}
+                            </Box>
                             <Box
                                 sx={{
                                     backgroundColor: "yellow",
@@ -635,12 +592,12 @@ function LandingPage() {
                                 }}
                             >
                                 <Typography>
-                                    Total Trie Time: 
+                                    Total Trie Time:
                                     {totalTrieTime}
                                 </Typography>
                             </Box>
                         </Box>
-                        
+
                         {/* <Box
                             sx={{
                                 backgroundColor: "gray",

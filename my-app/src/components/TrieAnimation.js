@@ -5,6 +5,7 @@ import TrieVisualization from "./TrieVisualization.js";
 import { buildTrie } from "./buildTrie";
 
 const TrieAnimation = ({ word, controls }) => {
+    const speed_factor = word.length/4.0;
     const coords = useMemo(() => {
         const arr = [];
         for (let i = 1; i < word.length; i++) {
@@ -24,8 +25,8 @@ const TrieAnimation = ({ word, controls }) => {
                     x: right,
                     y: height,
                     transition: {
-                        delay: first ? 3 : 1,
-                        duration: 0.5,
+                        delay: first ? .75 : .1,
+                        duration: 0.25/speed_factor,
                         ease: "easeInOut",
                     },
                 });
@@ -48,8 +49,8 @@ const TrieAnimation = ({ word, controls }) => {
                     scale: 3,
                 }} 
                 transition={{
-                    delay: 1,
-                    duration: 1,
+                    delay: .25,
+                    duration: 0.25/speed_factor,
                     repeat: 0,
                     ease: "easeIn",
                 }}
@@ -57,7 +58,7 @@ const TrieAnimation = ({ word, controls }) => {
             >
                 <motion.div
                     animate={controls}
-                    transition={{ delay: 5, duration: 1, ease: "easeIn" }}
+                    transition={{ delay: 3, duration: 0.25/speed_factor, ease: "easeIn" }}
                     style={{ width: "100%" }}
                 >
                     <TrieVisualization node={buildTrie([word])} />

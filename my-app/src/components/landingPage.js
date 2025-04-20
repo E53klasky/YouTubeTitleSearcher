@@ -195,6 +195,23 @@ export function ScrollingStack(inputArr, word) {
         );
     }
 
+    if (inputArr[0] == "This is a video title") {
+        return (
+            <Box
+                sx={{
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontSize: "1.5rem",
+                }}
+            >
+                Waiting for input...
+            </Box>
+        );
+    }
+
     if (data.length === 0) {
         return (
             <Box

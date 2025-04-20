@@ -500,27 +500,65 @@ function LandingPage() {
                                 },
                             }}
                         />
-                        <SearchButton
-                            title={titleInput}
-                            currentWord={currentWord}
-                            setCurrentWord={setCurrentWord}
-                            analyzing={analyzing}
-                            setAnalyzing={setAnalyzing}
-                            setDataDisplay={setDataDisplay}
-                            setTrieTime={setTrieTime}
-                            setMapTime={setMapTime}
-                            setTrieStats={setTrieStats}
-                            setHashMapTitle={setHashMapTitle}
-                            setTitleScore={setTitleScore}
-                            titleScore={titleScore}
-                            setWordScores={setWordScores}
-                            wordScores={wordsScores}
-                            totalTrieTime={totalTrieTime}
-                            setTotalTrieTime={setTotalTrieTime}
-                            totalMapTime={totalMapTime}
-                            setTotalMapTime={setTotalMapTime}
-                        />
-                        {/* Results Box */}
+                        <Box sx={{
+                                    display: "flex",
+                                    height: "100px",
+                                    width: "70%",
+                                    overflow: "hidden",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    flexDirection: "row",
+                                }}
+                        >
+                            <SearchButton
+                                title={titleInput}
+                                currentWord={currentWord}
+                                setCurrentWord={setCurrentWord}
+                                analyzing={analyzing}
+                                setAnalyzing={setAnalyzing}
+                                setDataDisplay={setDataDisplay}
+                                setTrieTime={setTrieTime}
+                                setMapTime={setMapTime}
+                                setTrieStats={setTrieStats}
+                                setHashMapTitle={setHashMapTitle}
+                                setTitleScore={setTitleScore}
+                                titleScore={titleScore}
+                                setWordScores={setWordScores}
+                                wordScores={wordsScores}
+                                totalTrieTime={totalTrieTime}
+                                setTotalTrieTime={setTotalTrieTime}
+                                totalMapTime={totalMapTime}
+                                setTotalMapTime={setTotalMapTime}
+                            />
+                         {/* Results Box */}
+                            <Box
+                                    sx={{
+                                        backgroundColor: "yellow",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        height: "50px",
+                                        width: "200px",
+                                        overflow: "hidden",
+                                        justifyContent: "space-around",
+                                        //alignItems: "center",
+                                        borderRadius: "100%",
+                                        marginLeft: "10px",
+                                        padding: "10px",
+                                    }}
+                                >
+                                    {!analyzing ? (
+                                    <Typography>
+                                        TITLE STATS: Views: {titleScore.views.toFixed(0)}{" "}
+                                        Likes: {titleScore.likes.toFixed(0)} Comments:{" "}
+                                        {titleScore.comments.toFixed(0)}
+                                    </Typography>
+                                ) : (
+                                    <Typography>Loading</Typography>
+                                )}
+                            </Box>
+                        </Box>
+                        
+                        
                         <Box
                             sx={{
                                 display: "flex",
@@ -542,14 +580,15 @@ function LandingPage() {
                                     justifyContent: "space-around",
                                     //alignItems: "center",
                                     borderRadius: "100%",
-                                    marginRight: "300px",
+                                    marginBottom: "20px",
                                     padding: "10px",
                                 }}
                             >
-                                <Typography>
-                                    Total Hashmap Time:
-                                    {totalMapTime}
-                                </Typography>
+                                
+                                {!analyzing ? <Typography>
+                                        Total Hashmap Time: 
+                                        {totalMapTime.toFixed(5)}ms
+                                    </Typography> : <Typography>Loading</Typography>}
                             </Box>
                             <Box
                                 sx={{
@@ -566,15 +605,19 @@ function LandingPage() {
                                     padding: "10px",
                                 }}
                             >
-                                {!analyzing ? (
-                                    <Typography>
-                                        TITLE STATS: Views: {titleScore.views}{" "}
-                                        Likes: {titleScore.likes} Comments:{" "}
-                                        {titleScore.comments}
-                                    </Typography>
-                                ) : (
-                                    <Typography>Loading</Typography>
-                                )}
+                                
+                               <Typography>
+                                        {wordsScores.map((arr, index) => {
+                                            if (index != 0){
+                                            return(
+                                                <>
+                                                    Word: {arr[0]} Views: {arr[1].toFixed(0)} Likes: {arr[2].toFixed(0)} Comments: {arr[3].toFixed(0)} 
+                                                </>
+                                            );
+                                        }
+                                        return (<></>)
+                                        })}
+                                </Typography>
                             </Box>
                             <Box
                                 sx={{
@@ -591,10 +634,10 @@ function LandingPage() {
                                     padding: "10px",
                                 }}
                             >
-                                <Typography>
-                                    Total Trie Time:
-                                    {totalTrieTime}
-                                </Typography>
+                                 {!analyzing ? <Typography>
+                                    Total Trie Time: 
+                                     {totalTrieTime.toFixed(5)}ms
+                                </Typography> : <Typography>Loading</Typography>}
                             </Box>
                         </Box>
 

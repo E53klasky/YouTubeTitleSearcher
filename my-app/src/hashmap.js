@@ -74,10 +74,10 @@ export class OptimizedYTVideoStatsHashmap {
             throw new Error("Value must be an instance of VideoStats");
         }
 
-        const words = title.trim().split(/\s+/);
+        const words = title.toLowerCase().trim().split(/\s+/);
 
         for (const word of words) {
-            this.insertWord(word, videoStats);
+            this.insertWord(word.toLowerCase(), videoStats);
         }
     }
 
@@ -97,7 +97,7 @@ export class OptimizedYTVideoStatsHashmap {
             this.wordBuckets[index] = [];
         }
 
-        this.wordBuckets[index].push([word, videoStats]);
+        this.wordBuckets[index].push([word.toLowerCase(), videoStats]);
         this.wordSize++;
     }
 
@@ -206,7 +206,7 @@ export class OptimizedYTVideoStatsHashmap {
     }
 
     getWordStats(word) {
-        const index = this.hashWord(word);
+        const index = this.hashWord(word.toLowerCase());
 
         if (!this.wordBuckets[index]) {
             return [];
@@ -216,7 +216,7 @@ export class OptimizedYTVideoStatsHashmap {
     }
 
     getAverageWordStats(word) {
-        const dataPoints = this.getWordStats(word);
+        const dataPoints = this.getWordStats(word.toLowerCase());
 
         if (dataPoints.length == 0) {
             return {

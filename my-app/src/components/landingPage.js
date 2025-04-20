@@ -402,8 +402,16 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
 });
 
 function LandingPage() {
+    let disTitleScore = 0;
     const [titleInput, setTitleInput] = useState("");
     const [currentWord, setCurrentWord] = useState("");
+    const [titleScore, setTitleScore] = useState({
+        views: 0,
+        likes: 0,
+        comments: 0,
+    });
+    const [wordsScores, setWordScores] = useState([[]]);
+    //console.log("word scores: " + wordsScores[1]?.[0] ?? "not ready");
     const [analyzing, setAnalyzing] = useState(false);
     const [trieStats, setTrieStats] = useState({
         views: 0,
@@ -416,12 +424,15 @@ function LandingPage() {
     const [dataDisplay, setDataDisplay] = useState("");
     const [trieTime, setTrieTime] = useState("");
     const [mapTime, setMapTime] = useState("");
+    const [totalTrieTime, setTotalTrieTime] = useState(0);
+    const [totalMapTime, setTotalMapTime] = useState(0);
 
     const trieControls = useAnimation();
 
     const handleTitleChange = (e) => {
         setTitleInput(e.target.value);
     };
+    
 
     return (
         <ThemeProvider theme={theme}>
@@ -545,9 +556,87 @@ function LandingPage() {
                             setMapTime={setMapTime}
                             setTrieStats={setTrieStats}
                             setHashMapTitle={setHashMapTitle}
+                            setTitleScore = {setTitleScore}
+                            titleScore = {titleScore}
+                            setWordScores = {setWordScores}
+                            wordScores = {wordsScores}
+                            totalTrieTime = {totalTrieTime}
+                            setTotalTrieTime = {setTotalTrieTime}
+                            totalMapTime = {totalMapTime}
+                            setTotalMapTime = {setTotalMapTime}
                         />
                         {/* Results Box */}
                         <Box
+                            sx={{
+                                backgroundColor: "yellow",
+                                display: "flex",
+                                flexDirection: "column",
+                                height: "50px",
+                                width: "500px",
+                                overflow: "hidden",
+                                justifyContent: "space-around",
+                                //alignItems: "center",
+                                borderRadius: "100%",
+                                margin: "20px",
+                                padding: "10px",
+                            }}
+                        >
+                            {!analyzing ? <Typography>
+                                TITLE STATS: Views: {titleScore.views} Likes: {titleScore.likes} Comments: {titleScore.comments}
+                            </Typography> : <Typography>Loading</Typography>}
+                        </Box>
+                        <Box
+                            sx = {{
+                                display: "flex",
+                                height: "50px",
+                                width: "500px",
+                                justifyContent: "center",
+                                //alignItems: "center",
+                                padding: "10px",}}
+                        >
+                            <Box
+                                sx={{
+                                    backgroundColor: "yellow",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    height: "50px",
+                                    width: "500px",
+                                    overflow: "hidden",
+                                    justifyContent: "space-around",
+                                    //alignItems: "center",
+                                    borderRadius: "100%",
+                                    marginRight: "100px",
+                                    padding: "10px",
+                                }}
+                            >
+                                <Typography>
+                                    Total Hashmap Time: 
+                                    {totalMapTime}
+                                </Typography>
+                            </Box>
+                            <Box
+                                sx={{
+                                    backgroundColor: "yellow",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    height: "50px",
+                                    width: "500px",
+                                    overflow: "hidden",
+                                    justifyContent: "space-around",
+                                    //alignItems: "center",
+                                    borderRadius: "100%",
+                                    marginLeft: "100px",
+                                    padding: "10px",
+                                }}
+                            >
+                                <Typography>
+                                    Total Trie Time: 
+                                    {totalTrieTime}
+                                </Typography>
+                            </Box>
+                        </Box>
+                        
+                        {/* <Box
                             sx={{
                                 backgroundColor: "gray",
                                 display: "flex",
@@ -579,7 +668,7 @@ function LandingPage() {
                                         textAlign: "center",
                                     }}
                                 >
-                                    {dataDisplay}
+                                    {"Popp"}
                                 </Typography>
                             </Box>
                             <Box
@@ -638,7 +727,7 @@ function LandingPage() {
                                     </Typography>
                                 </Box>
                             </Box>
-                        </Box>
+                        </Box> */}
                     </Box>
                     {/*ANIMATION BOXES*/}
                 </Box>

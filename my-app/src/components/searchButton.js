@@ -13,6 +13,13 @@ const SearchButton = ({
     setMapTime,
     setTrieStats,
     setHashMapTitle,
+    setTitleScore,
+    titleScore,
+    setWordScores,
+    totalTrieTime,
+    setTotalTrieTime,
+    totalMapTime,
+    setTotalMapTime,
 }) => {
     return (
         <Box mt={2}>
@@ -27,7 +34,14 @@ const SearchButton = ({
                         setTrieTime,
                         setMapTime,
                         setTrieStats,
-                        setHashMapTitle
+                        setHashMapTitle,
+                        setTitleScore,
+                        titleScore,
+                        setWordScores,
+                        totalTrieTime,
+                        setTotalTrieTime,
+                        totalMapTime,
+                        setTotalMapTime,
                     )
                 }
                 color="error"

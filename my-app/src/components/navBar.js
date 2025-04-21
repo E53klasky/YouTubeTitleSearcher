@@ -17,20 +17,9 @@ import {
 } from "@mui/material";
 import "@fontsource/poppins";
 import HomeIcon from "@mui/material/Icon";
-import { motion, useAnimation } from "framer-motion";
-import Divider, { dividerClasses } from "@mui/material/Divider";
-import { getYoutubeData } from "./visualsData";
-import highlightWord from "./visualsData";
-import { input } from "framer-motion/client";
-import TrieVisualization from "./TrieVisualization.js";
-import SearchButton from "./searchButton.js";
-// import {buildTrie} from './Trie.js';
-import TreeContainer from "./TrieVisualization.js";
-import TrieAnimation from "./TrieAnimation.js";
+import { Link } from "react-router-dom";
+import { color } from "framer-motion";
 
-{
-    /*Half chatgpted*/
-}
 export const Navbar = () => {
     return (
         <AppBar position="sticky" sx={{ background: "rgba(0,0,0, .4)" }}>
@@ -62,24 +51,31 @@ export const Navbar = () => {
                 {/* Buttons */}
                 <Button
                     color="inherit"
-                    href="https://www.google.com"
                     sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
                 >
-                    Home
+                    <Link
+                        style={{
+                            color: "rgb(201, 196, 196)",
+                            textDecoration: "none",
+                        }}
+                        to={"/"}
+                    >
+                        Home
+                    </Link>
                 </Button>
-                {/* <Button
-                    color="inherit"
-                    href="https://www.google.com/maps"
-                    sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
-                >
-                    Search
-                </Button> */}
                 <Button
                     color="inherit"
-                    href="https://www.google.com/drive"
                     sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
                 >
-                    About
+                    <Link
+                        style={{
+                            color: "rgb(201, 196, 196)",
+                            textDecoration: "none",
+                        }}
+                        to={"/about"}
+                    >
+                        About
+                    </Link>
                 </Button>
             </Toolbar>
         </AppBar>

@@ -12,6 +12,8 @@ import {
     Button,
     IconButton,
     Stack,
+    FormControlLabel,
+    Switch,
 } from "@mui/material";
 import "@fontsource/poppins";
 import HomeIcon from "@mui/material/Icon";
@@ -515,11 +517,12 @@ function LandingPage() {
                         <Box sx={{
                                     display: "flex",
                                     height: "100px",
-                                    width: "60%",
+                                    width: "70%",
                                     overflow: "hidden",
                                     alignItems: "center",
                                     justifyContent: "left",
                                     flexDirection: "row",
+                                    marginLeft: "10%",
                                 }}
                         >
                             <SearchButton
@@ -552,7 +555,7 @@ function LandingPage() {
                                         width: "300px",
                                         overflow: "hidden",
                                         justifyContent: "space-around",
-                                        marginLeft: "20%",
+                                        marginLeft: "14%",
                                         borderRadius: "10px",
                                         padding: "10px",
                                         paddingTop: "5px",
@@ -574,19 +577,33 @@ function LandingPage() {
                                     display: "flex",
                                     flexDirection: "row",
                                     height: "40px",
-                                    width: "200px",
+                                    width: "800px",
                                     overflow: "hidden",
                                     justifyContent: "center",
                                     alignItems: "center",
-                                    marginLeft: "20%",
+                                    marginLeft: "10%",
                                     borderRadius: "10px",
                                     padding: "10px",
                                     paddingTop: "5px",
                                     paddingBottom: "5px",
+                                    maxWidth: "270px",
                                 }}
                             >
-                                SPEED: 
+                                <Typography>
+                                    SPEED: 
+                                </Typography>
                                 <AnimationSlider setAnimationSpeed={setAnimationSpeed}/>
+                                <FormControlLabel control={<Switch defaultChecked sx={{
+                                    '& .MuiSwitch-switchBase.Mui-checked': {
+                                        color: "rgb(213, 39, 39)",
+                                        '&:hover': {
+                                        // backgroundColor: alpha("rgb(253, 0, 0)", theme.palette.action.hoverOpacity),
+                                        },
+                                    },
+                                    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                                        backgroundColor: "rgb(177, 31, 31)",
+                                    },
+                                }} />} label="Case Sensitive" labelPlacement="start" sx = {{marginLeft: "5px"}} />
                             </Box>
                             
                         </Box>

@@ -247,7 +247,7 @@ export function ScrollingStack(inputArr, word) {
                 overflow: "hidden",
                 display: "flex",
                 justifyContent: "center",
-                backgroundColor: "gray",
+                backgroundColor: "rgb(64, 64, 64)",
             }}
         >
             <motion.div
@@ -273,6 +273,9 @@ export function ScrollingStack(inputArr, word) {
 
 const DataRow = React.memo(({ row, index, isHighlighted }) => {
     const safeRow = Array.isArray(row) ? row : ["No data", 0, 0, 0];
+    const myDivider =  <Divider
+    orientation="vertical"
+    sx={{ height: "60%", backgroundColor: "rgb(179, 32, 32)", mx: 1 }}/>;
 
     return (
         <Box
@@ -316,11 +319,7 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
             >
                 {safeRow[0]}
             </Box>
-            <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ backgroundColor: "red", mx: 1 }}
-            />
+            {myDivider}
             <Box
                 sx={{
                     textAlign: "center",
@@ -334,11 +333,7 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
                     ? safeRow[1].toLocaleString()
                     : 0}
             </Box>
-            <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ backgroundColor: "red", mx: 1 }}
-            />
+            {myDivider}
             <Box
                 sx={{
                     textAlign: "center",
@@ -352,11 +347,7 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
                     ? safeRow[2].toLocaleString()
                     : 0}
             </Box>
-            <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ backgroundColor: "red", mx: 1 }}
-            />
+            {myDivider}
             <Box
                 sx={{
                     textAlign: "center",
@@ -399,6 +390,8 @@ function LandingPage() {
     const [mapTime, setMapTime] = useState("");
     const [totalTrieTime, setTotalTrieTime] = useState(0);
     const [totalMapTime, setTotalMapTime] = useState(0);
+
+    const [animationSpeed, setAnimationSpeed] = useState(1);
 
     const trieControls = useAnimation();
 
@@ -677,99 +670,6 @@ function LandingPage() {
                                 </Typography> : <Typography>Loading</Typography>}
                             </Box>
                         </Box>
-
-                        {/* <Box
-                            sx={{
-                                backgroundColor: "gray",
-                                display: "flex",
-                                flexDirection: "column",
-                                minHeight: "200px",
-                                width: "85vw",
-                                overflow: "hidden",
-                                justifyContent: "space-around",
-                                alignItems: "center",
-                                borderRadius: "10px",
-                                margin: "20px",
-                                padding: "10px",
-                            }}
-                        >
-                            <Box
-                                sx={{
-                                    background: "black",
-                                    color: "white",
-                                    width: "100%",
-                                    minHeight: "50px",
-                                    display: "flex",
-                                    alignItems: "start",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontSize: "1.2rem",
-                                        textAlign: "center",
-                                    }}
-                                >
-                                    {"Popp"}
-                                </Typography>
-                            </Box>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "center",
-                                    flexGrow: 1,
-                                    width: "100%",
-                                }}
-                            >
-                                <Box
-                                    sx={{
-                                        background: "black",
-                                        color: "white",
-                                        width: "100%",
-                                        flexGrow: 1,
-                                        marginTop: "10px",
-                                        marginRight: "10px",
-                                        padding: "0px 20px",
-                                        display: "flex",
-                                        alignItems: "start",
-                                        justifyContent: "center",
-                                    }}
-                                >
-                                    <Typography
-                                        sx={{
-                                            fontSize: "1.2rem",
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {mapTime}
-                                    </Typography>
-                                </Box>
-                                <Box
-                                    sx={{
-                                        background: "black",
-                                        color: "white",
-                                        width: "100%",
-                                        flexGrow: 1,
-                                        marginTop: "10px",
-                                        marginLeft: "10px",
-                                        padding: "0px 20px",
-                                        display: "flex",
-                                        alignItems: "start",
-                                        justifyContent: "center",
-                                    }}
-                                >
-                                    <Typography
-                                        sx={{
-                                            fontSize: "1.2rem",
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {trieTime}
-                                    </Typography>
-                                </Box>
-                            </Box>
-                        </Box> */}
                     </Box>
                     {/*ANIMATION BOXES*/}
                 </Box>
@@ -787,7 +687,7 @@ function LandingPage() {
                     {/* Hash Map Animation Box */}
                     <Box
                         sx={{
-                            backgroundColor: "gray",
+                            backgroundColor: "rgb(64, 64, 64)",
                             width: { xs: "90%", md: "600px" },
                             height: "350px",
                             borderRadius: "10px",
@@ -801,14 +701,15 @@ function LandingPage() {
                                 trieStats.likes,
                                 trieStats.comments,
                             ],
-                            currentWord
+                            currentWord,
+                            animationSpeed
                         )}
                     </Box>
 
                     {/* Trie Animation Box */}
                     <Box
                         sx={{
-                            backgroundColor: "gray",
+                            backgroundColor: "rgb(64, 64, 64)",
                             width: { xs: "90%", md: "600px" },
                             height: "350px",
                             borderRadius: "10px",
@@ -820,6 +721,7 @@ function LandingPage() {
                             key={currentWord}
                             word={currentWord == "" && !analyzing ? "not loaded" : currentWord}
                             controls={trieControls}
+                            speed={animationSpeed}
                         />
                     </Box>
                 </Box>

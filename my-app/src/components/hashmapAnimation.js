@@ -3,7 +3,7 @@ import Divider, {dividerClasses} from '@mui/material/Divider'
 import youtubeData from './visualsData';
 import highlightWord from './visualsData';
 
-export function ScrollingStack(inputArr, word) {
+export function ScrollingStack(inputArr, word, speed) {
     let arr = youtubeData();
   
     //Highlights "word"

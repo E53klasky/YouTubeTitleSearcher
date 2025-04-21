@@ -5,8 +5,8 @@ import { motion, useAnimation } from "framer-motion";
 import TrieVisualization from "./TrieVisualization.js";
 import { buildTrie } from "./buildTrie";
 
-const TrieAnimation = ({ word, controls }) => {
-    const speed_factor = word.length / 4.0;
+const TrieAnimation = ({ word, controls, speed }) => {
+    const speed_factor = word.length / 4.0 * speed;
     const coords = useMemo(() => {
         const arr = [];
         for (let i = 1; i < word.length; i++) {

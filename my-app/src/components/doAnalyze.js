@@ -95,6 +95,12 @@ export async function doAnalyze(
 
     setTotalMapTime(0.0);
     setTotalTrieTime(0.0);
+    titleScore ={
+        views: 0,
+        likes: 0,
+        comments: 0,
+    };
+    setWordScores([[]]);
 
     try {
         if (!dataArr) {

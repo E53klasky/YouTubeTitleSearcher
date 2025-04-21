@@ -406,6 +406,7 @@ function LandingPage() {
         setTitleInput(e.target.value);
     };
 
+
     return (
         <ThemeProvider theme={theme}>
             <Box
@@ -539,7 +540,6 @@ function LandingPage() {
                                 setTrieStats={setTrieStats}
                                 setHashMapTitle={setHashMapTitle}
                                 setTitleScore={setTitleScore}
-                                titleScore={titleScore}
                                 setWordScores={setWordScores}
                                 wordScores={wordsScores}
                                 totalTrieTime={totalTrieTime}
@@ -550,24 +550,22 @@ function LandingPage() {
                          {/* Results Box */}
                             <Box
                                     sx={{
-                                        backgroundColor: "yellow",
+                                        backgroundColor: "rgb(149, 24, 24)",
+                                        color: "rgb(201, 196, 196)",
                                         display: "flex",
                                         flexDirection: "column",
-                                        height: "50px",
-                                        width: "200px",
+                                        height: "40px",
+                                        width: "300px",
                                         overflow: "hidden",
                                         justifyContent: "space-around",
                                         //alignItems: "center",
-                                        borderRadius: "100%",
-                                        marginLeft: "10px",
+                                        borderRadius: "10px",
                                         padding: "10px",
                                     }}
                                 >
                                     {!analyzing ? (
                                     <Typography>
-                                        TITLE STATS: Views: {titleScore.views.toFixed(0)}{" "}
-                                        Likes: {titleScore.likes.toFixed(0)} Comments:{" "}
-                                        {titleScore.comments.toFixed(0)}
+                                        PROJECTED TITLE STATS: {titleScore.views.toFixed(0)} views, {titleScore.likes.toFixed(0)} likes, {titleScore.comments.toFixed(0)} comments
                                     </Typography>
                                 ) : (
                                     <Typography>Loading</Typography>
@@ -580,6 +578,7 @@ function LandingPage() {
                             position = "relative"
                             sx={{
                                 display: "flex",
+                                flexDirection: {md: "row", xs: "column"},
                                 height: "50px",
                                 width: "72%",
                                 marginLeft: "2.2%",
@@ -598,7 +597,6 @@ function LandingPage() {
                                     width: "150px",
                                     overflow: "hidden",
                                     justifyContent: "space-around",
-                                    //alignItems: "center",
                                     borderRadius: "10px",
                                     marginBottom: "20px",
                                     marginRight: "20%",

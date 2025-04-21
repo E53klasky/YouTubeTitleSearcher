@@ -74,7 +74,6 @@ export async function doAnalyze(
     setTrieStats,
     setHashMapTitle,
     setTitleScore,
-    titleScore,
     setWordScores,
     totalTrieTime,
     setTotalTrieTime,
@@ -95,11 +94,6 @@ export async function doAnalyze(
 
     setTotalMapTime(0.0);
     setTotalTrieTime(0.0);
-    titleScore ={
-        views: 0,
-        likes: 0,
-        comments: 0,
-    };
     setWordScores([[]]);
 
     try {
@@ -110,6 +104,12 @@ export async function doAnalyze(
         console.log(`Analyzing ${title}`);
 
         const words = title.trim().split(/\s+/);
+
+        let titleScore = {
+            views: 0,
+            likes: 0,
+            comments: 0,
+        }
 
         for (const word of words) {
             const validTitles = hashmap.searchByWord(word);
@@ -132,17 +132,29 @@ export async function doAnalyze(
             const mapEnd = performance.now();
 
             //Weird title score formula
+            console.log("words.length "+ words.length + "\ntitleScore.comments " + titleScore.comments);
             setTitleScore({
                 views:
                     titleScore.views +
                     hashmapStats.avgStats.views / words.length,
                 likes:
-                    titleScore.views +
+                    titleScore.likes +
                     hashmapStats.avgStats.likes / words.length,
                 comments:
                     titleScore.comments +
                     hashmapStats.avgStats.comments / words.length,
             });
+            titleScore = {
+                views:
+                    titleScore.views +
+                    hashmapStats.avgStats.views / words.length,
+                likes:
+                    titleScore.likes +
+                    hashmapStats.avgStats.likes / words.length,
+                comments:
+                    titleScore.comments +
+                    hashmapStats.avgStats.comments / words.length,
+            }
             setWordScores((prev) => [
                 ...prev,
                 [

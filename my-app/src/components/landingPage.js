@@ -640,29 +640,6 @@ function LandingPage() {
                                     labelPlacement="start"
                                     sx={{ marginLeft: "5px" }}
                                 />
-                                <FormControlLabel
-                                    control={
-                                        <Switch
-                                            sx={{
-                                                "& .MuiSwitch-switchBase.Mui-checked":
-                                                    {
-                                                        color: "rgb(213, 39, 39)",
-                                                        "&:hover": {
-                                                            // backgroundColor: alpha("rgb(253, 0, 0)", theme.palette.action.hoverOpacity),
-                                                        },
-                                                    },
-                                                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
-                                                    {
-                                                        backgroundColor:
-                                                            "rgb(177, 31, 31)",
-                                                    },
-                                            }}
-                                        />
-                                    }
-                                    label="Case Sensitive"
-                                    labelPlacement="start"
-                                    sx={{ marginLeft: "5px" }}
-                                />
                             </Box>
                         </Box>
 

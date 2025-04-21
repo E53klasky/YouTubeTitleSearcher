@@ -25,6 +25,7 @@ import SearchButton from "./searchButton.js";
 // import {buildTrie} from './Trie.js';
 import TreeContainer from "./TrieVisualization.js";
 import TrieAnimation from "./TrieAnimation.js";
+import AnimationSlider from "./slider.js";
 
 const theme = createTheme({
     typography: {
@@ -551,7 +552,7 @@ function LandingPage() {
                                         width: "300px",
                                         overflow: "hidden",
                                         justifyContent: "space-around",
-                                        marginLeft: "16%",
+                                        marginLeft: "20%",
                                         borderRadius: "10px",
                                         padding: "10px",
                                         paddingTop: "5px",
@@ -565,6 +566,29 @@ function LandingPage() {
                                     <Typography>Loading</Typography>
                                 )}
                             </Box>
+                            <Box
+                                gap = {2}
+                                sx={{
+                                    backgroundColor: "rgb(64, 64, 64)",
+                                    color: "rgb(201, 196, 196)",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    height: "40px",
+                                    width: "200px",
+                                    overflow: "hidden",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    marginLeft: "20%",
+                                    borderRadius: "10px",
+                                    padding: "10px",
+                                    paddingTop: "5px",
+                                    paddingBottom: "5px",
+                                }}
+                            >
+                                SPEED: 
+                                <AnimationSlider setAnimationSpeed={setAnimationSpeed}/>
+                            </Box>
+                            
                         </Box>
                         
                         

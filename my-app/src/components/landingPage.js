@@ -247,7 +247,7 @@ export function ScrollingStack(inputArr, word) {
                 overflow: "hidden",
                 display: "flex",
                 justifyContent: "center",
-                backgroundColor: "black",
+                backgroundColor: "gray",
             }}
         >
             <motion.div
@@ -577,10 +577,12 @@ function LandingPage() {
                         
                         
                         <Box
+                            position = "relative"
                             sx={{
                                 display: "flex",
                                 height: "50px",
-                                width: "70%",
+                                width: "72%",
+                                marginLeft: "2.2%",
                                 justifyContent: "center",
                                 //alignItems: "center",
                                 padding: "10px",
@@ -588,38 +590,43 @@ function LandingPage() {
                         >
                             <Box
                                 sx={{
-                                    backgroundColor: "yellow",
+                                    backgroundColor: "rgb(149, 24, 24)",
+                                    color: "rgb(201, 196, 196)",
                                     display: "flex",
                                     flexDirection: "column",
                                     height: "50px",
-                                    width: "500px",
+                                    width: "200px",
                                     overflow: "hidden",
                                     justifyContent: "space-around",
                                     //alignItems: "center",
-                                    borderRadius: "100%",
+                                    borderRadius: "10px",
                                     marginBottom: "20px",
+                                    marginRight: "20%",
                                     padding: "10px",
                                 }}
                             >
                                 
                                 {!analyzing ? <Typography>
-                                        Total Hashmap Time: 
-                                        {totalMapTime.toFixed(5)}ms
+                                        Hashmap Time: <br/>{totalMapTime.toFixed(5)}ms
                                     </Typography> : <Typography>Loading</Typography>}
                             </Box>
                             <Box
+                             position="absolute"
+                             left="41%"
+                             transform="translateX(-50%)"
                                 sx={{
-                                    backgroundColor: "yellow",
+                                    backgroundColor: "rgb(64, 64, 64)",
                                     display: "flex",
                                     flexDirection: "column",
                                     height: "50px",
-                                    width: "500px",
+                                    width: "200px",
                                     overflow: "hidden",
                                     justifyContent: "space-around",
                                     //alignItems: "center",
-                                    borderRadius: "100%",
+                                    borderRadius: "10px",
                                     marginBottom: "20px",
                                     padding: "10px",
+                                    color: "rgb(201, 196, 196)",
                                 }}
                             >
                                 
@@ -637,23 +644,24 @@ function LandingPage() {
                                 </Typography>
                             </Box>
                             <Box
+                                ml = "auto"
                                 sx={{
-                                    backgroundColor: "yellow",
+                                    backgroundColor: "rgb(149, 24, 24)",
+                                    color: "rgb(201, 196, 196)",
                                     display: "flex",
                                     flexDirection: "column",
                                     height: "50px",
-                                    width: "500px",
+                                    width: "200px",
                                     overflow: "hidden",
                                     justifyContent: "space-around",
                                     //alignItems: "center",
-                                    borderRadius: "100%",
-                                    marginLeft: "300px",
+                                    borderRadius: "10px",
+                                    marginBottom: "20px",
                                     padding: "10px",
                                 }}
                             >
                                  {!analyzing ? <Typography>
-                                    Total Trie Time: 
-                                     {totalTrieTime.toFixed(5)}ms
+                                    Trie Time: <br/>{totalTrieTime.toFixed(5)}ms
                                 </Typography> : <Typography>Loading</Typography>}
                             </Box>
                         </Box>

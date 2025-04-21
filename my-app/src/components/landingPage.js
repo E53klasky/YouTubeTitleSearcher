@@ -38,8 +38,6 @@ const theme = createTheme({
     },
 });
 
-
-
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -479,13 +477,19 @@ function LandingPage() {
                         <Box
                             sx={{
                                 display: "flex",
-                                height: "100px",
+                                height: { xs: "200px", md: "100px" },
                                 width: "70%",
                                 overflow: "hidden",
-                                alignItems: "center",
-                                justifyContent: "left",
-                                flexDirection: "row",
-                                marginLeft: "10%",
+                                alignItems: {
+                                    xs: "center",
+                                    md: "space-between",
+                                },
+                                justifyContent: {
+                                    xs: "space-between",
+                                    md: "space-between",
+                                },
+                                flexDirection: { xs: "column", md: "row" },
+                                marginBottom: { xs: "10px", md: "0px" },
                             }}
                         >
                             <SearchButton
@@ -518,10 +522,11 @@ function LandingPage() {
                                     width: "300px",
                                     overflow: "hidden",
                                     justifyContent: "space-around",
-                                    marginLeft: "14%",
                                     borderRadius: "10px",
                                     padding: "10px",
                                     paddingTop: "5px",
+                                    marginLeft: "10px",
+                                    marginRight: "10px",
                                 }}
                             >
                                 {!analyzing ? (
@@ -544,16 +549,14 @@ function LandingPage() {
                                     display: "flex",
                                     flexDirection: "row",
                                     height: "40px",
-                                    width: "800px",
+                                    minWidth: "150px",
                                     overflow: "hidden",
                                     justifyContent: "center",
                                     alignItems: "center",
-                                    marginLeft: "10%",
                                     borderRadius: "10px",
                                     padding: "10px",
                                     paddingTop: "5px",
                                     paddingBottom: "5px",
-                                    maxWidth: "270px",
                                 }}
                             >
                                 <FormControlLabel
@@ -589,15 +592,19 @@ function LandingPage() {
                         </Box>
 
                         <Box
-                            position="relative"
                             sx={{
                                 display: "flex",
-                                flexDirection: { md: "row", xs: "column" },
-                                height: "50px",
+                                flexDirection: { xs: "column", md: "row" },
+                                height: { xs: "250px", md: "100px" },
                                 width: "72%",
-                                marginLeft: "2.2%",
-                                justifyContent: "center",
-                                //alignItems: "center",
+                                justifyContent: {
+                                    xs: "space-between",
+                                    md: "space-between",
+                                },
+                                alignItems: {
+                                    xs: "center",
+                                    md: "center",
+                                },
                                 padding: "10px",
                             }}
                         >
@@ -613,7 +620,6 @@ function LandingPage() {
                                     justifyContent: "space-around",
                                     borderRadius: "10px",
                                     marginBottom: "20px",
-                                    marginRight: "20%",
                                     padding: "10px",
                                 }}
                             >
@@ -627,9 +633,6 @@ function LandingPage() {
                                 )}
                             </Box>
                             <Box
-                                position="absolute"
-                                left="41%"
-                                transform="translateX(-50%)"
                                 sx={{
                                     backgroundColor: "rgb(64, 64, 64)",
                                     display: "flex",
@@ -677,7 +680,6 @@ function LandingPage() {
                                 </Typography>
                             </Box>
                             <Box
-                                ml="auto"
                                 sx={{
                                     backgroundColor: "rgb(149, 24, 24)",
                                     color: "rgb(201, 196, 196)",
@@ -712,9 +714,10 @@ function LandingPage() {
                         flexDirection: { xs: "column", md: "row" },
                         justifyContent: "center",
                         alignItems: "center",
-                        width: "100%",
-                        padding: "20px",
+                        width: "90%",
+                        margin: "0 auto",
                         gap: "20px",
+                        marginBottom: "20px",
                     }}
                 >
                     {/* Hash Map Animation Box */}

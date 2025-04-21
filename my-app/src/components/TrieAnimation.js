@@ -5,8 +5,8 @@ import { motion, useAnimation } from "framer-motion";
 import TrieVisualization from "./TrieVisualization.js";
 import { buildTrie } from "./buildTrie";
 
-const TrieAnimation = ({ word, controls, speed }) => {
-    const speed_factor = word.length / 4.0 * speed;
+const TrieAnimation = ({ word, controls, isOn }) => {
+    const speed_factor = word.length / 4.0;
     const coords = useMemo(() => {
         const arr = [];
         for (let i = 1; i < word.length; i++) {
@@ -40,6 +40,24 @@ const TrieAnimation = ({ word, controls, speed }) => {
 
         runSequence();
     }, [coords, controls, word]);
+
+
+    if (!isOn) {
+        return (
+            <Box
+                sx={{
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontSize: "1.5rem",
+                }}
+            >
+                Animations are off
+            </Box>
+        );
+    }
 
     if (word == "not loaded") {
         return (

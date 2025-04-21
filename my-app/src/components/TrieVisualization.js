@@ -89,6 +89,7 @@ const TrieVisualization = ({
     //   else{coords.current.push(false);}
     // }, [coords, left, node]);
 
+
     return (
         <Box
             position="relative"

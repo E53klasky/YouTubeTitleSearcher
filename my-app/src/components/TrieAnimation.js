@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from "react";
+import {Box} from "@mui/material";
 import "@fontsource/poppins";
 import { motion, useAnimation } from "framer-motion";
 import TrieVisualization from "./TrieVisualization.js";
@@ -40,6 +41,22 @@ const TrieAnimation = ({ word, controls }) => {
         runSequence();
     }, [coords, controls, word]);
 
+    if (word == "not loaded") {
+        return (
+            <Box
+                sx={{
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontSize: "1.5rem",
+                }}
+            >
+                Waiting for input...
+            </Box>
+        );
+    }
     return (
         <>
             <motion.div

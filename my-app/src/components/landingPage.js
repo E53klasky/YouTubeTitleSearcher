@@ -818,7 +818,7 @@ function LandingPage() {
                     >
                         <TrieAnimation
                             key={currentWord}
-                            word={currentWord}
+                            word={currentWord == "" && !analyzing ? "not loaded" : currentWord}
                             controls={trieControls}
                         />
                     </Box>

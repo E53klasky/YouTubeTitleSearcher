@@ -1,24 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-    Typography,
-    Box,
-    Paper,
-    Avatar,
-    createTheme,
-    ThemeProvider,
-    TextField,
-    AppBar,
-    Toolbar,
-    Button,
-    IconButton,
-    Stack,
-    FormControlLabel,
-    Switch,
-} from "@mui/material";
+import { Typography, AppBar, Toolbar, Button, IconButton } from "@mui/material";
 import "@fontsource/poppins";
-import HomeIcon from "@mui/material/Icon";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 import { Link } from "react-router-dom";
-import { color } from "framer-motion";
 
 export const Navbar = () => {
     return (
@@ -33,7 +17,9 @@ export const Navbar = () => {
                     component={Link}
                     to="/landing"
                 >
-                    <HomeIcon />{" "}
+                    <Link to={"/"} style={{ color: "rgb(175, 24, 24)" }}>
+                        <YouTubeIcon sx={{ fontSize: "40px" }} />
+                    </Link>
                     {/* You can replace this with your desired icon */}
                 </IconButton>
 
@@ -55,9 +41,17 @@ export const Navbar = () => {
                     color="inherit"
                     sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
                     component={Link}
-                    to="/landing"
+                    to="/"
                 >
                     Home
+                </Button>
+                <Button
+                    color="inherit"
+                    sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
+                    component={Link}
+                    to="/search"
+                >
+                    Search
                 </Button>
                 <Button
                     color="inherit"

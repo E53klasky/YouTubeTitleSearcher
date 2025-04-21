@@ -19,8 +19,8 @@ import "@fontsource/poppins";
 import HomeIcon from "@mui/material/Icon";
 import { motion, useAnimation } from "framer-motion";
 import Divider, { dividerClasses } from "@mui/material/Divider";
-import { getYoutubeData } from "./visualsData";
-import highlightWord from "./visualsData";
+import { getYoutubeData } from "./visualsData.js";
+import highlightWord from "./visualsData.js";
 import { input } from "framer-motion/client";
 import TrieVisualization from "./TrieVisualization.js";
 import SearchButton from "./searchButton.js";
@@ -329,7 +329,7 @@ const DataRow = React.memo(({ row, index, isHighlighted }) => {
     );
 });
 
-function LandingPage() {
+function SearchPage() {
     let disTitleScore = 0;
     const [titleInput, setTitleInput] = useState("");
     const [currentWord, setCurrentWord] = useState("");
@@ -770,4 +770,4 @@ function LandingPage() {
     );
 }
 
-export default LandingPage;
+export default SearchPage;

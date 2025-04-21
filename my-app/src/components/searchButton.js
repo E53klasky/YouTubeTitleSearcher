@@ -35,6 +35,7 @@ const SearchButton = ({
                         setTrieStats,
                         setHashMapTitle,
                         setTitleScore,
+
                         setWordScores,
                         totalTrieTime,
                         setTotalTrieTime,
@@ -42,11 +43,12 @@ const SearchButton = ({
                         setTotalMapTime,
                     )
                 }
-                color="error"
+                //color="error"
+                disableElevation
                 disabled={analyzing}
                 sx={{
-                    backgroundColor: "rgb(149, 24, 24)",
-                    color: "rgb(201, 196, 196)",
+                    //backgroundColor: "rgb(149, 24, 24)",
+                    background: "linear-gradient(160deg, rgb(215, 126, 126) 5%, rgb(149, 24, 24) 50%)",
                     width: "200px",
                     height: "50px",
                     borderRadius: "100px",

@@ -21,14 +21,14 @@ export default class Trie {
         this.titleCount++;
 
         for (const word of words) {
-            this.#insertWord(word.toLowerCase(), data);
+            this.#insertWord(word, data);
         }
     }
 
     //insert a word into the trie
     #insertWord(word, data) {
         let curr = this.#root;
-        for (const c of word.toLowerCase()) {
+        for (const c of word) {
             if (!curr.children.has(c)) {
                 curr.children.set(c, new TrieNode());
             }
@@ -49,7 +49,7 @@ export default class Trie {
      */
     search(word) {
         let curr = this.#root;
-        for (const c of word.toLowerCase()) {
+        for (const c of word) {
             if (!curr.children.has(c)) return false;
             curr = curr.children.get(c);
         }
@@ -58,7 +58,7 @@ export default class Trie {
 
     getWordData(word) {
         let curr = this.#root;
-        for (const c of word.toLowerCase()) {
+        for (const c of word) {
             if (!curr.children.has(c)) return null;
             curr = curr.children.get(c);
         }
@@ -69,23 +69,23 @@ export default class Trie {
     prefix(word) {
         const outArr = [];
         let curr = this.#root;
-        for (const c of word.toLowerCase()) {
+        for (const c of word) {
             if (!curr.children.has(c)) return outArr;
             curr = curr.children.get(c);
         }
 
         //found end of prefix
-        this.#prefixHelper(curr, word.toLowerCase(), outArr);
+        this.#prefixHelper(curr, word, outArr);
 
         return outArr;
     }
 
     #prefixHelper(currNode, currWord, outArr) {
-        if (currNode.isWord) outArr.push(currWord.toLowerCase());
+        if (currNode.isWord) outArr.push(currWord);
         currNode.children.forEach((value, key) => {
             //value = the child node
             //key = the character
-            this.#prefixHelper(value, currWord.toLowerCase() + key, outArr);
+            this.#prefixHelper(value, currWord + key, outArr);
         });
     }
 }

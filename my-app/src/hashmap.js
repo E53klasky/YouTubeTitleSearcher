@@ -74,10 +74,10 @@ export class OptimizedYTVideoStatsHashmap {
             throw new Error("Value must be an instance of VideoStats");
         }
 
-        const words = title.toLowerCase().trim().split(/\s+/);
+        const words = title.trim().split(/\s+/);
 
         for (const word of words) {
-            this.insertWord(word.toLowerCase(), videoStats);
+            this.insertWord(word, videoStats);
         }
     }
 
@@ -97,7 +97,7 @@ export class OptimizedYTVideoStatsHashmap {
             this.wordBuckets[index] = [];
         }
 
-        this.wordBuckets[index].push([word.toLowerCase(), videoStats]);
+        this.wordBuckets[index].push([word, videoStats]);
         this.wordSize++;
     }
 
@@ -183,7 +183,6 @@ export class OptimizedYTVideoStatsHashmap {
         }
 
         const results = [];
-        const lowercaseWord = word.toLowerCase();
 
         // Search through all buckets
         for (let bucket of this.buckets) {
@@ -191,9 +190,9 @@ export class OptimizedYTVideoStatsHashmap {
                 for (let [videoId, videoStats] of bucket) {
                     // Check if the title contains the word (case insensitive)
 
-                    const parts = videoStats.title.toLowerCase().split(" ");
+                    const parts = videoStats.title.split(" ");
                     for (const part of parts) {
-                        if (part.toLowerCase() === lowercaseWord) {
+                        if (part === word) {
                             results.push([videoId, videoStats]);
                             break;
                         }
@@ -206,7 +205,7 @@ export class OptimizedYTVideoStatsHashmap {
     }
 
     getWordStats(word) {
-        const index = this.hashWord(word.toLowerCase());
+        const index = this.hashWord(word);
 
         if (!this.wordBuckets[index]) {
             return [];
@@ -216,7 +215,7 @@ export class OptimizedYTVideoStatsHashmap {
     }
 
     getAverageWordStats(word) {
-        const dataPoints = this.getWordStats(word.toLowerCase());
+        const dataPoints = this.getWordStats(word);
 
         if (dataPoints.length == 0) {
             return {

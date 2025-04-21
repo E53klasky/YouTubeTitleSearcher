@@ -108,7 +108,7 @@ const highlightWordInTitle = (title, word) => {
     return (
         <p style={{ margin: 0 }}>
             {parts.map((part, i) =>
-                part.toLowerCase() === word.toLowerCase() ? (
+                part === word ? (
                     <mark
                         key={i}
                         style={{
@@ -276,9 +276,12 @@ export function ScrollingStack(inputArr, word) {
 
 const DataRow = React.memo(({ row, index, isHighlighted }) => {
     const safeRow = Array.isArray(row) ? row : ["No data", 0, 0, 0];
-    const myDivider =  <Divider
-    orientation="vertical"
-    sx={{ height: "60%", backgroundColor: "rgb(179, 32, 32)", mx: 1 }}/>;
+    const myDivider = (
+        <Divider
+            orientation="vertical"
+            sx={{ height: "60%", backgroundColor: "rgb(179, 32, 32)", mx: 1 }}
+        />
+    );
 
     return (
         <Box
@@ -402,7 +405,6 @@ function LandingPage() {
         setTitleInput(e.target.value);
     };
 
-
     return (
         <ThemeProvider theme={theme}>
             <Box
@@ -514,16 +516,17 @@ function LandingPage() {
                                 },
                             }}
                         />
-                        <Box sx={{
-                                    display: "flex",
-                                    height: "100px",
-                                    width: "70%",
-                                    overflow: "hidden",
-                                    alignItems: "center",
-                                    justifyContent: "left",
-                                    flexDirection: "row",
-                                    marginLeft: "10%",
-                                }}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                height: "100px",
+                                width: "70%",
+                                overflow: "hidden",
+                                alignItems: "center",
+                                justifyContent: "left",
+                                flexDirection: "row",
+                                marginLeft: "10%",
+                            }}
                         >
                             <SearchButton
                                 title={titleInput}
@@ -544,33 +547,37 @@ function LandingPage() {
                                 totalMapTime={totalMapTime}
                                 setTotalMapTime={setTotalMapTime}
                             />
-                         {/* Results Box */}
+                            {/* Results Box */}
                             <Box
-                                    sx={{
-                                        backgroundColor: "rgb(149, 24, 24)",
-                                        color: "rgb(201, 196, 196)",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        height: "40px",
-                                        width: "300px",
-                                        overflow: "hidden",
-                                        justifyContent: "space-around",
-                                        marginLeft: "14%",
-                                        borderRadius: "10px",
-                                        padding: "10px",
-                                        paddingTop: "5px",
-                                    }}
-                                >
-                                    {!analyzing ? (
+                                sx={{
+                                    backgroundColor: "rgb(149, 24, 24)",
+                                    color: "rgb(201, 196, 196)",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    height: "40px",
+                                    width: "300px",
+                                    overflow: "hidden",
+                                    justifyContent: "space-around",
+                                    marginLeft: "14%",
+                                    borderRadius: "10px",
+                                    padding: "10px",
+                                    paddingTop: "5px",
+                                }}
+                            >
+                                {!analyzing ? (
                                     <Typography>
-                                        PROJECTED TITLE STATS: {titleScore.views.toFixed(0)} views, {titleScore.likes.toFixed(0)} likes, {titleScore.comments.toFixed(0)} comments
+                                        PROJECTED TITLE STATS:{" "}
+                                        {titleScore.views.toFixed(0)} views,{" "}
+                                        {titleScore.likes.toFixed(0)} likes,{" "}
+                                        {titleScore.comments.toFixed(0)}{" "}
+                                        comments
                                     </Typography>
                                 ) : (
                                     <Typography>Loading</Typography>
                                 )}
                             </Box>
                             <Box
-                                gap = {2}
+                                gap={2}
                                 sx={{
                                     backgroundColor: "rgb(64, 64, 64)",
                                     color: "rgb(201, 196, 196)",
@@ -589,31 +596,18 @@ function LandingPage() {
                                     maxWidth: "270px",
                                 }}
                             >
-                                <Typography>
-                                    SPEED: 
-                                </Typography>
-                                <AnimationSlider setAnimationSpeed={setAnimationSpeed}/>
-                                <FormControlLabel control={<Switch defaultChecked sx={{
-                                    '& .MuiSwitch-switchBase.Mui-checked': {
-                                        color: "rgb(213, 39, 39)",
-                                        '&:hover': {
-                                        // backgroundColor: alpha("rgb(253, 0, 0)", theme.palette.action.hoverOpacity),
-                                        },
-                                    },
-                                    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                                        backgroundColor: "rgb(177, 31, 31)",
-                                    },
-                                }} />} label="Case Sensitive" labelPlacement="start" sx = {{marginLeft: "5px"}} />
+                                <Typography>SPEED:</Typography>
+                                <AnimationSlider
+                                    setAnimationSpeed={setAnimationSpeed}
+                                />
                             </Box>
-                            
                         </Box>
-                        
-                        
+
                         <Box
-                            position = "relative"
+                            position="relative"
                             sx={{
                                 display: "flex",
-                                flexDirection: {md: "row", xs: "column"},
+                                flexDirection: { md: "row", xs: "column" },
                                 height: "50px",
                                 width: "72%",
                                 marginLeft: "2.2%",
@@ -638,15 +632,19 @@ function LandingPage() {
                                     padding: "10px",
                                 }}
                             >
-                                
-                                {!analyzing ? <Typography>
-                                        Hashmap Time: <br/>{totalMapTime.toFixed(5)}ms
-                                    </Typography> : <Typography>Loading</Typography>}
+                                {!analyzing ? (
+                                    <Typography>
+                                        Hashmap Time: <br />
+                                        {totalMapTime.toFixed(5)}ms
+                                    </Typography>
+                                ) : (
+                                    <Typography>Loading</Typography>
+                                )}
                             </Box>
                             <Box
-                             position="absolute"
-                             left="41%"
-                             transform="translateX(-50%)"
+                                position="absolute"
+                                left="41%"
+                                transform="translateX(-50%)"
                                 sx={{
                                     backgroundColor: "rgb(64, 64, 64)",
                                     display: "flex",
@@ -660,37 +658,41 @@ function LandingPage() {
                                     marginBottom: "20px",
                                     padding: "10px",
                                     color: "rgb(201, 196, 196)",
-                                    '&::-webkit-scrollbar': {
-                                        display: 'none', // Chrome, Safari
+                                    "&::-webkit-scrollbar": {
+                                        display: "none", // Chrome, Safari
                                     },
                                 }}
                             >
-                                <Box 
-                                sx = {{
-                                    backgroundColor: "rgb(149, 24, 24)", 
-                                    fontSize: "12px", 
-                                    borderRadius: "5px",
-                                    paddingTop: "3px",
-                                    paddingBottom: "3px",
-                                    }}>
+                                <Box
+                                    sx={{
+                                        backgroundColor: "rgb(149, 24, 24)",
+                                        fontSize: "12px",
+                                        borderRadius: "5px",
+                                        paddingTop: "3px",
+                                        paddingBottom: "3px",
+                                    }}
+                                >
                                     Words, Views, Likes, Comments
-                                    </Box>
-                                <Typography sx={{ fontSize: '12px' }}>
-                                
-                                        {wordsScores.map((arr, index) => {
-                                            if (index != 0){
-                                            return(
+                                </Box>
+                                <Typography sx={{ fontSize: "12px" }}>
+                                    {wordsScores.map((arr, index) => {
+                                        if (index != 0) {
+                                            return (
                                                 <>
-                                                    "{arr[0]}", {arr[1].toFixed(0)}, {arr[2].toFixed(0)}, {arr[3].toFixed(0)}<br/> 
+                                                    "{arr[0]}",{" "}
+                                                    {arr[1].toFixed(0)},{" "}
+                                                    {arr[2].toFixed(0)},{" "}
+                                                    {arr[3].toFixed(0)}
+                                                    <br />
                                                 </>
                                             );
                                         }
-                                        return (<></>)
-                                        })}
+                                        return <></>;
+                                    })}
                                 </Typography>
                             </Box>
                             <Box
-                                ml = "auto"
+                                ml="auto"
                                 sx={{
                                     backgroundColor: "rgb(149, 24, 24)",
                                     color: "rgb(201, 196, 196)",
@@ -706,9 +708,14 @@ function LandingPage() {
                                     padding: "10px",
                                 }}
                             >
-                                 {!analyzing ? <Typography>
-                                    Trie Time: <br/>{totalTrieTime.toFixed(5)}ms
-                                </Typography> : <Typography>Loading</Typography>}
+                                {!analyzing ? (
+                                    <Typography>
+                                        Trie Time: <br />
+                                        {totalTrieTime.toFixed(5)}ms
+                                    </Typography>
+                                ) : (
+                                    <Typography>Loading</Typography>
+                                )}
                             </Box>
                         </Box>
                     </Box>
@@ -760,7 +767,11 @@ function LandingPage() {
                     >
                         <TrieAnimation
                             key={currentWord}
-                            word={currentWord == "" && !analyzing ? "not loaded" : currentWord}
+                            word={
+                                currentWord == "" && !analyzing
+                                    ? "not loaded"
+                                    : currentWord
+                            }
                             controls={trieControls}
                             speed={animationSpeed}
                         />

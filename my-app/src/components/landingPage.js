@@ -595,7 +595,7 @@ function LandingPage() {
                                     display: "flex",
                                     flexDirection: "column",
                                     height: "50px",
-                                    width: "200px",
+                                    width: "150px",
                                     overflow: "hidden",
                                     justifyContent: "space-around",
                                     //alignItems: "center",
@@ -620,22 +620,35 @@ function LandingPage() {
                                     flexDirection: "column",
                                     height: "50px",
                                     width: "200px",
-                                    overflow: "hidden",
+                                    overflow: "auto",
                                     justifyContent: "space-around",
                                     //alignItems: "center",
                                     borderRadius: "10px",
                                     marginBottom: "20px",
                                     padding: "10px",
                                     color: "rgb(201, 196, 196)",
+                                    '&::-webkit-scrollbar': {
+                                        display: 'none', // Chrome, Safari
+                                    },
                                 }}
                             >
+                                <Box 
+                                sx = {{
+                                    backgroundColor: "rgb(149, 24, 24)", 
+                                    fontSize: "12px", 
+                                    borderRadius: "5px",
+                                    paddingTop: "3px",
+                                    paddingBottom: "3px",
+                                    }}>
+                                    Words, Views, Likes, Comments
+                                    </Box>
+                                <Typography sx={{ fontSize: '12px' }}>
                                 
-                               <Typography>
                                         {wordsScores.map((arr, index) => {
                                             if (index != 0){
                                             return(
                                                 <>
-                                                    Word: {arr[0]} Views: {arr[1].toFixed(0)} Likes: {arr[2].toFixed(0)} Comments: {arr[3].toFixed(0)} 
+                                                    "{arr[0]}", {arr[1].toFixed(0)}, {arr[2].toFixed(0)}, {arr[3].toFixed(0)}<br/> 
                                                 </>
                                             );
                                         }
@@ -651,7 +664,7 @@ function LandingPage() {
                                     display: "flex",
                                     flexDirection: "column",
                                     height: "50px",
-                                    width: "200px",
+                                    width: "150px",
                                     overflow: "hidden",
                                     justifyContent: "space-around",
                                     //alignItems: "center",

@@ -27,7 +27,6 @@ import SearchButton from "./searchButton.js";
 // import {buildTrie} from './Trie.js';
 import TreeContainer from "./TrieVisualization.js";
 import TrieAnimation from "./TrieAnimation.js";
-import AnimationSlider from "./slider.js";
 
 const theme = createTheme({
     typography: {
@@ -132,7 +131,7 @@ const highlightWordInTitle = (title, word) => {
 };
 
 // Update the ScrollingStack component
-export function ScrollingStack(inputArr, word) {
+export function ScrollingStack(inputArr, word, isOn) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [key, setKey] = useState(0);
@@ -181,6 +180,22 @@ export function ScrollingStack(inputArr, word) {
         loadData();
     }, []);
 
+    if (!isOn) {
+        return (
+            <Box
+                sx={{
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontSize: "1.5rem",
+                }}
+            >
+                Animations are off
+            </Box>
+        );
+    }
     if (loading) {
         return (
             <Box
@@ -397,9 +412,9 @@ function LandingPage() {
     const [totalTrieTime, setTotalTrieTime] = useState(0);
     const [totalMapTime, setTotalMapTime] = useState(0);
 
-    const [animationSpeed, setAnimationSpeed] = useState(1);
-
     const trieControls = useAnimation();
+
+    const [animationsOn, setAnimationsOn] = useState(true);
 
     const handleTitleChange = (e) => {
         setTitleInput(e.target.value);
@@ -596,9 +611,57 @@ function LandingPage() {
                                     maxWidth: "270px",
                                 }}
                             >
-                                <Typography>SPEED:</Typography>
-                                <AnimationSlider
-                                    setAnimationSpeed={setAnimationSpeed}
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={animationsOn}
+                                            onChange={(e) =>
+                                                setAnimationsOn(
+                                                    e.target.checked
+                                                )
+                                            }
+                                            sx={{
+                                                "& .MuiSwitch-switchBase.Mui-checked":
+                                                    {
+                                                        color: "rgb(213, 39, 39)",
+                                                        "&:hover": {
+                                                            // backgroundColor: alpha("rgb(253, 0, 0)", theme.palette.action.hoverOpacity),
+                                                        },
+                                                    },
+                                                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
+                                                    {
+                                                        backgroundColor:
+                                                            "rgb(177, 31, 31)",
+                                                    },
+                                            }}
+                                        />
+                                    }
+                                    label="Animations"
+                                    labelPlacement="start"
+                                    sx={{ marginLeft: "5px" }}
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            sx={{
+                                                "& .MuiSwitch-switchBase.Mui-checked":
+                                                    {
+                                                        color: "rgb(213, 39, 39)",
+                                                        "&:hover": {
+                                                            // backgroundColor: alpha("rgb(253, 0, 0)", theme.palette.action.hoverOpacity),
+                                                        },
+                                                    },
+                                                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
+                                                    {
+                                                        backgroundColor:
+                                                            "rgb(177, 31, 31)",
+                                                    },
+                                            }}
+                                        />
+                                    }
+                                    label="Case Sensitive"
+                                    labelPlacement="start"
+                                    sx={{ marginLeft: "5px" }}
                                 />
                             </Box>
                         </Box>
@@ -750,7 +813,7 @@ function LandingPage() {
                                 trieStats.comments,
                             ],
                             currentWord,
-                            animationSpeed
+                            animationsOn
                         )}
                     </Box>
 
@@ -773,7 +836,7 @@ function LandingPage() {
                                     : currentWord
                             }
                             controls={trieControls}
-                            speed={animationSpeed}
+                            isOn={animationsOn}
                         />
                     </Box>
                 </Box>

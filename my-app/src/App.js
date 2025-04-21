@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import SearchPage from "./components/searchPage";
 import AboutPage from "./components/aboutPage";
+import LandingPage from "./components/landingPage";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -9,6 +10,7 @@ function App() {
     return (
         <div className="App">
             <Routes>
+                <Route path="/landing" element={<LandingPage />} />
                 <Route path="/" element={<SearchPage />} />
                 <Route path="/about" element={<AboutPage />} />
             </Routes>

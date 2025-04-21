@@ -30,6 +30,8 @@ export const Navbar = () => {
                     color="inherit"
                     aria-label="menu"
                     sx={{ mr: 2 }}
+                    component={Link}
+                    to="/landing"
                 >
                     <HomeIcon />{" "}
                     {/* You can replace this with your desired icon */}
@@ -52,30 +54,18 @@ export const Navbar = () => {
                 <Button
                     color="inherit"
                     sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
+                    component={Link}
+                    to="/landing"
                 >
-                    <Link
-                        style={{
-                            color: "rgb(201, 196, 196)",
-                            textDecoration: "none",
-                        }}
-                        to={"/"}
-                    >
-                        Home
-                    </Link>
+                    Home
                 </Button>
                 <Button
                     color="inherit"
                     sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
+                    component={Link}
+                    to="/about"
                 >
-                    <Link
-                        style={{
-                            color: "rgb(201, 196, 196)",
-                            textDecoration: "none",
-                        }}
-                        to={"/about"}
-                    >
-                        About
-                    </Link>
+                    About
                 </Button>
             </Toolbar>
         </AppBar>

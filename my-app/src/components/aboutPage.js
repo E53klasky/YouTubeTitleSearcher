@@ -57,6 +57,8 @@ function AboutPage(){
                     }}
                 >
                     <Navbar />
+                    <Typography variant="h1" color={"rgb(201, 196, 196)"}>About Us</Typography>
+                    <Typography variant="body1" color={"rgb(201, 196, 196)"}>aksjdhlajsd</Typography>
                 </Box>
             </ThemeProvider>
     );

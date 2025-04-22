@@ -14,6 +14,7 @@ import {
     Stack,
     FormControlLabel,
     Switch,
+    Link,
 } from "@mui/material";
 import "@fontsource/poppins";
 import HomeIcon from "@mui/material/Icon";
@@ -37,8 +38,9 @@ const theme = createTheme({
         },
     },
 });
-
+// Name, Photo, links, bio,
 function AboutPage(){
+    const whiteColor = "rgb(201, 196, 196)";
     return (
             <ThemeProvider theme={theme}>
                 <Box
@@ -57,8 +59,73 @@ function AboutPage(){
                     }}
                 >
                     <Navbar />
-                    <Typography variant="h1" color={"rgb(201, 196, 196)"}>About Us</Typography>
-                    <Typography variant="body1" color={"rgb(201, 196, 196)"}>aksjdhlajsd</Typography>
+                    <Box 
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            //alignItems: "flex-start",
+                            justifyContent: "left",
+                            margin: "50px",
+                        }}
+                    >
+                        <Box>
+                            <Typography variant="h1" color={whiteColor}>About Us</Typography>
+                        </Box>
+                        
+                        {/* Discription of project */}
+                        <Box>
+                            <Typography sx = {{fontSize: "20px"}} color={whiteColor}>
+                                Discription of Project
+
+                            </Typography>
+                        </Box>
+                        <Box>
+                            <Typography variant="h2" color={whiteColor}>
+                                Team
+                            </Typography>
+                        </Box>
+                        {/* Start Discription of Person */}
+                        <Box>
+                            <Typography variant="h3" color={whiteColor}>
+                                Teammate 1
+                            </Typography>
+                            {/* Teammate Contact */}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "end",
+                                    justifyContent: "center",
+                                    margin: "50px",
+                                }}
+                            >
+                                {/* Image of Teammate */}
+                                <Box 
+                                    component="img" 
+                                    src="sabal.jpg"
+                                    alt="Image description"
+                                    sx={{ width: '150px', height: '150px', borderRadius: "200px"}}
+                                ></Box>
+                                {/* Links */}
+                                <Box sx = {{display: "flex", flexDirection: "column", width: "300px", justifyContent: "center", gap: "10px"}}>
+                                    <Link href="https://www.google.com" underline="always" sx = {{fontSize: "20px"}}>
+                                        Click Here for Resume Link
+                                    </Link>
+                                    <Link href="https://www.maps.google.com" underline="always" sx = {{fontSize: "20px"}}>
+                                        Click Here for LinkedIn Link
+                                    </Link>
+                                    <Typography sx = {{fontSize: "20px"}} color={whiteColor}>
+                                        email@email.email <br/> 987-654-3210
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            
+                            <Typography sx = {{fontSize: "20px"}} color={whiteColor}>
+                                Discription of Teammate
+                            </Typography>
+                        </Box>
+                    </Box>
+                    
                 </Box>
             </ThemeProvider>
     );

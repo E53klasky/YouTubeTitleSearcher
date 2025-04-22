@@ -510,6 +510,7 @@ function SearchPage() {
                                 setTotalTrieTime={setTotalTrieTime}
                                 totalMapTime={totalMapTime}
                                 setTotalMapTime={setTotalMapTime}
+                                animationsOn={animationsOn}
                             />
                             {/* Results Box */}
                             <Box
@@ -562,6 +563,7 @@ function SearchPage() {
                                 <FormControlLabel
                                     control={
                                         <Switch
+                                            disabled={analyzing}
                                             checked={animationsOn}
                                             onChange={(e) =>
                                                 setAnimationsOn(

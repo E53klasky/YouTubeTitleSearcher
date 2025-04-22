@@ -19,6 +19,7 @@ const SearchButton = ({
     setTotalTrieTime,
     totalMapTime,
     setTotalMapTime,
+    animationsOn,
 }) => {
     return (
         <Box mt={2}>
@@ -41,6 +42,7 @@ const SearchButton = ({
                         setTotalTrieTime,
                         totalMapTime,
                         setTotalMapTime,
+                        animationsOn
                     )
                 }
                 //color="error"
@@ -48,7 +50,8 @@ const SearchButton = ({
                 disabled={analyzing}
                 sx={{
                     //backgroundColor: "rgb(149, 24, 24)",
-                    background: "linear-gradient(160deg, rgb(215, 126, 126) 5%, rgb(149, 24, 24) 50%)",
+                    background:
+                        "linear-gradient(160deg, rgb(215, 126, 126) 5%, rgb(149, 24, 24) 50%)",
                     width: "200px",
                     height: "50px",
                     borderRadius: "100px",

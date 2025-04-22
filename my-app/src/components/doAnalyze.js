@@ -78,7 +78,8 @@ export async function doAnalyze(
     totalTrieTime,
     setTotalTrieTime,
     totalMapTime,
-    setTotalMapTime
+    setTotalMapTime,
+    animationsOn
 ) {
     if (currentController) {
         currentController.abort();
@@ -109,7 +110,7 @@ export async function doAnalyze(
             views: 0,
             likes: 0,
             comments: 0,
-        }
+        };
 
         for (const word of words) {
             const validTitles = hashmap.searchByWord(word);
@@ -154,7 +155,7 @@ export async function doAnalyze(
                 comments:
                     titleScore.comments +
                     hashmapStats.avgStats.comments / words.length,
-            }
+            };
             setWordScores((prev) => [
                 ...prev,
                 [
@@ -232,10 +233,11 @@ export async function doAnalyze(
             }
 
             try {
-                await cancelableDelay(
-                    (word.length * 0.1 + 2.75) * 1000,
-                    signal
-                );
+                if (animationsOn)
+                    await cancelableDelay(
+                        (word.length * 0.1 + 2.75) * 1000,
+                        signal
+                    );
             } catch (err) {
                 if (err.name === "AbortError") {
                     console.log("Previous analysis aborted");

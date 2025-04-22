@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Typography, AppBar, Toolbar, Button, IconButton } from "@mui/material";
+import { Typography, AppBar, Toolbar, Button, IconButton, Box, } from "@mui/material";
 import "@fontsource/poppins";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { Link } from "react-router-dom";
@@ -37,30 +37,33 @@ export const Navbar = () => {
                 </Typography>
 
                 {/* Buttons */}
-                <Button
-                    color="inherit"
-                    sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
-                    component={Link}
-                    to="/"
-                >
-                    Home
-                </Button>
-                <Button
-                    color="inherit"
-                    sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
-                    component={Link}
-                    to="/search"
-                >
-                    Search
-                </Button>
-                <Button
-                    color="inherit"
-                    sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
-                    component={Link}
-                    to="/about"
-                >
-                    About
-                </Button>
+                <Box sx = {{display: "flex", justifyContent: "center", alignItems:"center"}}>
+                    <Button
+                        color="inherit"
+                        sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
+                        component={Link}
+                        to="/"
+                    >
+                        Home
+                    </Button>
+                    <Button
+                        color="inherit"
+                        sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
+                        component={Link}
+                        to="/search"
+                    >
+                        Search
+                    </Button>
+                    <Button
+                        color="inherit"
+                        sx={{ color: "rgb(201, 196, 196)", fontSize: "19px" }}
+                        component={Link}
+                        to="/about"
+                    >
+                        About
+                    </Button>
+                </Box>
+                
             </Toolbar>
         </AppBar>
     );

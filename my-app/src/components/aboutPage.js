@@ -303,7 +303,7 @@ function AboutPage() {
                         }}
                     >
                         <Typography variant="h3" color={whiteColor}>
-                            Teammate 3
+                            Ethan Klasky
                         </Typography>
                         {/* Teammate Contact */}
                         <Box
@@ -319,7 +319,7 @@ function AboutPage() {
                             {/* Image of Teammate */}
                             <Box
                                 component="img"
-                                src="sabal.jpg"
+                                src="Ethan.jpg"
                                 alt="Image description"
                                 sx={{
                                     width: "150px",
@@ -338,14 +338,14 @@ function AboutPage() {
                                 }}
                             >
                                 <Link
-                                    href="https://www.google.com"
+                                    href="https://github.com/E53klasky"
                                     underline="always"
                                     sx={{ fontSize: "20px" }}
                                 >
-                                    Click Here for Resume Link
+                                    Click Here for Github
                                 </Link>
                                 <Link
-                                    href="https://www.maps.google.com"
+                                    href="https://www.linkedin.com/in/ethan-klasky-092a052a5/"
                                     underline="always"
                                     sx={{ fontSize: "20px" }}
                                 >
@@ -355,7 +355,7 @@ function AboutPage() {
                                     sx={{ fontSize: "20px" }}
                                     color={whiteColor}
                                 >
-                                    email@email.email <br /> 987-654-3210
+                                    ekasky@ufl.edu <br /> 865-924-7447
                                 </Typography>
                             </Box>
                         </Box>
@@ -369,7 +369,8 @@ function AboutPage() {
                             }}
                             color={whiteColor}
                         >
-                            Discription of Teammate
+                            Hello, I'm Ethan Klasky. I am a freshman at the
+                            University of Florida studying computer science. I got the data and read it in and fixed up bugs. Addtionally I made the lanidng page, and made the hashmap for this project.
                         </Typography>
                     </Box>
                 </Box>

@@ -74,18 +74,23 @@ function AboutPage(){
                         
                         {/* Discription of project */}
                         <Box>
-                            <Typography sx = {{fontSize: "20px"}} color={whiteColor}>
+                            <Typography sx = {{fontSize: "20px", marginBottom: "100px"}} color={whiteColor}>
                                 Discription of Project
 
                             </Typography>
                         </Box>
                         <Box>
-                            <Typography variant="h2" color={whiteColor}>
+                            <Typography variant="h2" color={whiteColor} sx = {{marginBottom: "50px"}}>
                                 Team
                             </Typography>
                         </Box>
+                        
+
+
                         {/* Start Discription of Person */}
-                        <Box>
+                        <Box sx = {{
+                            marginBottom: "100px",
+                        }}>
                             <Typography variant="h3" color={whiteColor}>
                                 Teammate 1
                             </Typography>
@@ -97,6 +102,7 @@ function AboutPage(){
                                     alignItems: "end",
                                     justifyContent: "center",
                                     margin: "50px",
+                                    marginTop: "10px",
                                 }}
                             >
                                 {/* Image of Teammate */}
@@ -124,6 +130,103 @@ function AboutPage(){
                                 Discription of Teammate
                             </Typography>
                         </Box>
+
+
+
+
+                        {/* Start Discription of Person */}
+                        <Box sx = {{
+                            marginBottom: "100px",
+                        }}>
+                            <Typography variant="h3" color={whiteColor}>
+                                Teammate 2
+                            </Typography>
+                            {/* Teammate Contact */}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "end",
+                                    justifyContent: "center",
+                                    margin: "50px",
+                                    marginTop: "10px",
+                                }}
+                            >
+                                {/* Image of Teammate */}
+                                <Box 
+                                    component="img" 
+                                    src="sabal.jpg"
+                                    alt="Image description"
+                                    sx={{ width: '150px', height: '150px', borderRadius: "200px"}}
+                                ></Box>
+                                {/* Links */}
+                                <Box sx = {{display: "flex", flexDirection: "column", width: "300px", justifyContent: "center", gap: "10px"}}>
+                                    <Link href="https://www.google.com" underline="always" sx = {{fontSize: "20px"}}>
+                                        Click Here for Resume Link
+                                    </Link>
+                                    <Link href="https://www.maps.google.com" underline="always" sx = {{fontSize: "20px"}}>
+                                        Click Here for LinkedIn Link
+                                    </Link>
+                                    <Typography sx = {{fontSize: "20px"}} color={whiteColor}>
+                                        email@email.email <br/> 987-654-3210
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            
+                            <Typography sx = {{fontSize: "20px"}} color={whiteColor}>
+                                Discription of Teammate
+                            </Typography>
+                        </Box>
+
+
+
+
+                        {/* Start Discription of Person */}
+                        <Box sx = {{
+                            marginBottom: "100px",
+                        }}>
+                            <Typography variant="h3" color={whiteColor}>
+                                Teammate 3
+                            </Typography>
+                            {/* Teammate Contact */}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "end",
+                                    justifyContent: "center",
+                                    margin: "50px",
+                                    marginTop: "10px",
+                                }}
+                            >
+                                {/* Image of Teammate */}
+                                <Box 
+                                    component="img" 
+                                    src="sabal.jpg"
+                                    alt="Image description"
+                                    sx={{ width: '150px', height: '150px', borderRadius: "200px"}}
+                                ></Box>
+                                {/* Links */}
+                                <Box sx = {{display: "flex", flexDirection: "column", width: "300px", justifyContent: "center", gap: "10px"}}>
+                                    <Link href="https://www.google.com" underline="always" sx = {{fontSize: "20px"}}>
+                                        Click Here for Resume Link
+                                    </Link>
+                                    <Link href="https://www.maps.google.com" underline="always" sx = {{fontSize: "20px"}}>
+                                        Click Here for LinkedIn Link
+                                    </Link>
+                                    <Typography sx = {{fontSize: "20px"}} color={whiteColor}>
+                                        email@email.email <br/> 987-654-3210
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            
+                            <Typography sx = {{fontSize: "20px"}} color={whiteColor}>
+                                Discription of Teammate
+                            </Typography>
+                        </Box>
+
+
+
                     </Box>
                     
                 </Box>

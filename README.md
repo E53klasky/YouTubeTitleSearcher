@@ -1,9 +1,10 @@
 # YouTubeTitleSearcher
 
-YouTube Title Optimization Website
+YouTube Title Analyzer Website
 Tools Used
 Material UI
 React.js
+Framer Motion
 Project Overview:
 We are developing a frontend-only website that compares the efficiency of two data structures: a Trie and a HashMap. Our goal is to visualize and analyze their performance in searching YouTube video titles.
 
@@ -12,7 +13,7 @@ Comparison of Data Structures: We implement both a Trie and a HashMap to compare
 Real-Time Animation: When a user searches for a YouTube video title, the website will animate the search process for better visualization.
 Title Optimization for YouTubers: We analyze YouTube video titles based on metrics like comments, views, and likes to help content creators optimize their titles for better engagement.
 Data Source:
-The dataset used for this project was sourced via YouTube's video ID dataset from 2019 (newest) and YouTube's API for finding the video title, comments, views, and likes.
+We used over 100,000 random videos from YouTube's API and found the video title, comments, views, and likes for each video.
 
 
 
@@ -73,6 +74,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 npm run build fails to minify
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-
-This is where I will be making a hashmap 

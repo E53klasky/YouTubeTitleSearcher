@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import {Box} from "@mui/material";
 import "@fontsource/poppins";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import TrieVisualization from "./TrieVisualization.js";
 import { buildTrie } from "./buildTrie";
 

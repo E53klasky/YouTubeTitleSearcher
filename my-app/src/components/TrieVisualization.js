@@ -1,43 +1,6 @@
-// import {
-//   Box,
-//   Stack,
-// } from '@mui/material';
-// import { motion } from "framer-motion";
-// export function TrieAnimation() {
 
-//   return (
-//     <Box sx={{ overflow: "hidden", height: "inherit", display: "flex", justifyContent: "center" }}>
-//       <motion.div
-//         animate={{ width: ["inherit", "0%"], height: ["inherit", "0%"] }}
-//         transition={{ duration: 4, repeat: 0, ease: "circIn" }}
-//         style={{ width: "200px", height: "200px" }}
-//       >
-//         <Box
-//           sx={{
-//             width: "100%",
-//             height: '100%',
-//             backgroundColor: "white",
-//             // display: "flex",
-//             alignItems: "center",
-//             justifyContent: "center",
-//             color: "white",
-//             fontSize: "1.2rem",
-//             borderRadius: '50%',
-//             // margin: "10px",
-//             // paddingLeft: "10px",
-//             // paddingRight: "10px",
-//           }}
-//         >
-
-//         </Box>
-
-//       </motion.div>
-//     </Box>git
-//   );
-// }
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
 import { Box, Paper } from "@mui/material";
-import { buildTrie } from "./buildTrie";
 
 const NODE_WIDTH = 40;
 const NODE_HEIGHT = 40;
@@ -83,12 +46,6 @@ const TrieVisualization = ({
     const childrenKeys = Object.keys(node.children || {});
     const childCount = childrenKeys.length;
     const left = childrenKeys.at(0) > node.char;
-    // useEffect(() => {
-    //   if (!node) return null;
-    //   if (left){coords.current.push(true);}
-    //   else{coords.current.push(false);}
-    // }, [coords, left, node]);
-
 
     return (
         <Box

@@ -1,33 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React from "react";
 import {
     Typography,
     Box,
-    Paper,
-    Avatar,
     createTheme,
     ThemeProvider,
-    TextField,
-    AppBar,
-    Toolbar,
-    Button,
-    IconButton,
-    Stack,
-    FormControlLabel,
-    Switch,
     Link,
 } from "@mui/material";
 import "@fontsource/poppins";
-import HomeIcon from "@mui/material/Icon";
-import { motion, useAnimation } from "framer-motion";
-import Divider, { dividerClasses } from "@mui/material/Divider";
-import { getYoutubeData } from "./visualsData";
-import highlightWord from "./visualsData";
-import { input } from "framer-motion/client";
-import TrieVisualization from "./TrieVisualization.js";
-import SearchButton from "./searchButton.js";
-// import {buildTrie} from './Trie.js';
-import TreeContainer from "./TrieVisualization.js";
-import TrieAnimation from "./TrieAnimation.js";
 import { Navbar } from "./navBar.js";
 
 const theme = createTheme({
@@ -63,7 +42,6 @@ function AboutPage() {
                     sx={{
                         display: "flex",
                         flexDirection: "column",
-                        //alignItems: "flex-start",
                         justifyContent: "left",
                         margin: "50px",
                     }}

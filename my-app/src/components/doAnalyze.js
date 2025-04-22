@@ -132,8 +132,6 @@ export async function doAnalyze(
             const hashmapStats = hashmap.getAverageWordStats(word);
             const mapEnd = performance.now();
 
-            //Weird title score formula
-            //console.log("words.length "+ words.length + "\ntitleScore.comments " + titleScore.comments);
             setTitleScore({
                 views:
                     titleScore.views +
